@@ -769,6 +769,37 @@
     .footer-nav a:hover { color: var(--accent); }
     .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
 
+    /* ── LANG SWITCHER ── */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.6rem;
+      background: transparent;
+      color: var(--muted2);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.05); color: var(--white); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .nav-links, .nav-status { display: none; }
@@ -777,6 +808,8 @@
       footer { flex-direction: column; align-items: flex-start; }
       .hero-metrics { gap: 1.5rem; }
       .cards { gap: 0; }
+      .contact-meta { grid-template-columns: 1fr; }
+      .footer-nav { flex-wrap: wrap; gap: 1rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -797,10 +830,14 @@
     </a>
     <div class="nav-right">
       <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#services" data-en="Services" data-vi="Dịch vụ">Services</a></li>
+        <li><a href="#process" data-en="Process" data-vi="Quy trình">Process</a></li>
+        <li><a href="#contact" data-en="Contact" data-vi="Liên hệ">Contact</a></li>
       </ul>
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btn-en">EN</button>
+        <button class="lang-btn" id="btn-vi">VI</button>
+      </div>
       <div class="nav-status">SYSTEM ONLINE</div>
     </div>
   </nav>
@@ -830,15 +867,15 @@
         <div class="metric-label">Response time</div>
       </div>
       <div class="metric">
-        <div class="metric-val">80%+</div>
-        <div class="metric-label">Margin target</div>
+        <div class="metric-val">5+</div>
+        <div class="metric-label">Projects Delivered</div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="section-label reveal">What we do</div>
+    <div class="section-label reveal" data-en="What we do" data-vi="Chúng tôi làm gì">What we do</div>
     <div class="cards">
 
       <div class="card reveal reveal-delay-1">
@@ -883,7 +920,7 @@
 
   <!-- PROCESS -->
   <section class="process" id="process">
-    <div class="section-label reveal">How we work</div>
+    <div class="section-label reveal" data-en="How we work" data-vi="Quy trình làm việc">How we work</div>
     <div class="steps">
       <div class="step reveal reveal-delay-1">
         <div class="step-num">01</div>
@@ -910,7 +947,7 @@
 
   <!-- VALUES -->
   <section class="values">
-    <div class="section-label reveal">Why simplesoft</div>
+    <div class="section-label reveal" data-en="Why simplesoft" data-vi="Tại sao chọn chúng tôi">Why simplesoft</div>
     <div class="value-grid">
       <div class="value-item reveal reveal-delay-1">
         <h3>Built around you</h3>
@@ -977,7 +1014,7 @@
 
       <div class="contact-wrap">
         <form id="contactForm">
-          <input type="hidden" name="access_key" value="7108fe4f-a3bc-4cfa-b651-209011e9f86f" />
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
           <input type="hidden" name="subject" value="New project inquiry — simplesoft.com.vn" />
           <input type="hidden" name="from_name" value="SimpleSoft Website" />
           <input type="checkbox" name="botcheck" style="display:none" />
@@ -1120,18 +1157,166 @@
 
     resize(); initNodes(); drawNetwork();
 
+    // ── TRANSLATIONS
+    const translations = {
+      en: {
+        'hero-sub':      ['We build software that fits.','Clean code. Real results.','Delivered on time, every time.'],
+        'btn-start':     'Start a project',   'btn-explore': '$ explore --services',
+        'metric-built':  'CUSTOM BUILT',      'metric-resp': 'RESPONSE TIME',  'metric-margin': 'PROJECTS DELIVERED',
+        's-what':'What we do','s-how':'How we work','s-why':'Why simplesoft',
+        'c1-num':'01 / SERVICE','c1-h':'Custom software development','c1-p':'Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.',
+        'c2-num':'02 / SERVICE','c2-h':'Workflow automation','c2-p':'Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.',
+        'c3-num':'03 / SERVICE','c3-h':'Ongoing support & maintenance','c3-p':"We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.",
+        'c4-num':'04 / SERVICE','c4-h':'System integration','c4-p':"Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.",
+        'p1-h':'Discover','p1-p':'We listen to how your business actually runs and define the real problem before writing a single line of code.',
+        'p2-h':'Design',  'p2-p':"We map out the solution and present a clear proposal. You know exactly what you're getting before we begin.",
+        'p3-h':'Build',   'p3-p':'We build close to the agreed design and keep you updated throughout. No black boxes, no surprises.',
+        'p4-h':'Deliver & support','p4-p':'We deploy, train your team, and stay available when you need to scale or hit a snag down the road.',
+        'v1-h':'Built around you',        'v1-p':'No templates forced onto your workflow. Every solution is designed specifically for how you operate.',
+        'v2-h':'In it for the long haul', 'v2-p':'Not just a one-time delivery. We grow alongside your business and stay accountable after go-live.',
+        'v3-h':'Fast without cutting corners','v3-p':'AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.',
+        'cta-h':"Ready to start your project?",'cta-p':"Tell us what problem you're trying to solve — we'll take it from there.",'cta-btn':'Get in touch',
+        'contact-h':'Get in touch','contact-sub':'// leave your details. response_time < 24h',
+        'vn-badge':'🇻🇳  Proudly built in Vietnam · Ho Chi Minh City',
+        'label-loc':'LOCATION','label-email':'EMAIL','label-resp':'RESPONSE',
+        'label-name':'FULL_NAME','label-phone':'PHONE','label-msg':'PROJECT_BRIEF',
+        'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
+        'btn-send':'$ send --message',
+        'nav-s':'Services','nav-p':'Process','nav-c':'Contact',
+        'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-p':'process','foot-nav-c':'contact',
+      },
+      vi: {
+        'hero-sub':      ['Chúng tôi xây phần mềm vừa vặn.','Code sạch. Kết quả thật.','Bàn giao đúng hẹn, mọi lúc.'],
+        'btn-start':     'Bắt đầu dự án',    'btn-explore': '$ xem --dich-vu',
+        'metric-built':  'TÙY CHỈNH HOÀN TOÀN','metric-resp':'THỜI GIAN PHẢN HỒI','metric-margin':'DỰ ÁN ĐÃ TRIỂN KHAI',
+        's-what':'Chúng tôi làm gì','s-how':'Quy trình làm việc','s-why':'Tại sao chọn chúng tôi',
+        'c1-num':'01 / DỊCH VỤ','c1-h':'Phát triển phần mềm theo yêu cầu','c1-p':'Ứng dụng riêng biệt, phù hợp với quy trình của bạn từ đầu đến cuối. Không cần thỏa hiệp với giải pháp có sẵn.',
+        'c2-num':'02 / DỊCH VỤ','c2-h':'Tự động hóa quy trình','c2-p':'Loại bỏ công việc lặp lại bằng các luồng tự động đáng tin cậy. Để đội ngũ tập trung vào việc quan trọng hơn.',
+        'c3-num':'03 / DỊCH VỤ','c3-h':'Hỗ trợ & bảo trì liên tục','c3-p':'Chúng tôi đồng hành lâu dài, giữ hệ thống ổn định khi bạn phát triển. Không giao xong rồi biến mất.',
+        'c4-num':'04 / DỊCH VỤ','c4-h':'Tích hợp hệ thống','c4-p':'Kết nối các công cụ, API và nền tảng hiện có thành một hệ thống liền mạch. Không còn dữ liệu phân mảnh hay chuyển giao thủ công.',
+        'p1-h':'Tìm hiểu','p1-p':'Lắng nghe quy trình thực tế của bạn, xác định bài toán cần giải quyết trước khi viết một dòng code.',
+        'p2-h':'Thiết kế','p2-p':'Phác thảo giải pháp và trình bày đề xuất rõ ràng. Bạn biết chính xác sẽ nhận được gì trước khi bắt đầu.',
+        'p3-h':'Phát triển','p3-p':'Build sát theo thiết kế đã thống nhất, cập nhật tiến độ thường xuyên. Không có hộp đen, không có bất ngờ.',
+        'p4-h':'Bàn giao & hỗ trợ','p4-p':'Triển khai và đào tạo đội ngũ. Vẫn ở đây khi bạn cần mở rộng hoặc gặp sự cố về sau.',
+        'v1-h':'May đo theo từng đội ngũ',  'v1-p':'Không áp đặt khuôn mẫu có sẵn. Mỗi giải pháp được thiết kế riêng theo đúng cách bạn vận hành.',
+        'v2-h':'Đồng hành lâu dài',         'v2-p':'Không chỉ bàn giao rồi biến mất. Chúng tôi lớn lên cùng bạn và chịu trách nhiệm sau go-live.',
+        'v3-h':'Nhanh mà không cắt góc',    'v3-p':'Phát triển có hỗ trợ AI giúp chúng tôi ship nhanh hơn trong khi vẫn đảm bảo chất lượng thật.',
+        'cta-h':'Sẵn sàng bắt đầu dự án của bạn?','cta-p':'Kể cho chúng tôi nghe bài toán bạn đang gặp phải — phần còn lại là việc của chúng tôi.','cta-btn':'Liên hệ ngay',
+        'contact-h':'Liên hệ','contact-sub':'// để lại thông tin. thời_gian_phản_hồi < 24h',
+        'vn-badge':'🇻🇳  Được tạo ra tại Việt Nam · TP. Hồ Chí Minh',
+        'label-loc':'ĐỊA CHỈ','label-email':'EMAIL','label-resp':'PHẢN HỒI',
+        'label-name':'HỌ_TÊN','label-phone':'SĐT','label-msg':'MÔ_TẢ_DỰ_ÁN',
+        'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com','ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
+        'btn-send':'$ gửi --thông-tin',
+        'nav-s':'Dịch vụ','nav-p':'Quy trình','nav-c':'Liên hệ',
+        'foot-tag':'// phần mềm, thật đơn giản','foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ',
+      }
+    };
+
+    function setLang(lang) {
+      const t = translations[lang];
+      typedLines = t['hero-sub'];
+      li = 0; ci = 0; deleting = false;
+
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-' + lang));
+
+      const navAs2 = document.querySelectorAll('.nav-links a');
+      if (navAs2[0]) navAs2[0].textContent = t['nav-s'];
+      if (navAs2[1]) navAs2[1].textContent = t['nav-p'];
+      if (navAs2[2]) navAs2[2].textContent = t['nav-c'];
+
+      const btnStart = document.querySelector('a.btn-primary[href="#contact"]');
+      if (btnStart) btnStart.textContent = t['btn-start'];
+      const btnExp = document.querySelector('a.btn-secondary');
+      if (btnExp) btnExp.textContent = t['btn-explore'];
+
+      const mLabels = document.querySelectorAll('.metric-label');
+      if (mLabels[0]) mLabels[0].textContent = t['metric-built'];
+      if (mLabels[1]) mLabels[1].textContent = t['metric-resp'];
+      if (mLabels[2]) mLabels[2].textContent = t['metric-margin'];
+
+      const sLabels = document.querySelectorAll('.section-label');
+      if (sLabels[0]) sLabels[0].textContent = t['s-what'];
+      if (sLabels[1]) sLabels[1].textContent = t['s-how'];
+      if (sLabels[2]) sLabels[2].textContent = t['s-why'];
+
+      const cNums = document.querySelectorAll('.card-num');
+      const cH    = document.querySelectorAll('.card h3');
+      const cP    = document.querySelectorAll('.card p');
+      for (let i=1;i<=4;i++) {
+        if (cNums[i-1]) cNums[i-1].textContent = t['c'+i+'-num'];
+        if (cH[i-1])    cH[i-1].textContent    = t['c'+i+'-h'];
+        if (cP[i-1])    cP[i-1].textContent    = t['c'+i+'-p'];
+      }
+
+      const sH = document.querySelectorAll('.step h4');
+      const sP = document.querySelectorAll('.step p');
+      for (let i=1;i<=4;i++) {
+        if (sH[i-1]) sH[i-1].textContent = t['p'+i+'-h'];
+        if (sP[i-1]) sP[i-1].textContent = t['p'+i+'-p'];
+      }
+
+      const vH = document.querySelectorAll('.value-item h3');
+      const vP = document.querySelectorAll('.value-item p');
+      for (let i=1;i<=3;i++) {
+        if (vH[i-1]) vH[i-1].textContent = t['v'+i+'-h'];
+        if (vP[i-1]) vP[i-1].textContent = t['v'+i+'-p'];
+      }
+
+      const ctaH = document.querySelector('.cta-band h2');
+      const ctaP = document.querySelector('.cta-band > p, .cta-band p');
+      const ctaBtn = document.querySelector('.cta-band .btn-primary');
+      if (ctaH)   ctaH.textContent   = t['cta-h'];
+      if (ctaP)   ctaP.textContent   = t['cta-p'];
+      if (ctaBtn) ctaBtn.textContent = t['cta-btn'];
+
+      const cH2  = document.querySelector('.contact-inner h2');
+      const cSub = document.querySelector('.contact-sub');
+      const vBadge = document.querySelector('.vn-badge');
+      if (cH2)    cH2.textContent    = t['contact-h'];
+      if (cSub)   cSub.textContent   = t['contact-sub'];
+      if (vBadge) vBadge.textContent = t['vn-badge'];
+
+      const metas = document.querySelectorAll('.contact-meta-label');
+      if (metas[0]) metas[0].textContent = t['label-loc'];
+      if (metas[1]) metas[1].textContent = t['label-email'];
+      if (metas[2]) metas[2].textContent = t['label-resp'];
+
+      document.querySelectorAll('label').forEach(l => {
+        if (l.htmlFor==='name')    l.textContent = t['label-name'];
+        if (l.htmlFor==='phone')   l.textContent = t['label-phone'];
+        if (l.htmlFor==='email')   l.textContent = t['label-email'];
+        if (l.htmlFor==='message') l.textContent = t['label-msg'];
+      });
+
+      const nI = document.getElementById('name');
+      const phI = document.getElementById('phone');
+      const eI = document.getElementById('email');
+      const mI = document.getElementById('message');
+      if (nI)  nI.placeholder  = t['ph-name'];
+      if (phI) phI.placeholder = t['ph-phone'];
+      if (eI)  eI.placeholder  = t['ph-email'];
+      if (mI)  mI.placeholder  = t['ph-msg'];
+
+      const sendBtn = document.getElementById('btnText');
+      if (sendBtn) sendBtn.textContent = t['btn-send'];
+
+      const fTag = document.querySelector('.footer-tagline');
+      if (fTag) fTag.textContent = t['foot-tag'];
+      const fNav = document.querySelectorAll('.footer-nav a');
+      if (fNav[0]) fNav[0].textContent = t['foot-nav-s'];
+      if (fNav[1]) fNav[1].textContent = t['foot-nav-p'];
+      if (fNav[2]) fNav[2].textContent = t['foot-nav-c'];
+    }
+
     // ── TYPEWRITER HERO
-    const lines = [
-      'We build software that fits.',
-      'Clean code. Real results.',
-      'Delivered on time, every time.'
-    ];
+    let typedLines = translations.en['hero-sub'];
     let li = 0, ci = 0, deleting = false, pause = 0;
     const el = document.getElementById('typedText');
 
     function type() {
       if (pause > 0) { pause--; setTimeout(type, 50); return; }
-      const line = lines[li];
+      const line = typedLines[li % typedLines.length];
       if (!deleting) {
         ci++;
         el.innerHTML = line.slice(0, ci) + '<span class="typed-cursor"></span>';
@@ -1139,7 +1324,7 @@
       } else {
         ci--;
         el.innerHTML = line.slice(0, ci) + '<span class="typed-cursor"></span>';
-        if (ci === 0) { deleting = false; li = (li + 1) % lines.length; pause = 15; }
+        if (ci === 0) { deleting = false; li = (li + 1) % typedLines.length; pause = 15; }
       }
       setTimeout(type, deleting ? 35 : 65);
     }
@@ -1162,6 +1347,10 @@
       secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
       navAs.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? '#F0F6FF' : ''; });
     }, { passive: true });
+
+    // ── LANG BUTTON EVENTS
+    document.getElementById('btn-en').addEventListener('click', () => setLang('en'));
+    document.getElementById('btn-vi').addEventListener('click', () => setLang('vi'));
 
     // ── WEB3FORMS SUBMIT
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
