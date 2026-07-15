@@ -467,6 +467,146 @@
 
     .card p { font-size: 0.82rem; color: var(--muted2); font-weight: 300; line-height: 1.7; }
 
+
+    /* ── PRODUCTS ── */
+    .products { background: transparent; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 360px));
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .product-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .product-card:hover::before { opacity: 1; }
+
+    .product-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+      animation: blink 2s infinite;
+    }
+
+    .product-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    .product-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .product-tagline {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+
+    .product-desc {
+      font-size: 0.88rem;
+      color: var(--muted2);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .product-features li {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .product-features li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .product-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .product-cta:hover {
+      border-color: var(--accent);
+      background: rgba(59,130,246,0.06);
+      color: var(--white);
+    }
+
+    .product-cta::after { content: '→'; }
+
     /* ── PROCESS ── */
     .process { background: transparent; }
 
@@ -841,6 +981,7 @@
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#services" data-en="Services" data-vi="Dịch vụ">Services</a></li>
+        <li><a href="#products">Products</a></li>
         <li><a href="#process" data-en="Process" data-vi="Quy trình">Process</a></li>
         <li><a href="#contact" data-en="Contact" data-vi="Liên hệ">Contact</a></li>
       </ul>
@@ -923,6 +1064,45 @@
         </svg>
         <h3>System integration</h3>
         <p>Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="section-label reveal">Our products</div>
+    <div class="products-grid">
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-badge">LIVE</div>
+        <div class="product-name">simple<span>DMS</span></div>
+        <div class="product-tagline">// Distribution Management System</div>
+        <p class="product-desc">A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.</p>
+        <ul class="product-features">
+          <li>Order management with multi-warehouse inventory</li>
+          <li>GPS-verified delivery routes & shipper tracking</li>
+          <li>Debt ledger with VietQR dynamic payment</li>
+          <li>Real-time dashboard for owners</li>
+          <li>Role-based access for staff & shippers</li>
+        </ul>
+        <a href="#contact" class="product-cta">Request a demo</a>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-badge">LIVE</div>
+        <div class="product-name">simple<span>RMS</span></div>
+        <div class="product-tagline">// Repair Management System</div>
+        <p class="product-desc">A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.</p>
+        <ul class="product-features">
+          <li>End-to-end repair ticket lifecycle management</li>
+          <li>Dual warranty tracking per device & repair</li>
+          <li>Customer portal via Zalo OA (no app install needed)</li>
+          <li>QR-code static payment integration</li>
+          <li>Custom fields engine for multi-industry expansion</li>
+        </ul>
+        <a href="#contact" class="product-cta">Request a demo</a>
       </div>
 
     </div>
@@ -1081,91 +1261,327 @@
   </footer>
 
   <script>
-    // ── NETWORK CANVAS
+    // ── SPACE SCENE CANVAS
     const canvas = document.getElementById('networkCanvas');
     const ctx = canvas.getContext('2d');
-    let W, H, nodes = [], mouse = { x: -999, y: -999 };
+    let W, H, mouse = { x: -999, y: -999 };
+
+    // Stars
+    let stars = [];
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 280; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.4 + 0.2,
+          alpha: Math.random() * 0.7 + 0.2,
+          twinkle: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.015 + 0.005,
+          ox: 0, oy: 0, // original position
+        });
+      }
+      stars.forEach(s => { s.ox = s.x; s.oy = s.y; });
+    }
+
+    // Earth params - bottom-right quadrant, partially visible
+    const EARTH = {
+      get cx() { return W * 0.78; },
+      get cy() { return H * 0.72; },
+      get r()  { return Math.min(W, H) * 0.22; },
+    };
+
+    // Satellites
+    const SATS = [
+      { angle: 0,    speed: 0.004, a: 1.55, b: 0.55, tilt: -0.3, size: 10, color: '#60a5fa' },
+      { angle: 2.1,  speed: 0.0027, a: 1.8,  b: 0.45, tilt: 0.5,  size: 7,  color: '#06b6d4' },
+      { angle: 4.3,  speed: 0.0055, a: 1.3,  b: 0.65, tilt: -0.6, size: 6,  color: '#a78bfa' },
+    ];
+
+    // Shooting stars
+    let shooters = [];
+    function spawnShooter() {
+      shooters.push({
+        x: Math.random() * W * 0.7,
+        y: Math.random() * H * 0.4,
+        vx: 3 + Math.random() * 4,
+        vy: 1.5 + Math.random() * 2,
+        len: 80 + Math.random() * 60,
+        alpha: 1,
+        life: 1,
+      });
+    }
+    setInterval(() => { if (Math.random() < 0.4) spawnShooter(); }, 3000);
 
     function resize() {
       W = canvas.width  = window.innerWidth;
       H = canvas.height = window.innerHeight;
+      initStars();
     }
 
-    function initNodes(n = 70) {
-      nodes = [];
-      for (let i = 0; i < n; i++) {
-        nodes.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          r: Math.random() * 1.5 + 0.5,
-          pulse: Math.random() * Math.PI * 2,
-        });
-      }
-    }
+    function drawEarth(t) {
+      const { cx, cy, r } = EARTH;
+      ctx.save();
 
-    function drawNetwork() {
-      ctx.clearRect(0, 0, W, H);
+      // Glow behind earth
+      const glow = ctx.createRadialGradient(cx, cy, r * 0.8, cx, cy, r * 1.8);
+      glow.addColorStop(0, 'rgba(59,130,246,0.12)');
+      glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 1.8, 0, Math.PI * 2);
+      ctx.fill();
 
-      const CONNECT  = 160;
-      const MOUSE_R  = 200;
+      // Clip to circle
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.clip();
 
-      // update positions
-      nodes.forEach(n => {
-        n.x += n.vx; n.y += n.vy;
-        n.pulse += 0.02;
-        if (n.x < 0 || n.x > W) n.vx *= -1;
-        if (n.y < 0 || n.y > H) n.vy *= -1;
-      });
+      // Ocean base
+      const ocean = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.2, 0, cx, cy, r);
+      ocean.addColorStop(0,   '#1e40af');
+      ocean.addColorStop(0.4, '#1d4ed8');
+      ocean.addColorStop(0.7, '#0f4c8a');
+      ocean.addColorStop(1,   '#0a1f44');
+      ctx.fillStyle = ocean;
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
 
-      // draw edges
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
-          const d = Math.sqrt(dx*dx + dy*dy);
-          if (d < CONNECT) {
-            const alpha = (1 - d / CONNECT) * 0.35;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(59,130,246,${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
-          }
-        }
+      // Continents (simplified blobs)
+      ctx.fillStyle = 'rgba(34,197,94,0.55)';
+      const offset = (t * 0.00008) % (Math.PI * 2);
 
-        // mouse interaction — draw extra edges to nearby nodes
-        const mdx = nodes[i].x - mouse.x, mdy = nodes[i].y - mouse.y;
-        const md = Math.sqrt(mdx*mdx + mdy*mdy);
-        if (md < MOUSE_R) {
-          const alpha = (1 - md / MOUSE_R) * 0.6;
-          ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(6,182,212,${alpha})`;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-        }
-      }
-
-      // draw nodes
-      nodes.forEach(n => {
-        const glow = 0.5 + Math.sin(n.pulse) * 0.5;
+      // continent blobs using ellipses
+      const continents = [
+        { dx: -0.25, dy: -0.15, rw: 0.28, rh: 0.38 },
+        { dx:  0.15, dy: -0.25, rw: 0.22, rh: 0.30 },
+        { dx:  0.30, dy:  0.20, rw: 0.18, rh: 0.22 },
+        { dx: -0.10, dy:  0.30, rw: 0.25, rh: 0.18 },
+        { dx:  0.05, dy:  0.05, rw: 0.12, rh: 0.20 },
+      ];
+      continents.forEach(co => {
+        const angle = offset;
+        const px = cx + (co.dx * Math.cos(angle) - 0 * Math.sin(angle)) * r;
+        const py = cy + co.dy * r;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r + glow * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(59,130,246,${0.4 + glow * 0.4})`;
+        ctx.ellipse(px, py, co.rw * r, co.rh * r, angle * 0.3, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      requestAnimationFrame(drawNetwork);
+      // Cloud layer
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      const cloudOff = (t * 0.00012) % (Math.PI * 2);
+      for (let i = 0; i < 5; i++) {
+        const ang = cloudOff + (i / 5) * Math.PI * 2;
+        const px = cx + Math.cos(ang) * r * 0.5;
+        const py = cy + Math.sin(ang) * r * 0.22;
+        ctx.beginPath();
+        ctx.ellipse(px, py, r * 0.35, r * 0.08, ang, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Atmosphere rim
+      ctx.restore();
+      ctx.save();
+      const atmo = ctx.createRadialGradient(cx, cy, r * 0.88, cx, cy, r * 1.06);
+      atmo.addColorStop(0,   'rgba(96,165,250,0)');
+      atmo.addColorStop(0.5, 'rgba(96,165,250,0.18)');
+      atmo.addColorStop(1,   'rgba(96,165,250,0)');
+      ctx.fillStyle = atmo;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 1.06, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Terminator (day/night shadow)
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.clip();
+      const shadow = ctx.createRadialGradient(cx + r * 0.5, cy, 0, cx + r * 0.4, cy, r * 1.3);
+      shadow.addColorStop(0,   'rgba(0,0,0,0)');
+      shadow.addColorStop(0.6, 'rgba(0,0,10,0.4)');
+      shadow.addColorStop(1,   'rgba(0,0,10,0.85)');
+      ctx.fillStyle = shadow;
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+
+      ctx.restore();
     }
 
-    window.addEventListener('resize', () => { resize(); initNodes(); });
+    function drawSatellite(sat, t) {
+      const { cx, cy, r } = EARTH;
+      sat.angle += sat.speed;
+
+      // Elliptical orbit with tilt
+      const ox = Math.cos(sat.angle) * r * sat.a;
+      const oy = Math.sin(sat.angle) * r * sat.b;
+      const sx = cx + ox * Math.cos(sat.tilt) - oy * Math.sin(sat.tilt);
+      const sy = cy + ox * Math.sin(sat.tilt) + oy * Math.cos(sat.tilt);
+
+      // Only draw if "in front" (simple z-order)
+      const behind = Math.sin(sat.angle) < 0;
+
+      if (!behind) {
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.rotate(sat.angle + 0.5);
+
+        // Glow
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, sat.size * 2.5);
+        g.addColorStop(0, sat.color.replace(')', ',0.5)').replace('rgb', 'rgba'));
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(0, 0, sat.size * 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Body
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillRect(-sat.size * 0.4, -sat.size * 0.25, sat.size * 0.8, sat.size * 0.5);
+
+        // Solar panels
+        ctx.fillStyle = sat.color;
+        ctx.fillRect(-sat.size * 1.4, -sat.size * 0.12, sat.size * 0.85, sat.size * 0.25);
+        ctx.fillRect( sat.size * 0.55, -sat.size * 0.12, sat.size * 0.85, sat.size * 0.25);
+
+        // Panel detail lines
+        ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+        ctx.lineWidth = 0.5;
+        for (let i = 1; i < 3; i++) {
+          ctx.beginPath();
+          ctx.moveTo(-sat.size * 1.4 + i * sat.size * 0.28, -sat.size * 0.12);
+          ctx.lineTo(-sat.size * 1.4 + i * sat.size * 0.28,  sat.size * 0.13);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(sat.size * 0.55 + i * sat.size * 0.28, -sat.size * 0.12);
+          ctx.lineTo(sat.size * 0.55 + i * sat.size * 0.28,  sat.size * 0.13);
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+
+      // Orbit path (faint ellipse)
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(sat.tilt);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, r * sat.a, r * sat.b, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255,255,255,0.04)`;
+      ctx.lineWidth = 0.8;
+      ctx.setLineDash([4, 8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+
+    function drawStars(t) {
+      const MOUSE_R = 180;
+      stars.forEach(s => {
+        s.twinkle += s.speed;
+        const tw = 0.5 + Math.sin(s.twinkle) * 0.5;
+
+        // Mouse repulsion
+        const dx = s.ox - mouse.x, dy = s.oy - mouse.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < MOUSE_R) {
+          const force = (1 - d / MOUSE_R) * 18;
+          s.x = s.ox + (dx / d) * force;
+          s.y = s.oy + (dy / d) * force;
+        } else {
+          s.x += (s.ox - s.x) * 0.05;
+          s.y += (s.oy - s.y) * 0.05;
+        }
+
+        const alpha = s.alpha * (0.4 + tw * 0.6);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * (0.8 + tw * 0.4), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+
+        // Bright stars get a cross sparkle
+        if (s.r > 1.1) {
+          ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.4})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(s.x - s.r * 3, s.y);
+          ctx.lineTo(s.x + s.r * 3, s.y);
+          ctx.moveTo(s.x, s.y - s.r * 3);
+          ctx.lineTo(s.x, s.y + s.r * 3);
+          ctx.stroke();
+        }
+      });
+    }
+
+    function drawShooters() {
+      shooters = shooters.filter(s => s.life > 0);
+      shooters.forEach(s => {
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life -= 0.018;
+        s.alpha = s.life;
+
+        const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * s.len / s.vx, s.y - s.vy * s.len / s.vx);
+        grad.addColorStop(0,   `rgba(255,255,255,${s.alpha * 0.9})`);
+        grad.addColorStop(0.3, `rgba(180,220,255,${s.alpha * 0.4})`);
+        grad.addColorStop(1,   'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.len, s.y - s.len * (s.vy / s.vx));
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+    }
+
+    function drawNebula() {
+      // Subtle nebula clouds in corners
+      const nebulas = [
+        { x: W * 0.1,  y: H * 0.15, r: W * 0.25, c1: 'rgba(59,30,120,0.06)',  c2: 'rgba(0,0,0,0)' },
+        { x: W * 0.85, y: H * 0.1,  r: W * 0.2,  c1: 'rgba(0,60,120,0.07)',   c2: 'rgba(0,0,0,0)' },
+        { x: W * 0.05, y: H * 0.75, r: W * 0.18, c1: 'rgba(20,80,100,0.05)',  c2: 'rgba(0,0,0,0)' },
+      ];
+      nebulas.forEach(n => {
+        const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+        g.addColorStop(0, n.c1);
+        g.addColorStop(1, n.c2);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    let animT = 0;
+    function drawSpace() {
+      animT += 16;
+      ctx.clearRect(0, 0, W, H);
+
+      // Deep space background
+      ctx.fillStyle = '#020408';
+      ctx.fillRect(0, 0, W, H);
+
+      drawNebula();
+      drawStars(animT);
+      drawShooters();
+
+      // Draw satellites behind earth first
+      SATS.forEach(sat => {
+        if (Math.sin(sat.angle) < 0) drawSatellite(sat, animT);
+      });
+
+      drawEarth(animT);
+
+      // Draw satellites in front of earth
+      SATS.forEach(sat => {
+        if (Math.sin(sat.angle) >= 0) drawSatellite(sat, animT);
+      });
+
+      requestAnimationFrame(drawSpace);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
     document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 
-    resize(); initNodes(); drawNetwork();
+    resize();
+    drawSpace();
 
     // ── TRANSLATIONS
     const translations = {
@@ -1187,12 +1603,12 @@
         'v3-h':'Fast without cutting corners','v3-p':'AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.',
         'cta-h':"Ready to start your project?",'cta-p':"Tell us what problem you're trying to solve — we'll take it from there.",'cta-btn':'Get in touch',
         'contact-h':'Get in touch','contact-sub':'// leave your details. response_time < 24h',
-        'vn-badge':'🇻🇳  Proudly built in Vietnam · Ho Chi Minh City',
+        'vn-badge':'🇻🇳  Proudly built in Vietnam · Ho Chi Minh City',
         'label-loc':'LOCATION','label-email':'EMAIL','label-resp':'RESPONSE',
         'label-name':'FULL_NAME','label-phone':'PHONE','label-msg':'PROJECT_BRIEF',
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
         'btn-send':'$ send --message',
-        'nav-s':'Services','nav-p':'Process','nav-c':'Contact',
+        'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact',
         'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-p':'process','foot-nav-c':'contact',
       },
       vi: {
@@ -1218,7 +1634,7 @@
         'label-name':'HỌ VÀ TÊN','label-phone':'SỐ ĐIỆN THOẠI','label-msg':'MÔ TẢ DỰ ÁN',
         'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com','ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
         'btn-send':'$ gửi --tin_nhắn',
-        'nav-s':'Dịch vụ','nav-p':'Quy trình','nav-c':'Liên hệ',
+        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ',
         'foot-tag':'// phần mềm, đơn giản hóa','foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ',
       }
     };
@@ -1232,8 +1648,9 @@
 
       const navAs2 = document.querySelectorAll('.nav-links a');
       if (navAs2[0]) navAs2[0].textContent = t['nav-s'];
-      if (navAs2[1]) navAs2[1].textContent = t['nav-p'];
-      if (navAs2[2]) navAs2[2].textContent = t['nav-c'];
+      if (navAs2[1]) navAs2[1].textContent = t['nav-prod'];
+      if (navAs2[2]) navAs2[2].textContent = t['nav-p'];
+      if (navAs2[3]) navAs2[3].textContent = t['nav-c'];
 
       const btnStart = document.querySelector('a.btn-primary[href="#contact"]');
       if (btnStart) btnStart.textContent = t['btn-start'];
