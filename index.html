@@ -467,6 +467,145 @@
 
     .card p { font-size: 0.82rem; color: var(--muted2); font-weight: 300; line-height: 1.7; }
 
+
+    /* ── PRODUCTS ── */
+    .products { background: transparent; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .product-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .product-card:hover::before { opacity: 1; }
+
+    .product-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-badge::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+      animation: blink 2s infinite;
+    }
+
+    .product-name {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    .product-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .product-tagline {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+
+    .product-desc {
+      font-size: 0.88rem;
+      color: var(--muted2);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .product-features li {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .product-features li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .product-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .product-cta:hover {
+      border-color: var(--accent);
+      background: rgba(59,130,246,0.06);
+      color: var(--white);
+    }
+
+    .product-cta::after { content: '→'; }
+
     /* ── PROCESS ── */
     .process { background: transparent; }
 
@@ -841,6 +980,7 @@
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#services" data-en="Services" data-vi="Dịch vụ">Services</a></li>
+        <li><a href="#products">Products</a></li>
         <li><a href="#process" data-en="Process" data-vi="Quy trình">Process</a></li>
         <li><a href="#contact" data-en="Contact" data-vi="Liên hệ">Contact</a></li>
       </ul>
@@ -923,6 +1063,45 @@
         </svg>
         <h3>System integration</h3>
         <p>Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- PRODUCTS -->
+  <section class="products" id="products">
+    <div class="section-label reveal">Our products</div>
+    <div class="products-grid">
+
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-badge">LIVE</div>
+        <div class="product-name">simple<span>DMS</span></div>
+        <div class="product-tagline">// Distribution Management System</div>
+        <p class="product-desc">A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.</p>
+        <ul class="product-features">
+          <li>Order management with multi-warehouse inventory</li>
+          <li>GPS-verified delivery routes & shipper tracking</li>
+          <li>Debt ledger with VietQR dynamic payment</li>
+          <li>Real-time dashboard for owners</li>
+          <li>Role-based access for staff & shippers</li>
+        </ul>
+        <a href="#contact" class="product-cta">Request a demo</a>
+      </div>
+
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-badge">LIVE</div>
+        <div class="product-name">simple<span>RMS</span></div>
+        <div class="product-tagline">// Repair Management System</div>
+        <p class="product-desc">A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.</p>
+        <ul class="product-features">
+          <li>End-to-end repair ticket lifecycle management</li>
+          <li>Dual warranty tracking per device & repair</li>
+          <li>Customer portal via Zalo OA (no app install needed)</li>
+          <li>QR-code static payment integration</li>
+          <li>Custom fields engine for multi-industry expansion</li>
+        </ul>
+        <a href="#contact" class="product-cta">Request a demo</a>
       </div>
 
     </div>
@@ -1192,7 +1371,7 @@
         'label-name':'FULL_NAME','label-phone':'PHONE','label-msg':'PROJECT_BRIEF',
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
         'btn-send':'$ send --message',
-        'nav-s':'Services','nav-p':'Process','nav-c':'Contact',
+        'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact',
         'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-p':'process','foot-nav-c':'contact',
       },
       vi: {
@@ -1218,7 +1397,7 @@
         'label-name':'HỌ VÀ TÊN','label-phone':'SỐ ĐIỆN THOẠI','label-msg':'MÔ TẢ DỰ ÁN',
         'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com','ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
         'btn-send':'$ gửi --tin_nhắn',
-        'nav-s':'Dịch vụ','nav-p':'Quy trình','nav-c':'Liên hệ',
+        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ',
         'foot-tag':'// phần mềm, đơn giản hóa','foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ',
       }
     };
@@ -1232,8 +1411,9 @@
 
       const navAs2 = document.querySelectorAll('.nav-links a');
       if (navAs2[0]) navAs2[0].textContent = t['nav-s'];
-      if (navAs2[1]) navAs2[1].textContent = t['nav-p'];
-      if (navAs2[2]) navAs2[2].textContent = t['nav-c'];
+      if (navAs2[1]) navAs2[1].textContent = t['nav-prod'];
+      if (navAs2[2]) navAs2[2].textContent = t['nav-p'];
+      if (navAs2[3]) navAs2[3].textContent = t['nav-c'];
 
       const btnStart = document.querySelector('a.btn-primary[href="#contact"]');
       if (btnStart) btnStart.textContent = t['btn-start'];
