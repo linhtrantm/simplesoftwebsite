@@ -94,12 +94,18 @@
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0;
     }
 
-    .logo-text { letter-spacing: -0.02em; }
+    .logo-soft {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     .logo-dot {
+      margin-right: 0.5rem;
       width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--accent);
@@ -577,7 +583,7 @@
       padding: 0.6rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0;
     }
 
     .t-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -830,7 +836,7 @@
   <nav>
     <a href="#" class="logo">
       <div class="logo-dot"></div>
-      <span class="logo-text">simple<span style="color:var(--accent)">soft</span></span>
+      simple<span class="logo-soft">soft</span>
     </a>
     <div class="nav-right">
       <ul class="nav-links">
