@@ -20,9 +20,9 @@
       --accent:    #3B82F6;
       --accent2:   #06b6d4;
       --accent-dim:#1E3A5F;
-      --white:     #F0F6FF;
-      --muted:     #4a5568;
-      --muted2:    #64748B;
+      --white:     #F8FBFF;
+      --muted:     #64748b;
+      --muted2:    #94a3b8;
       --border:    rgba(59,130,246,0.12);
       --border2:   rgba(255,255,255,0.05);
       --font:      'Sora', sans-serif;
@@ -35,8 +35,8 @@
       background: var(--bg);
       color: var(--white);
       font-family: var(--font);
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: 18px;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -357,7 +357,9 @@
     }
 
     /* ── SECTIONS ── */
-    section { padding: 5rem 5%; position: relative; z-index: 2; }
+    section { padding: 5rem 5%; position: relative; z-index: 2; max-width: 1400px; margin-left: auto; margin-right: auto; width: 100%; }
+    section + section, footer, nav { max-width: none; }
+    .hero { max-width: none; }
 
     .section-label {
       display: flex;
@@ -467,7 +469,7 @@
 
     .card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
 
-    .card p { font-size: 0.82rem; color: var(--muted2); font-weight: 300; line-height: 1.7; }
+    .card p { font-size: 0.88rem; color: var(--muted2); font-weight: 400; line-height: 1.7; }
 
 
     /* ── PRODUCTS ── */
@@ -629,7 +631,18 @@
       opacity: 0.25;
     }
 
-    .step { position: relative; }
+    .step {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .step:hover {
+      border-color: rgba(59,130,246,0.35);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
 
     .step-num {
       width: 3.2rem; height: 3.2rem;
@@ -652,11 +665,11 @@
 
     .step:hover .step-num {
       border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(59,130,246,0.35), inset 0 0 12px rgba(59,130,246,0.08);
+      box-shadow: 0 0 12px rgba(59,130,246,0.3);
     }
 
     .step h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; }
-    .step p  { font-size: 0.78rem; color: var(--muted2); font-weight: 300; line-height: 1.65; }
+    .step p  { font-size: 0.85rem; color: var(--muted2); font-weight: 400; line-height: 1.65; }
 
     /* ── VALUES ── */
     .values { background: transparent; }
@@ -668,12 +681,18 @@
     }
 
     .value-item {
-      padding: 1.5rem;
-      border: 1px solid var(--border2);
-      border-radius: 8px;
-      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
       position: relative;
       overflow: hidden;
+    }
+    .value-item:hover {
+      border-color: rgba(59,130,246,0.35);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      transform: translateY(-3px);
     }
 
     .value-item::before {
@@ -689,7 +708,7 @@
     .value-item:hover::before { opacity: 1; }
 
     .value-item h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .value-item p  { font-size: 0.82rem; color: var(--muted2); font-weight: 300; }
+    .value-item p  { font-size: 0.88rem; color: var(--muted2); font-weight: 400; }
 
     /* ── CTA BAND ── */
     .cta-band {
@@ -774,11 +793,12 @@
     .cta-band p { color: var(--muted2); font-size: 0.95rem; font-weight: 300; margin-bottom: 2rem; }
 
     /* ── CONTACT ── */
-    .contact { background: transparent; }
+    .contact { background: rgba(255,255,255,0.025); border-radius: 16px; }
 
     .contact-inner {
-      max-width: 600px;
+      max-width: 720px;
       margin: 0 auto;
+      width: 100%;
     }
 
     .contact-inner > h2 {
@@ -819,7 +839,7 @@
 
     .contact-meta {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -864,7 +884,67 @@
     .contact-wrap { max-width: 600px; margin: 0 auto; }
     .contact-wrap > p { color: var(--muted2); font-size: 0.88rem; margin-bottom: 2rem; font-weight: 300; font-family: var(--mono); }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1px;
+    }
+    .form-grid-full {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 1px;
+    }
+    .form-field {
+      background: var(--bg-card);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      transition: background 0.2s;
+    }
+    .form-field:focus-within {
+      background: rgba(59,130,246,0.06);
+    }
+    .form-field label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .form-field input,
+    .form-field textarea {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      font-size: 0.9rem;
+      font-family: var(--font);
+      font-weight: 400;
+      color: var(--white);
+      box-shadow: none;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus {
+      box-shadow: none;
+      border: none;
+    }
+    .form-field textarea {
+      min-height: 100px;
+      resize: none;
+    }
+    .form-row { display: contents; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
     .form-row .form-group { margin-bottom: 0; }
 
@@ -878,14 +958,14 @@
     }
 
     input, textarea {
-      background: rgba(10,15,30,0.8);
-      border: 1px solid var(--border);
+      background: rgba(15,25,60,0.9);
+      border: 1px solid rgba(59,130,246,0.25);
       border-radius: 6px;
       color: var(--white);
       font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 300;
-      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 400;
+      padding: 0.85rem 1.1rem;
       outline: none;
       transition: border-color 0.25s, box-shadow 0.25s;
       width: 100%;
@@ -956,11 +1036,11 @@
     @media (max-width: 640px) {
       .nav-links, .nav-status { display: none; }
       .steps::before { display: none; }
-      .form-row { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; align-items: flex-start; }
       .hero-metrics { gap: 1.5rem; }
       .cards { gap: 0; }
-      .contact-meta { grid-template-columns: 1fr; }
+      .contact-meta { grid-template-columns: 1fr 1fr; }
       .footer-nav { flex-wrap: wrap; gap: 1rem; }
       .products-grid { grid-template-columns: 1fr; }
     }
@@ -1203,6 +1283,10 @@
           <span class="contact-meta-label">response</span>
           <span class="contact-meta-val">&lt; 24 hours</span>
         </div>
+        <div class="contact-meta-item">
+          <span class="contact-meta-label">hotline</span>
+          <span class="contact-meta-val"><a href="tel:0932197026">0932 197 026</a></span>
+        </div>
       </div>
 
       <div class="contact-wrap">
@@ -1212,25 +1296,31 @@
           <input type="hidden" name="from_name" value="SimpleSoft Website" />
           <input type="checkbox" name="botcheck" style="display:none" />
 
-          <div class="form-row">
-            <div class="form-group">
+          <div class="form-grid">
+            <div class="form-field">
               <label for="name">full_name</label>
               <input type="text" id="name" name="name" placeholder="Nguyen Van A" required />
             </div>
-            <div class="form-group">
+            <div class="form-field">
               <label for="phone">phone</label>
               <input type="tel" id="phone" name="phone" placeholder="+84 901 234 567" />
             </div>
+            <div class="form-field">
+              <label for="email">email</label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required />
+            </div>
+            <div class="form-field">
+              <label>response_time</label>
+              <span style="font-size:0.9rem;color:var(--muted2);padding-top:2px;">&lt; 24 hours</span>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="email">email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" required />
+          <div class="form-grid-full">
+            <div class="form-field">
+              <label for="message">project_brief</label>
+              <textarea id="message" name="message" placeholder="We're looking to build a system that..." required></textarea>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="message">project_brief</label>
-            <textarea id="message" name="message" placeholder="We're looking to build a system that..." required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" id="submitBtn" style="width:100%;margin-top:0.5rem">
+          <button type="submit" class="btn-primary" id="submitBtn" style="width:100%;margin-top:1rem">
             <span id="btnText">$ send --message</span>
           </button>
         </form>
@@ -1260,7 +1350,7 @@
       <li><a href="#process">process</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
-    <span class="footer-copy">© 2026 simplesoft.com.vn &nbsp;·&nbsp; 🇻🇳 Made in Vietnam</span>
+<div style="display:flex;flex-direction:column;gap:0.3rem;text-align:right"><span class="footer-copy">© 2026 simplesoft.com.vn &nbsp;·&nbsp; 🇻🇳 Made in Vietnam</span><a href="tel:0932197026" style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-decoration:none;letter-spacing:0.06em;">📞 0932 197 026</a></div>
   </footer>
 
   <script>
@@ -1626,7 +1716,7 @@
         'cta-h':"Ready to start your project?",'cta-p':"Tell us what problem you're trying to solve — we'll take it from there.",'cta-btn':'Get in touch',
         'contact-h':'Get in touch','contact-sub':'// leave your details. response_time < 24h',
         'vn-badge':'🇻🇳  Proudly built in Vietnam · Ho Chi Minh City',
-        'label-loc':'LOCATION','label-email':'EMAIL','label-resp':'RESPONSE',
+        'label-loc':'LOCATION','label-email':'EMAIL','label-resp':'RESPONSE','label-hotline':'HOTLINE',
         'label-name':'FULL_NAME','label-phone':'PHONE','label-msg':'PROJECT_BRIEF',
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
         'btn-send':'$ send --message',
@@ -1634,30 +1724,50 @@
         'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-p':'process','foot-nav-c':'contact',
       },
       vi: {
-        'hero-sub':      ['Chúng tôi xây dựng phần mềm đo ni đóng giày.','Mã nguồn sạch. Kết quả thực.','Đúng thời hạn, không ngoại lệ.'],
-        'btn-start':     'Bắt đầu dự án',    'btn-explore': '$ khám_phá --dịch_vụ',
+        'hero-sub':      ['Phần mềm vừa vặn, đúng nhu cầu.','Code sạch. Kết quả thật.','Đúng hẹn, không lý do.'],
+        'btn-start':     'Bắt đầu dự án',    'btn-explore': '$ xem --dịch-vụ',
         'metric-built':  'PHÁT TRIỂN THEO YÊU CẦU','metric-resp':'THỜI GIAN PHẢN HỒI','metric-margin':'DỰ ÁN ĐÃ BÀN GIAO',
-        's-what':'Chúng tôi làm gì','s-how':'Cách chúng tôi làm việc','s-why':'Tại sao chọn simplesoft',
-        'c1-num':'01 / DỊCH VỤ','c1-h':'Phát triển phần mềm theo yêu cầu','c1-p':'Ứng dụng được xây dựng riêng biệt, bám sát quy trình làm việc của bạn từ đầu đến cuối. Không thỏa hiệp với các giải pháp đóng gói sẵn.',
-        'c2-num':'02 / DỊCH VỤ','c2-h':'Tự động hóa quy trình','c2-p':'Loại bỏ các tác vụ lặp lại bằng hệ thống tự động hóa tin cậy. Để đội ngũ của bạn tập trung vào những việc thực sự quan trọng.',
-        'c3-num':'03 / DỊCH VỤ','c3-h':'Hỗ trợ và bảo trì dài hạn','c3-p':'Chúng tôi đồng hành lâu dài, giữ cho hệ thống ổn định khi doanh nghiệp của bạn phát triển. Chúng tôi không "biến mất" sau khi bàn giao.',
-        'c4-num':'04 / DỊCH VỤ','c4-h':'Tích hợp hệ thống','c4-p':'Kết nối các công cụ, API và nền tảng hiện có thành một hệ thống thống nhất. Chấm dứt tình trạng dữ liệu rời rạc hay thao tác thủ công giữa các ứng dụng.',
-        'p1-h':'Khám phá','p1-p':'Chúng tôi lắng nghe cách doanh nghiệp của bạn vận hành và xác định đúng vấn đề cốt lõi trước khi viết bất kỳ dòng mã nào.',
-        'p2-h':'Thiết kế','p2-p':'Chúng tôi phác thảo giải pháp và đưa ra đề xuất rõ ràng. Bạn sẽ biết chính xác những gì mình nhận được trước khi chúng tôi bắt đầu.',
-        'p3-h':'Phát triển','p3-p':'Chúng tôi xây dựng sát với bản thiết kế đã thống nhất và cập nhật tiến độ liên tục. Không "hộp đen", không bất ngờ ngoài ý muốn.',
-        'p4-h':'Bàn giao & Hỗ trợ','p4-p':'Chúng tôi triển khai, đào tạo đội ngũ của bạn và luôn sẵn sàng hỗ trợ khi bạn cần mở rộng hoặc gặp khó khăn sau này.',
-        'v1-h':'Xây dựng xoay quanh bạn','v1-p':'Không áp đặt khuôn mẫu vào quy trình làm việc của bạn. Mỗi giải pháp được thiết kế riêng để phù hợp với cách bạn vận hành.',
-        'v2-h':'Cam kết đồng hành dài hạn','v2-p':'Không chỉ là giao dịch một lần. Chúng tôi phát triển cùng doanh nghiệp của bạn và giữ trách nhiệm ngay cả sau khi hệ thống vận hành thực tế.',
-        'v3-h':'Nhanh chóng nhưng không cắt xén chất lượng','v3-p':'Ứng dụng trí tuệ nhân tạo (AI) trong phát triển giúp chúng tôi tăng tốc độ triển khai mà vẫn duy trì tiêu chuẩn chất lượng cao nhất cho doanh nghiệp của bạn.',
-        'cta-h':'Bạn đã sẵn sàng bắt đầu dự án?','cta-p':'Hãy cho chúng tôi biết vấn đề bạn đang gặp phải — chúng tôi sẽ giải quyết phần còn lại.','cta-btn':'Liên hệ ngay',
-        'contact-h':'Liên hệ','contact-sub':'// để lại thông tin của bạn. thời_gian_phản_hồi < 24h',
-        'vn-badge':'🇻🇳  Tự hào được phát triển tại Việt Nam · TP. Hồ Chí Minh',
-        'label-loc':'ĐỊA ĐIỂM','label-email':'EMAIL','label-resp':'PHẢN HỒI',
+        's-what':'Chúng tôi làm gì','s-how':'Quy trình làm việc','s-why':'Tại sao chọn chúng tôi',
+        'c1-num':'01 / DỊCH VỤ',
+        'c1-h':'Phát triển phần mềm theo yêu cầu',
+        'c1-p':'Ứng dụng xây dựng riêng, bám sát quy trình thực tế của bạn — không phải ngược lại.',
+        'c2-num':'02 / DỊCH VỤ',
+        'c2-h':'Tự động hóa quy trình',
+        'c2-p':'Loại bỏ thao tác thủ công lặp đi lặp lại. Để đội ngũ tập trung vào việc tạo ra giá trị thật.',
+        'c3-num':'03 / DỊCH VỤ',
+        'c3-h':'Hỗ trợ & bảo trì dài hạn',
+        'c3-p':'Chúng tôi không giao xong rồi biến mất. Hệ thống của bạn luôn có người theo dõi và xử lý kịp thời.',
+        'c4-num':'04 / DỊCH VỤ',
+        'c4-h':'Tích hợp hệ thống',
+        'c4-p':'Kết nối các phần mềm, API và nền tảng rời rạc thành một hệ thống thống nhất, liền mạch.',
+        'p1-h':'Tìm hiểu',
+        'p1-p':'Lắng nghe cách doanh nghiệp bạn thực sự vận hành. Xác định đúng vấn đề trước khi viết một dòng code.',
+        'p2-h':'Thiết kế',
+        'p2-p':'Phác thảo giải pháp rõ ràng, trình bày trước khi bắt tay vào làm. Bạn biết chính xác mình sẽ nhận được gì.',
+        'p3-h':'Phát triển',
+        'p3-p':'Xây dựng sát thiết kế đã thống nhất, cập nhật tiến độ thường xuyên. Minh bạch từ đầu đến cuối.',
+        'p4-h':'Bàn giao & Hỗ trợ',
+        'p4-p':'Triển khai, đào tạo đội ngũ và luôn sẵn sàng khi bạn cần mở rộng hoặc gặp sự cố.',
+        'v1-h':'Xây dựng xoay quanh bạn',
+        'v1-p':'Không áp khuôn mẫu. Mỗi giải pháp được thiết kế riêng theo đúng cách bạn vận hành.',
+        'v2-h':'Đồng hành lâu dài',
+        'v2-p':'Không chỉ giao hàng một lần. Chúng tôi phát triển cùng bạn và giữ trách nhiệm sau khi go-live.',
+        'v3-h':'Nhanh mà không cắt góc',
+        'v3-p':'Ứng dụng AI vào phát triển giúp rút ngắn thời gian mà vẫn giữ được tiêu chuẩn chất lượng.',
+        'cta-h':'Sẵn sàng bắt đầu chưa?',
+        'cta-p':'Kể cho chúng tôi nghe bài toán của bạn — phần còn lại để chúng tôi lo.',
+        'cta-btn':'Liên hệ ngay',
+        'contact-h':'Liên hệ',
+        'contact-sub':'// để lại thông tin — chúng tôi phản hồi trong 24 giờ',
+        'vn-badge':'🇻🇳  Phát triển tại Việt Nam · TP. Hồ Chí Minh',
+        'label-loc':'ĐỊA CHỈ','label-email':'EMAIL','label-resp':'PHẢN HỒI','label-hotline':'HOTLINE',
         'label-name':'HỌ VÀ TÊN','label-phone':'SỐ ĐIỆN THOẠI','label-msg':'MÔ TẢ DỰ ÁN',
-        'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com','ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
-        'btn-send':'$ gửi --tin_nhắn',
+        'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com',
+        'ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
+        'btn-send':'$ gửi thông tin',
         'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ',
-        'foot-tag':'// phần mềm, đơn giản hóa','foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ',
+        'foot-tag':'// phần mềm, đơn giản hóa',
+        'foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ',
       }
     };
 
@@ -1796,6 +1906,75 @@
       secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
       navAs.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? '#F0F6FF' : ''; });
     }, { passive: true });
+
+    // Product cards VI translation
+    const productVI = {
+      dms: {
+        badge: 'ĐANG HOẠT ĐỘNG',
+        tagline: '// Hệ thống Quản lý Phân phối',
+        desc: 'Nền tảng SaaS đa khách thuê dành cho nhà phân phối và xưởng sản xuất nhỏ tại Việt Nam. SimpleDMS thay thế bảng tính và theo dõi thủ công bằng hệ thống thời gian thực — từ đơn hàng, kho bãi đến tuyến giao hàng và thu công nợ.',
+        features: ['Quản lý đơn hàng, nhiều kho hàng','Tuyến giao hàng có xác minh GPS','Sổ công nợ tích hợp thanh toán VietQR','Dashboard thời gian thực cho chủ','Phân quyền theo vai trò'],
+        cta: 'Xem demo'
+      },
+      rms: {
+        badge: 'ĐANG HOẠT ĐỘNG',
+        tagline: '// Hệ thống Quản lý Sửa chữa',
+        desc: 'Nền tảng SaaS đa khách thuê cho các tiệm sửa chữa tại Việt Nam. SimpleRMS quản lý toàn bộ vòng đời đơn sửa chữa — từ tiếp nhận đến bàn giao — với cổng tra cứu qua Zalo OA và quy trình linh hoạt phù hợp nhiều ngành.',
+        features: ['Quản lý ticket sửa chữa đầu cuối','Theo dõi bảo hành thiết bị & linh kiện','Cổng khách hàng qua Zalo OA','Tích hợp thanh toán QR tĩnh','Custom fields cho nhiều ngành'],
+        cta: 'Xem demo'
+      }
+    };
+
+    function updateProductsVI(lang) {
+      if(lang !== 'vi') return;
+      const cards = document.querySelectorAll('.product-card');
+      const keys = ['dms','rms'];
+      cards.forEach((card,i) => {
+        const vi = productVI[keys[i]];
+        if(!vi) return;
+        const badge = card.querySelector('.product-badge');
+        const tagline = card.querySelector('.product-tagline');
+        const desc = card.querySelector('.product-desc');
+        const features = card.querySelectorAll('.product-features li');
+        const cta = card.querySelector('.product-cta');
+        if(badge) badge.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent=' '+vi.badge; });
+        if(tagline) tagline.textContent = vi.tagline;
+        if(desc) desc.textContent = vi.desc;
+        features.forEach((li,j) => { if(vi.features[j]) li.textContent = vi.features[j]; });
+        if(cta) cta.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent = vi.cta; });
+      });
+    }
+
+    function resetProductsEN() {
+      const cards = document.querySelectorAll('.product-card');
+      const enData = [
+        {
+          badge:'LIVE', tagline:'// Distribution Management System',
+          desc:'A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.',
+          features:['Order management with multi-warehouse inventory','GPS-verified delivery routes & shipper tracking','Debt ledger with VietQR dynamic payment','Real-time dashboard for owners','Role-based access for staff & shippers'],
+          cta:'Request a demo'
+        },
+        {
+          badge:'LIVE', tagline:'// Repair Management System',
+          desc:'A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.',
+          features:['End-to-end repair ticket lifecycle management','Dual warranty tracking per device & repair','Customer portal via Zalo OA (no app install needed)','QR-code static payment integration','Custom fields engine for multi-industry expansion'],
+          cta:'Request a demo'
+        }
+      ];
+      cards.forEach((card,i) => {
+        const en = enData[i];
+        const badge = card.querySelector('.product-badge');
+        const tagline = card.querySelector('.product-tagline');
+        const desc = card.querySelector('.product-desc');
+        const features = card.querySelectorAll('.product-features li');
+        const cta = card.querySelector('.product-cta');
+        if(badge) badge.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent=' '+en.badge; });
+        if(tagline) tagline.textContent = en.tagline;
+        if(desc) desc.textContent = en.desc;
+        features.forEach((li,j) => { if(en.features[j]) li.textContent = en.features[j]; });
+        if(cta) cta.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent = en.cta; });
+      });
+    }
 
     // ── LANG BUTTON EVENTS
     document.getElementById('btn-en').addEventListener('click', () => setLang('en'));
