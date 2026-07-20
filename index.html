@@ -1381,8 +1381,8 @@
       high:   [10, 60, 130],
       mid:    [20, 100, 180],
       low:    [80, 160, 220],
-      cloud:  [180, 210, 240],
-      ground: [100, 160, 100],
+      cloud:  [30, 40, 80],
+      ground: [15, 20, 40],
     };
 
     // ── STARS
@@ -1464,96 +1464,264 @@
     setInterval(()=>{if(Math.random()<0.6) spawnShooter();}, 1800);
     setTimeout(spawnShooter, 500);
 
-    // ── TERRAIN (ground layer)
-    function drawTerrain(alpha) {
-      if(alpha <= 0) return;
-      const h = H;
-
-      // Sky gradient at ground level
-      const skyG = ctx.createLinearGradient(0, 0, 0, h*0.6);
-      skyG.addColorStop(0, `rgba(40,120,200,${alpha})`);
-      skyG.addColorStop(1, `rgba(100,180,255,${alpha*0.3})`);
-      ctx.fillStyle = skyG;
-      ctx.fillRect(0, 0, W, h*0.6);
-
-      // Sun
-      const sunX = W*0.75, sunY = H*0.18;
-      const sunG = ctx.createRadialGradient(sunX,sunY,0,sunX,sunY,W*0.12);
-      sunG.addColorStop(0,`rgba(255,240,180,${alpha})`);
-      sunG.addColorStop(0.3,`rgba(255,200,80,${alpha*0.6})`);
-      sunG.addColorStop(1,'rgba(255,150,50,0)');
-      ctx.fillStyle=sunG; ctx.beginPath(); ctx.arc(sunX,sunY,W*0.12,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle=`rgba(255,250,200,${alpha})`; ctx.beginPath(); ctx.arc(sunX,sunY,W*0.025,0,Math.PI*2); ctx.fill();
-
-      // Sun rays
-      ctx.strokeStyle=`rgba(255,230,120,${alpha*0.15})`;
-      for(let i=0;i<12;i++){
-        const ang=i/12*Math.PI*2; const rLen=W*0.18;
-        ctx.lineWidth=1.5;
-        ctx.beginPath();
-        ctx.moveTo(sunX+Math.cos(ang)*W*0.03,sunY+Math.sin(ang)*W*0.03);
-        ctx.lineTo(sunX+Math.cos(ang)*rLen,sunY+Math.sin(ang)*rLen);
-        ctx.stroke();
-      }
-
-      // Mountains far
-      ctx.fillStyle=`rgba(60,100,140,${alpha*0.7})`;
-      ctx.beginPath(); ctx.moveTo(0,h*0.62);
-      const mpts=[
-        [0,.62],[.05,.5],[.12,.58],[.2,.44],[.3,.54],[.38,.42],[.48,.55],[.55,.4],[.65,.52],[.72,.38],[.82,.5],[.9,.43],[1,.55],[1,.62]
-      ];
-      mpts.forEach(([x,y])=>ctx.lineTo(x*W,y*h));
-      ctx.closePath(); ctx.fill();
-
-      // Mountains near
-      ctx.fillStyle=`rgba(40,75,110,${alpha*0.85})`;
-      ctx.beginPath(); ctx.moveTo(0,h*0.68);
-      const mpts2=[
-        [0,.68],[.08,.55],[.18,.65],[.28,.5],[.38,.62],[.5,.48],[.6,.6],[.7,.47],[.8,.58],[.9,.5],[1,.6],[1,.68]
-      ];
-      mpts2.forEach(([x,y])=>ctx.lineTo(x*W,y*h));
-      ctx.closePath(); ctx.fill();
-
-      // Ground / hills
-      const groundG = ctx.createLinearGradient(0, h*0.65, 0, h);
-      groundG.addColorStop(0, `rgba(60,110,55,${alpha})`);
-      groundG.addColorStop(0.3,`rgba(50,95,45,${alpha})`);
-      groundG.addColorStop(1, `rgba(30,65,30,${alpha})`);
-      ctx.fillStyle=groundG;
-      ctx.beginPath(); ctx.moveTo(0,h*0.68);
-      const gpts=[
-        [0,.68],[.1,.65],[.25,.67],[.4,.64],[.55,.66],[.7,.63],[.85,.65],[1,.64],[1,1],[0,1]
-      ];
-      gpts.forEach(([x,y])=>ctx.lineTo(x*W,y*h));
-      ctx.closePath(); ctx.fill();
-
-      // Trees silhouettes
-      ctx.fillStyle=`rgba(20,50,20,${alpha*0.8})`;
-      const trees=[[.05,.67],[.12,.66],[.22,.68],[.35,.65],[.45,.67],[.58,.64],[.68,.66],[.78,.65],[.88,.67],[.95,.66]];
-      trees.forEach(([tx,ty])=>{
-        const bx=tx*W, by=ty*h, th=h*0.055+Math.random()*h*0.03;
-        ctx.beginPath();
-        ctx.moveTo(bx,by); ctx.lineTo(bx-h*0.018,by); ctx.lineTo(bx,by-th*0.3); ctx.fill();
-        ctx.beginPath(); ctx.arc(bx,by-th*0.35,h*0.022,0,Math.PI*2); ctx.fill();
-      });
-
-      // Birds
-      if(alpha > 0.5) {
-        ctx.strokeStyle=`rgba(20,20,40,${(alpha-0.5)*1.5})`;
-        ctx.lineWidth=1.2;
-        [[.3,.35],[.35,.32],[.55,.28],[.6,.3],[.62,.26]].forEach(([bx,by])=>{
-          const x=bx*W+Math.sin(animT*0.001+bx*10)*5, y=by*h;
-          ctx.beginPath();
-          ctx.moveTo(x-8,y); ctx.quadraticCurveTo(x,y-5,x+8,y); ctx.stroke();
+    // ── CITY TERRAIN (ground layer)
+    // Pre-generate buildings once for consistent layout
+    let cityBuildings = null;
+    function initCity() {
+      cityBuildings = [];
+      // Far skyline buildings (tiny, silhouette)
+      for(let i=0;i<60;i++) {
+        const x = i/60;
+        cityBuildings.push({
+          x, layer:0,
+          w: 0.008+Math.random()*0.018,
+          h: 0.06+Math.random()*0.18,
+          hasAntenna: Math.random()>0.7,
+          windows: Array.from({length:Math.floor(Math.random()*12+4)},()=>({
+            wx: Math.random(), wy: Math.random(),
+            on: Math.random()>0.35,
+            flicker: Math.random()>0.85,
+          }))
         });
       }
+      // Mid skyline
+      for(let i=0;i<35;i++) {
+        const x = i/35;
+        cityBuildings.push({
+          x, layer:1,
+          w: 0.018+Math.random()*0.04,
+          h: 0.12+Math.random()*0.28,
+          hasAntenna: Math.random()>0.6,
+          style: Math.floor(Math.random()*3), // 0=flat, 1=tapered, 2=stepped
+          windows: Array.from({length:Math.floor(Math.random()*20+8)},()=>({
+            wx: Math.random(), wy: Math.random(),
+            on: Math.random()>0.3,
+            flicker: Math.random()>0.9,
+          }))
+        });
+      }
+      // Near buildings (large, detailed)
+      for(let i=0;i<18;i++) {
+        const x = i/18;
+        cityBuildings.push({
+          x, layer:2,
+          w: 0.04+Math.random()*0.08,
+          h: 0.2+Math.random()*0.38,
+          hasAntenna: Math.random()>0.5,
+          style: Math.floor(Math.random()*3),
+          windows: Array.from({length:Math.floor(Math.random()*30+12)},()=>({
+            wx: Math.random(), wy: Math.random(),
+            on: Math.random()>0.25,
+            flicker: Math.random()>0.92,
+          }))
+        });
+      }
+    }
 
-      // Atmospheric haze at horizon
-      const hazeG=ctx.createLinearGradient(0,h*0.55,0,h*0.72);
-      hazeG.addColorStop(0,'rgba(150,200,240,0)');
-      hazeG.addColorStop(0.5,`rgba(150,200,240,${alpha*0.25})`);
-      hazeG.addColorStop(1,'rgba(150,200,240,0)');
-      ctx.fillStyle=hazeG; ctx.fillRect(0,h*0.55,W,h*0.17);
+    function drawTerrain(alpha) {
+      if(alpha <= 0) return;
+      if(!cityBuildings) initCity();
+      const h = H;
+      const t = animT;
+
+      // ── SKY GRADIENT (dusk/evening city sky)
+      const skyG = ctx.createLinearGradient(0, 0, 0, h*0.72);
+      skyG.addColorStop(0,  `rgba(10,15,40,${alpha})`);
+      skyG.addColorStop(0.3,`rgba(20,30,80,${alpha})`);
+      skyG.addColorStop(0.6,`rgba(40,60,120,${alpha})`);
+      skyG.addColorStop(0.85,`rgba(80,50,80,${alpha})`);
+      skyG.addColorStop(1,  `rgba(120,60,50,${alpha})`);
+      ctx.fillStyle=skyG; ctx.fillRect(0,0,W,h*0.72);
+
+      // ── MOON
+      const moonX=W*0.78, moonY=H*0.14;
+      const moonG=ctx.createRadialGradient(moonX,moonY,0,moonX,moonY,W*0.04);
+      moonG.addColorStop(0,`rgba(240,235,200,${alpha})`);
+      moonG.addColorStop(0.7,`rgba(210,205,170,${alpha*0.8})`);
+      moonG.addColorStop(1,'rgba(180,175,140,0)');
+      ctx.fillStyle=moonG; ctx.beginPath(); ctx.arc(moonX,moonY,W*0.04,0,Math.PI*2); ctx.fill();
+      // Moon glow
+      const mglow=ctx.createRadialGradient(moonX,moonY,W*0.04,moonX,moonY,W*0.12);
+      mglow.addColorStop(0,`rgba(220,210,160,${alpha*0.12})`);
+      mglow.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=mglow; ctx.beginPath(); ctx.arc(moonX,moonY,W*0.12,0,Math.PI*2); ctx.fill();
+
+      // ── STARS in city sky (fewer, dimmer)
+      ctx.fillStyle=`rgba(255,255,255,${alpha*0.5})`;
+      for(let i=0;i<60;i++){
+        const sx=(Math.sin(i*127.1)*0.5+0.5)*W;
+        const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.55;
+        const sa=0.3+Math.sin(t*0.001+i)*0.3;
+        ctx.globalAlpha=sa*alpha; ctx.beginPath(); ctx.arc(sx,sy,0.8,0,Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+
+      // ── HORIZON GLOW (city light pollution)
+      const horiG=ctx.createLinearGradient(0,h*0.55,0,h*0.75);
+      horiG.addColorStop(0,'rgba(0,0,0,0)');
+      horiG.addColorStop(0.4,`rgba(255,120,40,${alpha*0.12})`);
+      horiG.addColorStop(0.7,`rgba(255,160,60,${alpha*0.2})`);
+      horiG.addColorStop(1,'rgba(255,180,80,0)');
+      ctx.fillStyle=horiG; ctx.fillRect(0,h*0.55,W,h*0.2);
+
+      // ── GROUND / ROAD
+      const groundY = h*0.72;
+      const groundG=ctx.createLinearGradient(0,groundY,0,h);
+      groundG.addColorStop(0,`rgba(18,18,25,${alpha})`);
+      groundG.addColorStop(0.3,`rgba(12,12,18,${alpha})`);
+      groundG.addColorStop(1,`rgba(8,8,12,${alpha})`);
+      ctx.fillStyle=groundG; ctx.fillRect(0,groundY,W,h-groundY);
+
+      // Road markings
+      ctx.strokeStyle=`rgba(255,220,80,${alpha*0.4})`;
+      ctx.lineWidth=2; ctx.setLineDash([W*0.03, W*0.02]);
+      ctx.beginPath(); ctx.moveTo(0,h*0.82); ctx.lineTo(W,h*0.82); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,h*0.88); ctx.lineTo(W,h*0.88); ctx.stroke();
+      ctx.setLineDash([]);
+      // Center dashes
+      ctx.strokeStyle=`rgba(255,255,255,${alpha*0.25})`;
+      ctx.lineWidth=1.5; ctx.setLineDash([W*0.025, W*0.025]);
+      ctx.beginPath(); ctx.moveTo(0,h*0.85); ctx.lineTo(W,h*0.85); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Moving cars
+      const carSpeed=0.00018;
+      for(let i=0;i<6;i++){
+        const carX=((t*carSpeed*(1+i*0.3)+i/6)%1.2-0.1)*W;
+        const carY=h*(i%2===0?0.836:0.862);
+        const carDir=i%2===0?1:-1;
+        const cx2=carDir>0?carX:W-carX;
+        // Headlights / taillights
+        const lightCol=carDir>0?`rgba(255,240,180,${alpha*0.9})`:`rgba(255,50,50,${alpha*0.9})`;
+        const glowCol=carDir>0?`rgba(255,240,180,${alpha*0.15})`:`rgba(255,50,50,${alpha*0.12})`;
+        // Glow
+        const cg=ctx.createRadialGradient(cx2,carY,0,cx2,carY,W*0.04);
+        cg.addColorStop(0,glowCol); cg.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx2,carY,W*0.04,0,Math.PI*2); ctx.fill();
+        // Body
+        ctx.fillStyle=`rgba(30,30,40,${alpha*0.85})`;
+        ctx.fillRect(cx2-16,carY-5,32,9);
+        ctx.fillRect(cx2-11,carY-10,22,6);
+        // Lights
+        ctx.fillStyle=lightCol;
+        ctx.fillRect(cx2+(carDir>0?13:-16),carY-4,3,5);
+        ctx.fillRect(cx2+(carDir>0?13:-16),carY-4,3,5);
+      }
+
+      // ── BUILDINGS — draw layer by layer (far→near)
+      [0,1,2].forEach(layer=>{
+        const layerColors=[
+          // far: dark blue silhouette
+          {fill:'rgba(15,20,45,', stroke:'rgba(30,50,100,'},
+          // mid: slightly lighter
+          {fill:'rgba(18,22,48,', stroke:'rgba(40,65,120,'},
+          // near: darkest, most detail
+          {fill:'rgba(12,14,30,', stroke:'rgba(50,80,140,'},
+        ][layer];
+
+        const baseY=[h*0.68, h*0.65, h*0.60][layer];
+        const layerAlpha=[0.75,0.88,1.0][layer];
+
+        cityBuildings.filter(b=>b.layer===layer).forEach(b=>{
+          const bx=b.x*W - b.w*W*0.5;
+          const bw=b.w*W;
+          const bh=b.h*h;
+          const by=baseY-bh;
+
+          // Building shape
+          ctx.beginPath();
+          if(b.style===1 && layer>0) {
+            // Tapered top
+            ctx.moveTo(bx,baseY); ctx.lineTo(bx,by+bh*0.3);
+            ctx.lineTo(bx+bw*0.1,by); ctx.lineTo(bx+bw*0.9,by);
+            ctx.lineTo(bx+bw,by+bh*0.3); ctx.lineTo(bx+bw,baseY);
+          } else if(b.style===2 && layer>0) {
+            // Stepped
+            ctx.moveTo(bx,baseY); ctx.lineTo(bx,by+bh*0.5);
+            ctx.lineTo(bx+bw*0.15,by+bh*0.5); ctx.lineTo(bx+bw*0.15,by+bh*0.2);
+            ctx.lineTo(bx+bw*0.25,by+bh*0.2); ctx.lineTo(bx+bw*0.25,by);
+            ctx.lineTo(bx+bw*0.75,by); ctx.lineTo(bx+bw*0.75,by+bh*0.2);
+            ctx.lineTo(bx+bw*0.85,by+bh*0.2); ctx.lineTo(bx+bw*0.85,by+bh*0.5);
+            ctx.lineTo(bx+bw,by+bh*0.5); ctx.lineTo(bx+bw,baseY);
+          } else {
+            ctx.rect(bx,by,bw,bh);
+          }
+          ctx.closePath();
+          ctx.fillStyle=`${layerColors.fill}${alpha*layerAlpha})`;
+          ctx.fill();
+          ctx.strokeStyle=`${layerColors.stroke}${alpha*layerAlpha*0.4})`;
+          ctx.lineWidth=0.5; ctx.stroke();
+
+          // Antenna
+          if(b.hasAntenna) {
+            ctx.strokeStyle=`rgba(80,100,160,${alpha*layerAlpha*0.6})`;
+            ctx.lineWidth=1;
+            ctx.beginPath(); ctx.moveTo(bx+bw*0.5,by); ctx.lineTo(bx+bw*0.5,by-bh*0.12); ctx.stroke();
+            // Blinking red light
+            const blinkOn=Math.sin(t*0.002+b.x*100)>0;
+            if(blinkOn){
+              ctx.fillStyle=`rgba(255,50,50,${alpha*0.9})`;
+              ctx.beginPath(); ctx.arc(bx+bw*0.5,by-bh*0.12,2,0,Math.PI*2); ctx.fill();
+            }
+          }
+
+          // Windows (only for mid and near)
+          if(layer > 0) {
+            b.windows.forEach(w=>{
+              const wx=bx+bw*0.1+w.wx*bw*0.8;
+              const wy=by+bh*0.05+w.wy*bh*0.85;
+              const ww=bw*0.06, wh=bh*0.04;
+              if(w.on){
+                const flk=w.flicker ? (Math.sin(t*0.005+wx)>0.95?0:1) : 1;
+                if(flk) {
+                  // Window glow
+                  const wg=ctx.createRadialGradient(wx,wy,0,wx,wy,ww*2);
+                  wg.addColorStop(0,`rgba(255,230,140,${alpha*0.2})`);
+                  wg.addColorStop(1,'rgba(0,0,0,0)');
+                  ctx.fillStyle=wg; ctx.fillRect(wx-ww,wy-wh,ww*2,wh*2);
+                  ctx.fillStyle=`rgba(255,235,150,${alpha*0.85})`;
+                  ctx.fillRect(wx,wy,ww,wh);
+                }
+              } else {
+                ctx.fillStyle=`rgba(20,30,60,${alpha*0.4})`;
+                ctx.fillRect(wx,wy,ww,wh);
+              }
+            });
+          }
+        });
+      });
+
+      // ── STREET LIGHTS
+      const lightPoles=[.04,.1,.17,.24,.32,.4,.48,.56,.63,.7,.77,.84,.91,.97];
+      lightPoles.forEach((lx,i)=>{
+        const px=lx*W, py=h*0.72;
+        // Pole
+        ctx.strokeStyle=`rgba(80,80,100,${alpha*0.7})`; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,py-h*0.1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(px,py-h*0.1); ctx.lineTo(px+W*0.015,py-h*0.1); ctx.stroke();
+        // Light glow
+        const lgx=px+W*0.015, lgy=py-h*0.1;
+        const lg=ctx.createRadialGradient(lgx,lgy,0,lgx,lgy,W*0.06);
+        lg.addColorStop(0,`rgba(255,220,120,${alpha*0.35})`);
+        lg.addColorStop(0.3,`rgba(255,200,80,${alpha*0.12})`);
+        lg.addColorStop(1,'rgba(255,180,60,0)');
+        ctx.fillStyle=lg; ctx.beginPath(); ctx.arc(lgx,lgy,W*0.06,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle=`rgba(255,230,150,${alpha*0.9})`;
+        ctx.beginPath(); ctx.arc(lgx,lgy,3,0,Math.PI*2); ctx.fill();
+      });
+
+      // ── CITY LIGHT REFLECTION on ground
+      const refG=ctx.createLinearGradient(0,groundY,0,groundY+h*0.08);
+      refG.addColorStop(0,`rgba(40,60,120,${alpha*0.15})`);
+      refG.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=refG; ctx.fillRect(0,groundY,W,h*0.08);
+
+      // ── ATMOSPHERIC FOG at horizon
+      const fogG=ctx.createLinearGradient(0,h*0.58,0,h*0.72);
+      fogG.addColorStop(0,'rgba(0,0,0,0)');
+      fogG.addColorStop(0.5,`rgba(60,80,140,${alpha*0.18})`);
+      fogG.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=fogG; ctx.fillRect(0,h*0.58,W,h*0.14);
     }
 
     // ── CONTINENT PATHS for earth wireframe
@@ -1844,7 +2012,7 @@
     function resize() {
       W=canvas.width=window.innerWidth;
       H=canvas.height=window.innerHeight;
-      initStars(); initSats(); initClouds();
+      initStars(); initSats(); initClouds(); cityBuildings=null;
     }
 
     window.addEventListener('resize',()=>resize());
