@@ -1381,8 +1381,8 @@
       high:   [10, 60, 130],
       mid:    [20, 100, 180],
       low:    [80, 160, 220],
-      cloud:  [30, 40, 80],
-      ground: [15, 20, 40],
+      cloud:  [12, 18, 42],
+      ground: [8, 12, 28],
     };
 
     // ── STARS
@@ -1464,264 +1464,307 @@
     setInterval(()=>{if(Math.random()<0.6) spawnShooter();}, 1800);
     setTimeout(spawnShooter, 500);
 
-    // ── CITY TERRAIN (ground layer)
-    // Pre-generate buildings once for consistent layout
+    // ── SAIGON SKYLINE — DOT ART, PIXEL MASK
     let cityBuildings = null;
-    function initCity() {
-      cityBuildings = [];
-      // Far skyline buildings (tiny, silhouette)
-      for(let i=0;i<60;i++) {
-        const x = i/60;
-        cityBuildings.push({
-          x, layer:0,
-          w: 0.008+Math.random()*0.018,
-          h: 0.06+Math.random()*0.18,
-          hasAntenna: Math.random()>0.7,
-          windows: Array.from({length:Math.floor(Math.random()*12+4)},()=>({
-            wx: Math.random(), wy: Math.random(),
-            on: Math.random()>0.35,
-            flicker: Math.random()>0.85,
-          }))
-        });
-      }
-      // Mid skyline
-      for(let i=0;i<35;i++) {
-        const x = i/35;
-        cityBuildings.push({
-          x, layer:1,
-          w: 0.018+Math.random()*0.04,
-          h: 0.12+Math.random()*0.28,
-          hasAntenna: Math.random()>0.6,
-          style: Math.floor(Math.random()*3), // 0=flat, 1=tapered, 2=stepped
-          windows: Array.from({length:Math.floor(Math.random()*20+8)},()=>({
-            wx: Math.random(), wy: Math.random(),
-            on: Math.random()>0.3,
-            flicker: Math.random()>0.9,
-          }))
-        });
-      }
-      // Near buildings (large, detailed)
-      for(let i=0;i<18;i++) {
-        const x = i/18;
-        cityBuildings.push({
-          x, layer:2,
-          w: 0.04+Math.random()*0.08,
-          h: 0.2+Math.random()*0.38,
-          hasAntenna: Math.random()>0.5,
-          style: Math.floor(Math.random()*3),
-          windows: Array.from({length:Math.floor(Math.random()*30+12)},()=>({
-            wx: Math.random(), wy: Math.random(),
-            on: Math.random()>0.25,
-            flicker: Math.random()>0.92,
-          }))
-        });
-      }
-    }
+    function initCity() { cityBuildings = true; }
 
     function drawTerrain(alpha) {
       if(alpha <= 0) return;
-      if(!cityBuildings) initCity();
-      const h = H;
-      const t = animT;
+      const h = H, w = W, t = animT;
 
-      // ── SKY GRADIENT (dusk/evening city sky)
-      const skyG = ctx.createLinearGradient(0, 0, 0, h*0.72);
-      skyG.addColorStop(0,  `rgba(10,15,40,${alpha})`);
-      skyG.addColorStop(0.3,`rgba(20,30,80,${alpha})`);
-      skyG.addColorStop(0.6,`rgba(40,60,120,${alpha})`);
-      skyG.addColorStop(0.85,`rgba(80,50,80,${alpha})`);
-      skyG.addColorStop(1,  `rgba(120,60,50,${alpha})`);
-      ctx.fillStyle=skyG; ctx.fillRect(0,0,W,h*0.72);
+      // Night sky
+      const skyG = ctx.createLinearGradient(0,0,0,h);
+      skyG.addColorStop(0,  `rgba(4,6,22,${alpha})`);
+      skyG.addColorStop(0.6,`rgba(8,12,38,${alpha})`);
+      skyG.addColorStop(1,  `rgba(10,14,42,${alpha})`);
+      ctx.fillStyle=skyG; ctx.fillRect(0,0,w,h);
 
-      // ── MOON
-      const moonX=W*0.78, moonY=H*0.14;
-      const moonG=ctx.createRadialGradient(moonX,moonY,0,moonX,moonY,W*0.04);
-      moonG.addColorStop(0,`rgba(240,235,200,${alpha})`);
-      moonG.addColorStop(0.7,`rgba(210,205,170,${alpha*0.8})`);
-      moonG.addColorStop(1,'rgba(180,175,140,0)');
-      ctx.fillStyle=moonG; ctx.beginPath(); ctx.arc(moonX,moonY,W*0.04,0,Math.PI*2); ctx.fill();
-      // Moon glow
-      const mglow=ctx.createRadialGradient(moonX,moonY,W*0.04,moonX,moonY,W*0.12);
-      mglow.addColorStop(0,`rgba(220,210,160,${alpha*0.12})`);
-      mglow.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=mglow; ctx.beginPath(); ctx.arc(moonX,moonY,W*0.12,0,Math.PI*2); ctx.fill();
-
-      // ── STARS in city sky (fewer, dimmer)
-      ctx.fillStyle=`rgba(255,255,255,${alpha*0.5})`;
-      for(let i=0;i<60;i++){
-        const sx=(Math.sin(i*127.1)*0.5+0.5)*W;
-        const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.55;
-        const sa=0.3+Math.sin(t*0.001+i)*0.3;
-        ctx.globalAlpha=sa*alpha; ctx.beginPath(); ctx.arc(sx,sy,0.8,0,Math.PI*2); ctx.fill();
+      // Stars
+      for(let i=0;i<50;i++){
+        const sx=(Math.sin(i*127.1)*0.5+0.5)*w;
+        const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.38;
+        ctx.globalAlpha=(0.15+Math.sin(t*0.0008+i)*0.12)*alpha;
+        ctx.fillStyle='rgba(200,210,255,1)';
+        ctx.beginPath(); ctx.arc(sx,sy,0.7,0,Math.PI*2); ctx.fill();
       }
       ctx.globalAlpha=1;
 
-      // ── HORIZON GLOW (city light pollution)
-      const horiG=ctx.createLinearGradient(0,h*0.55,0,h*0.75);
-      horiG.addColorStop(0,'rgba(0,0,0,0)');
-      horiG.addColorStop(0.4,`rgba(255,120,40,${alpha*0.12})`);
-      horiG.addColorStop(0.7,`rgba(255,160,60,${alpha*0.2})`);
-      horiG.addColorStop(1,'rgba(255,180,80,0)');
-      ctx.fillStyle=horiG; ctx.fillRect(0,h*0.55,W,h*0.2);
+      const baseY = h * 0.72;
+      const DOT = Math.max(2.5, w * 0.0038);
+      const STEP = DOT * 1.55;
 
-      // ── GROUND / ROAD
-      const groundY = h*0.72;
-      const groundG=ctx.createLinearGradient(0,groundY,0,h);
-      groundG.addColorStop(0,`rgba(18,18,25,${alpha})`);
-      groundG.addColorStop(0.3,`rgba(12,12,18,${alpha})`);
-      groundG.addColorStop(1,`rgba(8,8,12,${alpha})`);
-      ctx.fillStyle=groundG; ctx.fillRect(0,groundY,W,h-groundY);
+      // ── CORE DOT RENDERER
+      // mask = 2D array of rows (bottom→top), each row = [colStart, colEnd] or array of spans
+      function dotMask(anchorX, anchorY, mask, opts={}) {
+        const {
+          dotColor   = `rgba(185,162,88,${alpha*0.82})`,
+          winColor   = `rgba(255,228,135,${alpha*0.92})`,
+          winDensity = 0.5,
+          colW       = STEP, // horizontal dot spacing
+          rowH       = STEP, // vertical dot spacing
+          antCols    = null, // column indices for antenna dots above row 0
+          antRows    = 3,
+          blinkKey   = anchorX,
+        } = opts;
 
-      // Road markings
-      ctx.strokeStyle=`rgba(255,220,80,${alpha*0.4})`;
-      ctx.lineWidth=2; ctx.setLineDash([W*0.03, W*0.02]);
-      ctx.beginPath(); ctx.moveTo(0,h*0.82); ctx.lineTo(W,h*0.82); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0,h*0.88); ctx.lineTo(W,h*0.88); ctx.stroke();
-      ctx.setLineDash([]);
-      // Center dashes
-      ctx.strokeStyle=`rgba(255,255,255,${alpha*0.25})`;
-      ctx.lineWidth=1.5; ctx.setLineDash([W*0.025, W*0.025]);
-      ctx.beginPath(); ctx.moveTo(0,h*0.85); ctx.lineTo(W,h*0.85); ctx.stroke();
-      ctx.setLineDash([]);
+        const totalRows = mask.length;
 
-      // Moving cars
-      const carSpeed=0.00018;
-      for(let i=0;i<6;i++){
-        const carX=((t*carSpeed*(1+i*0.3)+i/6)%1.2-0.1)*W;
-        const carY=h*(i%2===0?0.836:0.862);
-        const carDir=i%2===0?1:-1;
-        const cx2=carDir>0?carX:W-carX;
-        // Headlights / taillights
-        const lightCol=carDir>0?`rgba(255,240,180,${alpha*0.9})`:`rgba(255,50,50,${alpha*0.9})`;
-        const glowCol=carDir>0?`rgba(255,240,180,${alpha*0.15})`:`rgba(255,50,50,${alpha*0.12})`;
-        // Glow
-        const cg=ctx.createRadialGradient(cx2,carY,0,cx2,carY,W*0.04);
-        cg.addColorStop(0,glowCol); cg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx2,carY,W*0.04,0,Math.PI*2); ctx.fill();
-        // Body
-        ctx.fillStyle=`rgba(30,30,40,${alpha*0.85})`;
-        ctx.fillRect(cx2-16,carY-5,32,9);
-        ctx.fillRect(cx2-11,carY-10,22,6);
-        // Lights
-        ctx.fillStyle=lightCol;
-        ctx.fillRect(cx2+(carDir>0?13:-16),carY-4,3,5);
-        ctx.fillRect(cx2+(carDir>0?13:-16),carY-4,3,5);
+        for(let ri=0; ri<totalRows; ri++) {
+          const row = mask[ri]; // [startCol, endCol] or [[s1,e1],[s2,e2]...]
+          const spans = (typeof row[0]==='number') ? [row] : row;
+          const rowY = anchorY - ri * rowH;
+
+          spans.forEach(([sc, ec]) => {
+            for(let cc=sc; cc<ec; cc++) {
+              const dx = anchorX + cc * colW;
+              const dy = rowY;
+              const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
+              ctx.beginPath(); ctx.arc(dx, dy, DOT/2, 0, Math.PI*2);
+              ctx.fillStyle = (isWin && ri>0 && ri<totalRows-1) ? winColor : dotColor;
+              ctx.fill();
+            }
+          });
+        }
+
+        // Antenna
+        if(antCols !== null) {
+          antCols.forEach(cc => {
+            for(let ar=1; ar<=antRows; ar++) {
+              const dx = anchorX + cc * colW;
+              const dy = anchorY - (totalRows-1+ar) * rowH;
+              ctx.beginPath(); ctx.arc(dx, dy, DOT/2*0.7, 0, Math.PI*2);
+              ctx.fillStyle = `rgba(140,125,65,${alpha*0.6})`; ctx.fill();
+            }
+            // Blinking red light at top
+            const dx = anchorX + cc * colW;
+            const dy = anchorY - (totalRows-1+antRows) * rowH - DOT;
+            const blink = Math.sin(t*0.002+blinkKey*0.01) > 0;
+            const bg = ctx.createRadialGradient(dx,dy,0,dx,dy,7);
+            bg.addColorStop(0,`rgba(255,40,40,${blink?alpha*0.9:0})`);
+            bg.addColorStop(1,'rgba(0,0,0,0)');
+            ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(dx,dy,7,0,Math.PI*2); ctx.fill();
+            if(blink){ ctx.fillStyle=`rgba(255,50,50,${alpha})`; ctx.beginPath(); ctx.arc(dx,dy,2.2,0,Math.PI*2); ctx.fill(); }
+          });
+        }
       }
 
-      // ── BUILDINGS — draw layer by layer (far→near)
-      [0,1,2].forEach(layer=>{
-        const layerColors=[
-          // far: dark blue silhouette
-          {fill:'rgba(15,20,45,', stroke:'rgba(30,50,100,'},
-          // mid: slightly lighter
-          {fill:'rgba(18,22,48,', stroke:'rgba(40,65,120,'},
-          // near: darkest, most detail
-          {fill:'rgba(12,14,30,', stroke:'rgba(50,80,140,'},
-        ][layer];
+      // ── BACKGROUND FILLER BUILDINGS (generic blocks)
+      const bgColor = `rgba(100,88,48,${alpha*0.32})`;
+      const bgW = `rgba(150,130,65,${alpha*0.38})`;
+      [
+        [.01,6,7],[.08,5,8],[.14,4,6],[.18,6,7],[.22,5,9],
+        [.75,5,7],[.80,4,6],[.85,6,8],[.90,5,7],[.95,4,6],
+      ].forEach(([rx,rows,cols])=>{
+        const mask = Array.from({length:rows},()=>[0,cols]);
+        dotMask(rx*w, baseY, mask, {dotColor:bgColor, winColor:bgW, winDensity:0.2, antCols:null});
+      });
 
-        const baseY=[h*0.68, h*0.65, h*0.60][layer];
-        const layerAlpha=[0.75,0.88,1.0][layer];
-
-        cityBuildings.filter(b=>b.layer===layer).forEach(b=>{
-          const bx=b.x*W - b.w*W*0.5;
-          const bw=b.w*W;
-          const bh=b.h*h;
-          const by=baseY-bh;
-
-          // Building shape
-          ctx.beginPath();
-          if(b.style===1 && layer>0) {
-            // Tapered top
-            ctx.moveTo(bx,baseY); ctx.lineTo(bx,by+bh*0.3);
-            ctx.lineTo(bx+bw*0.1,by); ctx.lineTo(bx+bw*0.9,by);
-            ctx.lineTo(bx+bw,by+bh*0.3); ctx.lineTo(bx+bw,baseY);
-          } else if(b.style===2 && layer>0) {
-            // Stepped
-            ctx.moveTo(bx,baseY); ctx.lineTo(bx,by+bh*0.5);
-            ctx.lineTo(bx+bw*0.15,by+bh*0.5); ctx.lineTo(bx+bw*0.15,by+bh*0.2);
-            ctx.lineTo(bx+bw*0.25,by+bh*0.2); ctx.lineTo(bx+bw*0.25,by);
-            ctx.lineTo(bx+bw*0.75,by); ctx.lineTo(bx+bw*0.75,by+bh*0.2);
-            ctx.lineTo(bx+bw*0.85,by+bh*0.2); ctx.lineTo(bx+bw*0.85,by+bh*0.5);
-            ctx.lineTo(bx+bw,by+bh*0.5); ctx.lineTo(bx+bw,baseY);
-          } else {
-            ctx.rect(bx,by,bw,bh);
-          }
-          ctx.closePath();
-          ctx.fillStyle=`${layerColors.fill}${alpha*layerAlpha})`;
-          ctx.fill();
-          ctx.strokeStyle=`${layerColors.stroke}${alpha*layerAlpha*0.4})`;
-          ctx.lineWidth=0.5; ctx.stroke();
-
-          // Antenna
-          if(b.hasAntenna) {
-            ctx.strokeStyle=`rgba(80,100,160,${alpha*layerAlpha*0.6})`;
-            ctx.lineWidth=1;
-            ctx.beginPath(); ctx.moveTo(bx+bw*0.5,by); ctx.lineTo(bx+bw*0.5,by-bh*0.12); ctx.stroke();
-            // Blinking red light
-            const blinkOn=Math.sin(t*0.002+b.x*100)>0;
-            if(blinkOn){
-              ctx.fillStyle=`rgba(255,50,50,${alpha*0.9})`;
-              ctx.beginPath(); ctx.arc(bx+bw*0.5,by-bh*0.12,2,0,Math.PI*2); ctx.fill();
-            }
-          }
-
-          // Windows (only for mid and near)
-          if(layer > 0) {
-            b.windows.forEach(w=>{
-              const wx=bx+bw*0.1+w.wx*bw*0.8;
-              const wy=by+bh*0.05+w.wy*bh*0.85;
-              const ww=bw*0.06, wh=bh*0.04;
-              if(w.on){
-                const flk=w.flicker ? (Math.sin(t*0.005+wx)>0.95?0:1) : 1;
-                if(flk) {
-                  // Window glow
-                  const wg=ctx.createRadialGradient(wx,wy,0,wx,wy,ww*2);
-                  wg.addColorStop(0,`rgba(255,230,140,${alpha*0.2})`);
-                  wg.addColorStop(1,'rgba(0,0,0,0)');
-                  ctx.fillStyle=wg; ctx.fillRect(wx-ww,wy-wh,ww*2,wh*2);
-                  ctx.fillStyle=`rgba(255,235,150,${alpha*0.85})`;
-                  ctx.fillRect(wx,wy,ww,wh);
-                }
-              } else {
-                ctx.fillStyle=`rgba(20,30,60,${alpha*0.4})`;
-                ctx.fillRect(wx,wy,ww,wh);
-              }
-            });
-          }
+      // Mid layer
+      const midC=`rgba(140,122,66,${alpha*0.55})`;
+      const midW=`rgba(210,185,95,${alpha*0.65})`;
+      [
+        [.01,10,6],[.07,12,5],[.11,9,7],[.16,14,5],[.20,11,6],
+        [.50,10,5],[.55,13,5],[.60,10,6],[.65,11,5],
+        [.87,11,6],[.91,9,5],[.95,12,6],
+      ].forEach(([rx,rows,cols])=>{
+        const mask = Array.from({length:rows},(_, ri)=>{
+          const trim = ri>rows*0.7 ? 0 : Math.floor((1-ri/rows)*0.5);
+          return [trim, cols-trim];
         });
+        dotMask(rx*w, baseY, mask, {dotColor:midC, winColor:midW, winDensity:0.3});
       });
 
-      // ── STREET LIGHTS
-      const lightPoles=[.04,.1,.17,.24,.32,.4,.48,.56,.63,.7,.77,.84,.91,.97];
-      lightPoles.forEach((lx,i)=>{
-        const px=lx*W, py=h*0.72;
-        // Pole
-        ctx.strokeStyle=`rgba(80,80,100,${alpha*0.7})`; ctx.lineWidth=2;
-        ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,py-h*0.1); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(px,py-h*0.1); ctx.lineTo(px+W*0.015,py-h*0.1); ctx.stroke();
-        // Light glow
-        const lgx=px+W*0.015, lgy=py-h*0.1;
-        const lg=ctx.createRadialGradient(lgx,lgy,0,lgx,lgy,W*0.06);
-        lg.addColorStop(0,`rgba(255,220,120,${alpha*0.35})`);
-        lg.addColorStop(0.3,`rgba(255,200,80,${alpha*0.12})`);
-        lg.addColorStop(1,'rgba(255,180,60,0)');
-        ctx.fillStyle=lg; ctx.beginPath(); ctx.arc(lgx,lgy,W*0.06,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle=`rgba(255,230,150,${alpha*0.9})`;
-        ctx.beginPath(); ctx.arc(lgx,lgy,3,0,Math.PI*2); ctx.fill();
+      // ══════════════════════════════════════════════
+      // LANDMARK 81 — tallest, slim, multi-faceted taper
+      // Profile: wide base, gradually narrows to a point
+      // Widths per 5-row segment (bottom→top): 8,8,7,7,6,6,5,5,4,3,2,1
+      // ══════════════════════════════════════════════
+      const l81Mask = [];
+      const l81Widths = [8,8,8,7,7,7,6,6,6,5,5,4,4,3,3,2,2,1,1,1];
+      l81Widths.forEach(bw2 => {
+        const pad = Math.floor((8-bw2)/2);
+        l81Mask.push([pad, pad+bw2]);
       });
+      const l81X = w*0.25;
+      dotMask(l81X, baseY, l81Mask, {
+        dotColor:`rgba(185,162,88,${alpha*0.85})`,
+        winColor:`rgba(215,235,255,${alpha*0.92})`,
+        winDensity:0.52,
+        antCols:[4], antRows:4, blinkKey:l81X,
+      });
+      // LM81 glow
+      const lmtop = baseY - l81Mask.length * STEP;
+      const lmG=ctx.createRadialGradient(l81X+4*STEP,lmtop,0,l81X+4*STEP,lmtop,STEP*5);
+      lmG.addColorStop(0,`rgba(120,180,255,${alpha*0.2})`);
+      lmG.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=lmG; ctx.beginPath(); ctx.arc(l81X+4*STEP,lmtop,STEP*5,0,Math.PI*2); ctx.fill();
 
-      // ── CITY LIGHT REFLECTION on ground
-      const refG=ctx.createLinearGradient(0,groundY,0,groundY+h*0.08);
-      refG.addColorStop(0,`rgba(40,60,120,${alpha*0.15})`);
-      refG.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=refG; ctx.fillRect(0,groundY,W,h*0.08);
+      // ══════════════════════════════════════════════
+      // BITEXCO — cylindrical, helipad disc at ~65% height
+      // Key feature: disc jutting left at row ~10 from bottom
+      // ══════════════════════════════════════════════
+      const btMask = [];
+      // Bottom section (rows 0-7): full width 6
+      for(let i=0;i<8;i++) btMask.push([0,6]);
+      // Helipad row: extend left by 4 cols
+      btMask.push([-4,6]); // special wide row = helipad
+      // Above helipad (rows 9-18): slightly narrower
+      for(let i=0;i<4;i++) btMask.push([1,5]);
+      for(let i=0;i<4;i++) btMask.push([1,5]);
+      // Top taper
+      btMask.push([1,5]);
+      btMask.push([2,4]);
+      btMask.push([2,4]);
+      btMask.push([2,4]);
 
-      // ── ATMOSPHERIC FOG at horizon
-      const fogG=ctx.createLinearGradient(0,h*0.58,0,h*0.72);
-      fogG.addColorStop(0,'rgba(0,0,0,0)');
-      fogG.addColorStop(0.5,`rgba(60,80,140,${alpha*0.18})`);
-      fogG.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=fogG; ctx.fillRect(0,h*0.58,W,h*0.14);
+      const btX = w*0.60;
+      // Draw helipad row specially — different color
+      dotMask(btX, baseY, btMask, {
+        dotColor:`rgba(178,155,82,${alpha*0.82})`,
+        winColor:`rgba(255,228,140,${alpha*0.9})`,
+        winDensity:0.48,
+        antCols:[3], antRows:3, blinkKey:btX,
+      });
+      // Helipad highlight dots
+      const hdRowY = baseY - 8*STEP;
+      for(let hd=-4; hd<6; hd++){
+        ctx.beginPath(); ctx.arc(btX+hd*STEP, hdRowY, DOT/2, 0, Math.PI*2);
+        ctx.fillStyle=`rgba(220,195,100,${alpha*0.9})`; ctx.fill();
+      }
+      // Bitexco glow
+      const btTop = baseY - btMask.length*STEP;
+      const btG=ctx.createRadialGradient(btX+3*STEP,btTop,0,btX+3*STEP,btTop,STEP*4);
+      btG.addColorStop(0,`rgba(255,200,80,${alpha*0.14})`);
+      btG.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=btG; ctx.beginPath(); ctx.arc(btX+3*STEP,btTop,STEP*4,0,Math.PI*2); ctx.fill();
+
+      // ══════════════════════════════════════════════
+      // NHÀ THỜ ĐỨC BÀ — 2 gothic towers, rose window center
+      // Distinctive: twin pointed spires, symmetrical
+      // ══════════════════════════════════════════════
+      const ntdX = w*0.38;
+      // Left tower
+      const ltMask=[
+        [0,3],[0,3],[0,3],[0,3],[0,3],[0,3],  // body
+        [1,2],[1,2],[1,2],                      // spire base
+        [1,2],                                  // spire top (single dot)
+      ];
+      dotMask(ntdX, baseY, ltMask, {dotColor:`rgba(165,145,78,${alpha*0.78})`,winColor:`rgba(200,175,88,${alpha*0.7})`,winDensity:0.25,antCols:[1],antRows:2,blinkKey:ntdX});
+      // Right tower
+      const rtX = ntdX + 5*STEP;
+      dotMask(rtX, baseY, ltMask, {dotColor:`rgba(165,145,78,${alpha*0.78})`,winColor:`rgba(200,175,88,${alpha*0.7})`,winDensity:0.25,antCols:[1],antRows:2,blinkKey:rtX});
+      // Main nave (shorter, between towers)
+      const naveMask=Array.from({length:5},()=>[0,5]);
+      dotMask(ntdX+3*STEP, baseY, naveMask, {dotColor:`rgba(150,132,70,${alpha*0.72})`,winColor:`rgba(190,165,80,${alpha*0.6})`,winDensity:0.2});
+      // Rose window dot — center between towers
+      ctx.beginPath(); ctx.arc(ntdX+4.5*STEP, baseY-5*STEP, DOT*1.2, 0, Math.PI*2);
+      ctx.fillStyle=`rgba(220,190,95,${alpha*0.8})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(ntdX+4.5*STEP, baseY-5*STEP, DOT*0.5, 0, Math.PI*2);
+      ctx.fillStyle=`rgba(10,15,40,${alpha})`; ctx.fill();
+
+      // ══════════════════════════════════════════════
+      // BƯU ĐIỆN TP — wide, low, central dome
+      // Distinctive: wide rectangular base, large dome center
+      // ══════════════════════════════════════════════
+      const bdX = w*0.44;
+      // Wide base
+      const bdBaseMask=Array.from({length:4},()=>[0,10]);
+      dotMask(bdX, baseY, bdBaseMask, {dotColor:`rgba(155,135,72,${alpha*0.75})`,winColor:`rgba(200,178,90,${alpha*0.65})`,winDensity:0.22});
+      // Dome — arc of dots
+      const domeCX = bdX+5*STEP, domeCY = baseY-4*STEP;
+      const domeR = STEP*3;
+      for(let ang=Math.PI; ang<=Math.PI*2; ang+=0.25){
+        const dx2=domeCX+Math.cos(ang)*domeR;
+        const dy2=domeCY+Math.sin(ang)*domeR*0.6;
+        ctx.beginPath(); ctx.arc(dx2,dy2,DOT/2,0,Math.PI*2);
+        ctx.fillStyle=`rgba(165,145,75,${alpha*0.8})`; ctx.fill();
+      }
+      // Fill dome interior dots
+      for(let dr=1; dr<3; dr++){
+        for(let ang=Math.PI+0.4; ang<Math.PI*2-0.4; ang+=0.35){
+          const dx2=domeCX+Math.cos(ang)*domeR*(dr/3);
+          const dy2=domeCY+Math.sin(ang)*domeR*0.55*(dr/3);
+          ctx.beginPath(); ctx.arc(dx2,dy2,DOT/2*0.8,0,Math.PI*2);
+          ctx.fillStyle=`rgba(145,128,66,${alpha*0.65})`; ctx.fill();
+        }
+      }
+      // Cross on top
+      ctx.fillStyle=`rgba(190,168,84,${alpha*0.8})`;
+      ctx.fillRect(domeCX-DOT*0.2, domeCY-domeR*0.62-DOT*2, DOT*0.4, DOT*2);
+      ctx.fillRect(domeCX-DOT, domeCY-domeR*0.62-DOT*1.5, DOT*2, DOT*0.4);
+
+      // ── VINHOMES (left, slim pair)
+      const vhMask=[
+        [0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],
+        [1,3],[1,3],[1,3],[2,2], // taper
+      ];
+      // Actually fix taper properly
+      const vhMask2=[];
+      for(let i=0;i<13;i++) vhMask2.push([0,4]);
+      vhMask2.push([0,4]);
+      vhMask2.push([1,3]);
+      vhMask2.push([1,3]);
+      vhMask2.push([2,3]); // tip: 1 dot wide, row of 1 — use [2,3] to get 1 dot
+      dotMask(w*0.095, baseY, vhMask2, {dotColor:`rgba(155,135,72,${alpha*0.75})`,winColor:`rgba(210,230,255,${alpha*0.78})`,winDensity:0.38,antCols:[2],antRows:2,blinkKey:w*0.095});
+      // Twin 2
+      const vh2Mask=vhMask2.slice(0,-2);
+      dotMask(w*0.095+5*STEP, baseY, vh2Mask, {dotColor:`rgba(148,130,68,${alpha*0.72})`,winColor:`rgba(205,225,255,${alpha*0.72})`,winDensity:0.35});
+
+      // ── SÔNG SÀI GÒN
+      const riverY=baseY, riverH=h*0.045;
+      ctx.fillStyle=`rgba(6,10,30,${alpha})`; ctx.fillRect(0,riverY,w,riverH);
+      for(let ri=0;ri<w;ri+=STEP*1.8){
+        const sh=Math.sin(t*0.0014+ri*0.045)*2.5;
+        ctx.beginPath(); ctx.arc(ri,riverY+riverH*0.45+sh,DOT*0.42,0,Math.PI*2);
+        ctx.fillStyle=`rgba(160,140,70,${alpha*0.2})`; ctx.fill();
+      }
+
+      // ── GROUND
+      const groundY=riverY+riverH;
+      ctx.fillStyle=`rgba(5,7,16,${alpha})`; ctx.fillRect(0,groundY,w,h-groundY);
+
+      // Road dashes
+      for(let ri=0;ri<w;ri+=STEP*2.2){
+        ctx.beginPath(); ctx.arc(ri,h*0.845,DOT*0.38,0,Math.PI*2);
+        ctx.fillStyle=`rgba(140,120,48,${alpha*0.28})`; ctx.fill();
+      }
+
+      // Cars + motorbikes
+      for(let i=0;i<10;i++){
+        const dir=i%2===0?1:-1;
+        const lY=h*(i%3===0?0.848:i%3===1?0.868:0.885);
+        const bx=((t*0.00012*(0.9+i*0.18)+i/10)%1.2-0.1)*w;
+        const cx2=dir>0?bx:w-bx;
+        const col=dir>0?`rgba(255,240,170,${alpha*0.9})`:`rgba(255,55,55,${alpha*0.88})`;
+        ctx.beginPath(); ctx.arc(cx2+(dir>0?3:-3),lY,DOT*0.65,0,Math.PI*2);
+        ctx.fillStyle=col; ctx.fill();
+        const cg=ctx.createRadialGradient(cx2,lY,0,cx2,lY,18);
+        cg.addColorStop(0,dir>0?`rgba(255,230,140,${alpha*0.15})`:`rgba(255,50,50,${alpha*0.12})`);
+        cg.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx2,lY,18,0,Math.PI*2); ctx.fill();
+      }
+
+      // Street lights
+      for(let i=0;i<12;i++){
+        const lx2=w*(i/11), side=i%2===0?1:-1;
+        for(let pd=0;pd<4;pd++){
+          ctx.beginPath(); ctx.arc(lx2,groundY-pd*STEP,DOT*0.38,0,Math.PI*2);
+          ctx.fillStyle=`rgba(90,80,42,${alpha*0.45})`; ctx.fill();
+        }
+        const lpx2=lx2+side*STEP*1.8, lpy2=groundY-3.5*STEP;
+        ctx.beginPath(); ctx.arc(lpx2,lpy2,DOT*0.9,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,218,100,${alpha*0.92})`; ctx.fill();
+        const lpG=ctx.createRadialGradient(lpx2,lpy2,0,lpx2,lpy2,STEP*3);
+        lpG.addColorStop(0,`rgba(255,205,80,${alpha*0.22})`);
+        lpG.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=lpG; ctx.beginPath(); ctx.arc(lpx2,lpy2,STEP*3,0,Math.PI*2); ctx.fill();
+      }
+
+      // Light pollution
+      const polG=ctx.createLinearGradient(0,h*0.55,0,baseY);
+      polG.addColorStop(0,'rgba(0,0,0,0)');
+      polG.addColorStop(1,`rgba(160,90,20,${alpha*0.14})`);
+      ctx.fillStyle=polG; ctx.fillRect(0,h*0.55,w,baseY-h*0.55);
     }
 
     // ── CONTINENT PATHS for earth wireframe
@@ -2012,7 +2055,7 @@
     function resize() {
       W=canvas.width=window.innerWidth;
       H=canvas.height=window.innerHeight;
-      initStars(); initSats(); initClouds(); cityBuildings=null;
+      initStars(); initSats(); initClouds(); cityBuildings=null; initCity();
     }
 
     window.addEventListener('resize',()=>resize());
