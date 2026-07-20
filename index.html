@@ -1001,6 +1001,58 @@
     .footer-nav a:hover { color: var(--accent); }
     .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
 
+    .partners-bar {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .partners-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      margin-right: 0.5rem;
+    }
+
+    .partner-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .partner-item:hover {
+      color: rgba(255,255,255,0.75);
+      border-color: var(--border);
+    }
+
+    .partner-sep {
+      width: 1px;
+      height: 12px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
     /* ── LANG SWITCHER ── */
     .lang-switch {
       display: flex;
@@ -1361,6 +1413,65 @@
     }
     window.addEventListener('scroll', updateScroll, {passive:true});
 
+    // ── REAL-TIME TIME OF DAY
+    // Returns 0.0-1.0 representing 0h-24h
+    function getTimeProgress() {
+      const now = new Date();
+      return (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 86400;
+    }
+
+    // Get sky phase based on hour (0-23)
+    // Returns object with colors and sun/moon position
+    function getSkyPhase() {
+      const now = new Date();
+      const h = now.getHours() + now.getMinutes()/60;
+
+      // Define key time points and their sky colors [r,g,b]
+      const phases = [
+        { t:0,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'midnight' },
+        { t:4,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'latedark' },
+        { t:5,   sky0:[20,8,25],   sky1:[60,20,40],  sky2:[100,45,30], sun:{y:0.92},   moon:false, stars:0.3,  label:'predawn'  },
+        { t:6,   sky0:[180,80,30], sky1:[220,110,50],sky2:[255,165,80],sun:{y:0.85},   moon:false, stars:0.0,  label:'sunrise'  },
+        { t:7,   sky0:[80,140,210],sky1:[120,180,240],sky2:[160,210,255],sun:{y:0.7},  moon:false, stars:0.0,  label:'morning'  },
+        { t:10,  sky0:[30,110,200],sky1:[60,150,230],sky2:[100,185,255],sun:{y:0.45}, moon:false, stars:0.0,  label:'late-morning'},
+        { t:12,  sky0:[20,95,190], sky1:[45,135,220],sky2:[85,175,255], sun:{y:0.22}, moon:false, stars:0.0,  label:'noon'     },
+        { t:14,  sky0:[25,100,195],sky1:[50,140,225],sky2:[90,178,255], sun:{y:0.3},  moon:false, stars:0.0,  label:'afternoon'},
+        { t:16,  sky0:[60,120,190],sky1:[100,155,215],sky2:[140,190,245],sun:{y:0.55},moon:false, stars:0.0,  label:'lateaft'  },
+        { t:17,  sky0:[180,90,30], sky1:[220,120,50],sky2:[255,160,70], sun:{y:0.78}, moon:false, stars:0.05, label:'sunset'   },
+        { t:18,  sky0:[100,40,50], sky1:[160,60,50], sky2:[210,90,40],  sun:{y:0.92}, moon:true,  stars:0.2,  label:'dusk'     },
+        { t:19,  sky0:[15,10,35],  sky1:[25,18,55],  sky2:[40,30,75],   sun:null,      moon:true,  stars:0.7,  label:'night'    },
+        { t:21,  sky0:[4,6,20],    sky1:[8,12,35],   sky2:[12,18,48],   sun:null,      moon:true,  stars:1.0,  label:'deepnight'},
+        { t:24,  sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],    sun:null,      moon:true,  stars:1.0,  label:'midnight2'},
+      ];
+
+      // Find surrounding phases and interpolate
+      let p0 = phases[0], p1 = phases[phases.length-1];
+      for(let i=0; i<phases.length-1; i++){
+        if(h >= phases[i].t && h < phases[i+1].t){
+          p0 = phases[i]; p1 = phases[i+1]; break;
+        }
+      }
+      const t2 = p1.t > p0.t ? (h - p0.t) / (p1.t - p0.t) : 0;
+      const ei = t2 < 0.5 ? 2*t2*t2 : -1+(4-2*t2)*t2; // ease
+
+      return {
+        sky0:    lerpColor(p0.sky0, p1.sky0, ei),
+        sky1:    lerpColor(p0.sky1, p1.sky1, ei),
+        sky2:    lerpColor(p0.sky2, p1.sky2, ei),
+        hasSun:  p0.sun !== null || p1.sun !== null,
+        sunY:    p0.sun && p1.sun ? lerp(p0.sun.y, p1.sun.y, ei) : (p0.sun ? p0.sun.y : p1.sun ? p1.sun.y : 0.5),
+        hasMoon: lerp(p0.moon?1:0, p1.moon?1:0, ei) > 0.3,
+        moonAlpha: lerp(p0.moon?1:0, p1.moon?1:0, ei),
+        starAlpha: lerp(p0.stars, p1.stars, ei),
+        isDaytime: h >= 6 && h < 18,
+        isDay: h >= 7 && h < 17,
+        isSunrise: h >= 5 && h < 7,
+        isSunset: h >= 17 && h < 19,
+        hour: h,
+        label: p0.label,
+      };
+    }
+
     // ── LERP HELPER
     function lerp(a, b, t) { return a + (b - a) * t; }
     function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -1472,22 +1583,98 @@
       if(alpha <= 0) return;
       const h = H, w = W, t = animT;
 
-      // Night sky
-      const skyG = ctx.createLinearGradient(0,0,0,h);
-      skyG.addColorStop(0,  `rgba(4,6,22,${alpha})`);
-      skyG.addColorStop(0.6,`rgba(8,12,38,${alpha})`);
-      skyG.addColorStop(1,  `rgba(10,14,42,${alpha})`);
+      // ── TIME-AWARE SKY
+      const sky = getCachedSkyPhase();
+
+      const skyG = ctx.createLinearGradient(0,0,0,h*0.85);
+      skyG.addColorStop(0,  `rgba(${sky.sky0[0]},${sky.sky0[1]},${sky.sky0[2]},${alpha})`);
+      skyG.addColorStop(0.5,`rgba(${sky.sky1[0]},${sky.sky1[1]},${sky.sky1[2]},${alpha})`);
+      skyG.addColorStop(1,  `rgba(${sky.sky2[0]},${sky.sky2[1]},${sky.sky2[2]},${alpha*0.8})`);
       ctx.fillStyle=skyG; ctx.fillRect(0,0,w,h);
 
-      // Stars
-      for(let i=0;i<50;i++){
-        const sx=(Math.sin(i*127.1)*0.5+0.5)*w;
-        const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.38;
-        ctx.globalAlpha=(0.15+Math.sin(t*0.0008+i)*0.12)*alpha;
-        ctx.fillStyle='rgba(200,210,255,1)';
-        ctx.beginPath(); ctx.arc(sx,sy,0.7,0,Math.PI*2); ctx.fill();
+      // Stars — visible at night, fade during day
+      if(sky.starAlpha > 0.02) {
+        for(let i=0;i<60;i++){
+          const sx=(Math.sin(i*127.1)*0.5+0.5)*w;
+          const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.42;
+          ctx.globalAlpha=(0.15+Math.sin(t*0.0008+i)*0.12)*alpha*sky.starAlpha;
+          ctx.fillStyle='rgba(210,218,255,1)';
+          ctx.beginPath(); ctx.arc(sx,sy,0.7,0,Math.PI*2); ctx.fill();
+        }
+        ctx.globalAlpha=1;
       }
-      ctx.globalAlpha=1;
+
+      // Sun — daytime
+      if(sky.hasSun && sky.sunY < 1.0) {
+        const sunX = w*0.72;
+        const sunY2 = h * sky.sunY;
+        const isSunrise = sky.isSunrise, isSunset = sky.isSunset;
+        const sunCol = isSunrise||isSunset ? [255,160,60] : [255,240,180];
+        const sunSize = isSunrise||isSunset ? w*0.038 : w*0.028;
+
+        // Sun glow
+        const sg=ctx.createRadialGradient(sunX,sunY2,0,sunX,sunY2,sunSize*4);
+        sg.addColorStop(0,`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha*(isSunrise||isSunset?0.4:0.25)})`);
+        sg.addColorStop(0.4,`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha*0.08})`);
+        sg.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(sunX,sunY2,sunSize*4,0,Math.PI*2); ctx.fill();
+
+        // Sun disc
+        ctx.fillStyle=`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha})`;
+        ctx.beginPath(); ctx.arc(sunX,sunY2,sunSize,0,Math.PI*2); ctx.fill();
+
+        // Sun rays (only midday)
+        if(sky.isDay && !isSunrise && !isSunset) {
+          ctx.strokeStyle=`rgba(255,240,160,${alpha*0.12})`;
+          ctx.lineWidth=1.5;
+          for(let ri=0;ri<12;ri++){
+            const ra=ri/12*Math.PI*2;
+            ctx.beginPath();
+            ctx.moveTo(sunX+Math.cos(ra)*sunSize*1.3,sunY2+Math.sin(ra)*sunSize*1.3);
+            ctx.lineTo(sunX+Math.cos(ra)*sunSize*3,sunY2+Math.sin(ra)*sunSize*3);
+            ctx.stroke();
+          }
+        }
+
+        // Horizon glow for sunrise/sunset
+        if(isSunrise||isSunset) {
+          const hg=ctx.createLinearGradient(0,h*0.55,0,h*0.75);
+          hg.addColorStop(0,'rgba(0,0,0,0)');
+          hg.addColorStop(0.5,`rgba(255,120,40,${alpha*0.22})`);
+          hg.addColorStop(1,'rgba(0,0,0,0)');
+          ctx.fillStyle=hg; ctx.fillRect(0,h*0.55,w,h*0.2);
+        }
+      }
+
+      // Moon — nighttime
+      if(sky.moonAlpha > 0.05) {
+        const moonX=w*0.8, moonY2=h*0.12;
+        const ma=sky.moonAlpha*alpha;
+        const mg=ctx.createRadialGradient(moonX,moonY2,0,moonX,moonY2,w*0.032);
+        mg.addColorStop(0,`rgba(240,235,195,${ma})`);
+        mg.addColorStop(0.6,`rgba(210,202,160,${ma*0.8})`);
+        mg.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=mg; ctx.beginPath(); ctx.arc(moonX,moonY2,w*0.032,0,Math.PI*2); ctx.fill();
+        const mhalo=ctx.createRadialGradient(moonX,moonY2,w*0.032,moonX,moonY2,w*0.1);
+        mhalo.addColorStop(0,`rgba(200,190,140,${ma*0.08})`);
+        mhalo.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=mhalo; ctx.beginPath(); ctx.arc(moonX,moonY2,w*0.1,0,Math.PI*2); ctx.fill();
+      }
+
+      // Clouds — more visible during day
+      const cloudVis = sky.isDay ? 0.6 : sky.isSunrise||sky.isSunset ? 0.4 : 0.15;
+      if(cloudVis > 0.1) {
+        for(let ci2=0;ci2<5;ci2++){
+          const cx3=((t*0.00008*(1+ci2*0.3)+ci2/5)%1.2-0.1)*w;
+          const cy3=h*(0.2+ci2*0.04);
+          const cw3=w*(0.1+ci2*0.02);
+          const cloudR=ctx.createRadialGradient(cx3,cy3,0,cx3,cy3,cw3);
+          cloudR.addColorStop(0,`rgba(255,255,255,${alpha*cloudVis*0.35})`);
+          cloudR.addColorStop(0.5,`rgba(230,240,255,${alpha*cloudVis*0.15})`);
+          cloudR.addColorStop(1,'rgba(0,0,0,0)');
+          ctx.fillStyle=cloudR; ctx.beginPath(); ctx.arc(cx3,cy3,cw3,0,Math.PI*2); ctx.fill();
+        }
+      }
 
       const baseY = h * 0.72;
       const DOT = Math.max(2.5, w * 0.0038);
@@ -1518,9 +1705,19 @@
             for(let cc=sc; cc<ec; cc++) {
               const dx = anchorX + cc * colW;
               const dy = rowY;
-              const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
+              // Window lights fade during daytime
+        const _sky2 = getCachedSkyPhase();
+        const _winAlphaScale = _sky2.isDay ? 0.15 : _sky2.isSunrise||_sky2.isSunset ? 0.5 : 1.0;
+        const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
               ctx.beginPath(); ctx.arc(dx, dy, DOT/2, 0, Math.PI*2);
-              ctx.fillStyle = (isWin && ri>0 && ri<totalRows-1) ? winColor : dotColor;
+              if(isWin && ri>0 && ri<totalRows-1) {
+                // Brighten window color at night, dim during day
+                const baseAlpha = parseFloat(winColor.match(/[\d.]+\)$/)[0]);
+                const scaledWin = winColor.replace(/[\d.]+\)$/, `${baseAlpha*_winAlphaScale})`);
+                ctx.fillStyle = scaledWin;
+              } else {
+                ctx.fillStyle = dotColor;
+              }
               ctx.fill();
             }
           });
@@ -1760,11 +1957,25 @@
         ctx.fillStyle=lpG; ctx.beginPath(); ctx.arc(lpx2,lpy2,STEP*3,0,Math.PI*2); ctx.fill();
       }
 
-      // Light pollution
-      const polG=ctx.createLinearGradient(0,h*0.55,0,baseY);
-      polG.addColorStop(0,'rgba(0,0,0,0)');
-      polG.addColorStop(1,`rgba(160,90,20,${alpha*0.14})`);
-      ctx.fillStyle=polG; ctx.fillRect(0,h*0.55,w,baseY-h*0.55);
+      // Light pollution (stronger at night, weaker during day)
+      const polStrength = sky.isDay ? 0.04 : sky.isSunrise||sky.isSunset ? 0.09 : 0.16;
+      const polR = sky.isDay ? [120,160,200] : [160,90,20];
+      const polG2=ctx.createLinearGradient(0,h*0.55,0,baseY);
+      polG2.addColorStop(0,'rgba(0,0,0,0)');
+      polG2.addColorStop(1,`rgba(${polR[0]},${polR[1]},${polR[2]},${alpha*polStrength})`);
+      ctx.fillStyle=polG2; ctx.fillRect(0,h*0.55,w,baseY-h*0.55);
+
+      // TIME INDICATOR — small clock overlay
+      const now2 = new Date();
+      const timeStr = now2.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+      const phaseLabel = sky.isDay ? (sky.hour<12?'🌅 Buổi sáng':sky.hour<15?'☀️ Buổi trưa':'🌤 Buổi chiều') : sky.isSunrise?'🌄 Bình minh':sky.isSunset?'🌇 Hoàng hôn':'🌙 Ban đêm';
+      ctx.save();
+      ctx.globalAlpha=alpha*0.7;
+      ctx.font=`${Math.max(10,w*0.009)}px 'JetBrains Mono', monospace`;
+      ctx.fillStyle='rgba(255,255,255,0.6)';
+      ctx.textAlign='right';
+      ctx.fillText(timeStr + '  ' + phaseLabel, w*0.97, h*0.08);
+      ctx.restore();
     }
 
     // ── CONTINENT PATHS for earth wireframe
@@ -1990,18 +2201,35 @@
       });
     }
 
+    // Cache sky phase (update every 30s, not every frame)
+    let _skyPhase = null, _skyPhaseTime = 0;
+    function getCachedSkyPhase() {
+      const now = Date.now();
+      if(!_skyPhase || now - _skyPhaseTime > 30000) {
+        _skyPhase = getSkyPhase();
+        _skyPhaseTime = now;
+      }
+      return _skyPhase;
+    }
+
     function getBgColor() {
       const sp = scrollProgress;
-      // Phase 0→0.2: deep space
-      // Phase 0.2→0.4: entering atmosphere
-      // Phase 0.4→0.6: high altitude
-      // Phase 0.6→0.8: mid altitude
-      // Phase 0.8→1.0: low altitude / ground
-      if(sp < 0.2) return lerpColor(COLORS.space, COLORS.atmo, sp/0.2);
-      if(sp < 0.4) return lerpColor(COLORS.atmo, COLORS.high, (sp-0.2)/0.2);
-      if(sp < 0.6) return lerpColor(COLORS.high, COLORS.mid, (sp-0.4)/0.2);
-      if(sp < 0.8) return lerpColor(COLORS.mid, COLORS.low, (sp-0.6)/0.2);
-      return lerpColor(COLORS.low, COLORS.cloud, (sp-0.8)/0.2);
+      const sky = getCachedSkyPhase();
+
+      // Space colors stay fixed (above atmosphere)
+      const spaceColor = [2,4,8];
+
+      // Ground/city sky color comes from time of day
+      const groundColor = sky.sky0;
+      const midColor    = sky.sky1;
+      const highColor   = sky.sky2;
+
+      // Blend: space → atmosphere → sky (time-aware) as scroll increases
+      if(sp < 0.2) return lerpColor(spaceColor, [5,20,60], sp/0.2);
+      if(sp < 0.4) return lerpColor([5,20,60], highColor, (sp-0.2)/0.2);
+      if(sp < 0.6) return lerpColor(highColor, midColor, (sp-0.4)/0.2);
+      if(sp < 0.8) return lerpColor(midColor, groundColor, (sp-0.6)/0.2);
+      return lerpColor(groundColor, sky.sky0, (sp-0.8)/0.2);
     }
 
     function loop() {
@@ -2062,6 +2290,8 @@
     document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
     resize();
     updateScroll();
+    // Refresh sky phase cache every minute
+    setInterval(()=>{ _skyPhase = null; }, 60000);
     loop();
 
     // ── TRANSLATIONS
