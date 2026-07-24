@@ -1101,6 +1101,19 @@
       *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
       .reveal { opacity: 1; transform: none; }
     }
+
+    /* Justify paragraph text */
+    .card p,
+    .step p,
+    .value-item p,
+    .product-desc,
+    .hero p,
+    .cta-band p,
+    .contact-inner > .contact-sub {
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
   </style>
 </head>
 <body>
@@ -2570,11 +2583,11 @@
         const desc = card.querySelector('.product-desc');
         const features = card.querySelectorAll('.product-features li');
         const cta = card.querySelector('.product-cta');
-        if(badge) badge.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent=' '+vi.badge; });
+        if(badge) badge.innerHTML = `<span style="width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:blink 2s infinite;display:inline-block;margin-right:0.4rem;flex-shrink:0;"></span> ${vi.badge}`;
         if(tagline) tagline.textContent = vi.tagline;
         if(desc) desc.textContent = vi.desc;
         features.forEach((li,j) => { if(vi.features[j]) li.textContent = vi.features[j]; });
-        if(cta) cta.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent = vi.cta; });
+        if(cta) cta.textContent = vi.cta;
       });
     }
 
@@ -2607,11 +2620,11 @@
         const desc = card.querySelector('.product-desc');
         const features = card.querySelectorAll('.product-features li');
         const cta = card.querySelector('.product-cta');
-        if(badge) badge.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent=' '+en.badge; });
+        if(badge) badge.innerHTML = `<span style="width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:blink 2s infinite;display:inline-block;margin-right:0.4rem;flex-shrink:0;"></span> ${en.badge}`;
         if(tagline) tagline.textContent = en.tagline;
         if(desc) desc.textContent = en.desc;
         features.forEach((li,j) => { if(en.features[j]) li.textContent = en.features[j]; });
-        if(cta) cta.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent = en.cta; });
+        if(cta) cta.textContent = en.cta;
       });
     }
 
