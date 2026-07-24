@@ -490,6 +490,15 @@
       position: relative;
       overflow: hidden;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-features {
+      flex: 1;
+    }
+    .product-cta {
+      margin-top: 1.75rem;
+      align-self: flex-start;
     }
 
     .product-card::before {
@@ -1166,7 +1175,7 @@
         <div class="metric-label">Response time</div>
       </div>
       <div class="metric">
-        <div class="metric-val">5+</div>
+        <div class="metric-val">15+</div>
         <div class="metric-label">Projects Delivered</div>
       </div>
     </div>
