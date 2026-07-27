@@ -1186,7 +1186,7 @@
         <div class="metric-label">Response time</div>
       </div>
       <div class="metric">
-        <div class="metric-val">15+</div>
+        <div class="metric-val">5+</div>
         <div class="metric-label">Projects Delivered</div>
       </div>
     </div>
@@ -1453,6 +1453,42 @@
   <script>
     // ── EPIC SPACE TO EARTH SCROLL SCENE
     const canvas = document.getElementById('networkCanvas');
+
+    // ── PERFORMANCE DETECTION
+    const _perf = (() => {
+      const cores = navigator.hardwareConcurrency || 2;
+      const mem   = navigator.deviceMemory || 4; // GB, not all browsers support
+      const dpr   = window.devicePixelRatio || 1;
+      const ua    = navigator.userAgent;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+
+      // Score: higher = more capable
+      let score = cores * 10 + mem * 5;
+      if(dpr >= 2)   score -= 10; // retina = more pixels to fill
+      if(isMobile)   score -= 20;
+
+      // FPS benchmark — run after first few frames
+      let _fps = 60, _fpsFrames = 0, _fpsStart = 0;
+
+      const LOW  = score < 30;
+      const MID  = score >= 30 && score < 60;
+      const HIGH = score >= 60;
+
+      return {
+        LOW, MID, HIGH, isMobile,
+        // Quality multipliers
+        starCount:    LOW ? 120 : MID ? 280 : 590,
+        satCount:     LOW ? 4   : MID ? 8   : 12,
+        shooters:     LOW ? false : true,
+        cityDots:     LOW ? false : true,  // dots vs simple silhouette
+        cloudCount:   LOW ? 3   : MID ? 5  : 7,
+        resScale:     LOW ? 0.55 : MID ? 0.75 : 1.0,
+        fps:          LOW ? 24  : MID ? 36  : 60,
+      };
+    })();
+
+    // Apply canvas resolution scaling
+    const _resScale = _perf.resScale;
     const ctx = canvas.getContext('2d');
     let W, H, mouse = {x:-999,y:-999}, animT = 0;
     let scrollProgress = 0; // 0 = space, 1 = ground
@@ -1481,15 +1517,15 @@
       const phases = [
         { t:0,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'midnight' },
         { t:4,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'latedark' },
-        { t:5,   sky0:[20,8,25],   sky1:[60,20,40],  sky2:[100,45,30], sun:{y:0.92},   moon:false, stars:0.3,  label:'predawn'  },
-        { t:6,   sky0:[180,80,30], sky1:[220,110,50],sky2:[255,165,80],sun:{y:0.85},   moon:false, stars:0.0,  label:'sunrise'  },
-        { t:7,   sky0:[80,140,210],sky1:[120,180,240],sky2:[160,210,255],sun:{y:0.7},  moon:false, stars:0.0,  label:'morning'  },
-        { t:10,  sky0:[30,110,200],sky1:[60,150,230],sky2:[100,185,255],sun:{y:0.45}, moon:false, stars:0.0,  label:'late-morning'},
-        { t:12,  sky0:[20,95,190], sky1:[45,135,220],sky2:[85,175,255], sun:{y:0.22}, moon:false, stars:0.0,  label:'noon'     },
-        { t:14,  sky0:[25,100,195],sky1:[50,140,225],sky2:[90,178,255], sun:{y:0.3},  moon:false, stars:0.0,  label:'afternoon'},
-        { t:16,  sky0:[60,120,190],sky1:[100,155,215],sky2:[140,190,245],sun:{y:0.55},moon:false, stars:0.0,  label:'lateaft'  },
-        { t:17,  sky0:[180,90,30], sky1:[220,120,50],sky2:[255,160,70], sun:{y:0.78}, moon:false, stars:0.05, label:'sunset'   },
-        { t:18,  sky0:[100,40,50], sky1:[160,60,50], sky2:[210,90,40],  sun:{y:0.92}, moon:true,  stars:0.2,  label:'dusk'     },
+        { t:5,   sky0:[20,8,25],   sky1:[60,20,40],  sky2:[100,45,30], sun:{y:0.96,x:0.08}, moon:false, stars:0.3,  label:'predawn'  },
+        { t:6,   sky0:[180,80,30], sky1:[220,110,50],sky2:[255,165,80],sun:{y:0.88,x:0.13}, moon:false, stars:0.0,  label:'sunrise'  },
+        { t:7,   sky0:[80,140,210],sky1:[120,180,240],sky2:[160,210,255],sun:{y:0.70,x:0.22}, moon:false, stars:0.0,  label:'morning'  },
+        { t:10,  sky0:[30,110,200],sky1:[60,150,230],sky2:[100,185,255],sun:{y:0.42,x:0.36}, moon:false, stars:0.0,  label:'late-morning'},
+        { t:12,  sky0:[20,95,190], sky1:[45,135,220],sky2:[85,175,255], sun:{y:0.14,x:0.52}, moon:false, stars:0.0,  label:'noon'     },
+        { t:14,  sky0:[25,100,195],sky1:[50,140,225],sky2:[90,178,255], sun:{y:0.28,x:0.65}, moon:false, stars:0.0,  label:'afternoon'},
+        { t:16,  sky0:[60,120,190],sky1:[100,155,215],sky2:[140,190,245],sun:{y:0.55,x:0.76}, moon:false, stars:0.0,  label:'lateaft'  },
+        { t:17,  sky0:[180,90,30], sky1:[220,120,50],sky2:[255,160,70], sun:{y:0.78,x:0.85}, moon:false, stars:0.05, label:'sunset'   },
+        { t:18,  sky0:[100,40,50], sky1:[160,60,50], sky2:[210,90,40],  sun:{y:0.93,x:0.91}, moon:true,  stars:0.2,  label:'dusk'     },
         { t:19,  sky0:[15,10,35],  sky1:[25,18,55],  sky2:[40,30,75],   sun:null,      moon:true,  stars:0.7,  label:'night'    },
         { t:21,  sky0:[4,6,20],    sky1:[8,12,35],   sky2:[12,18,48],   sun:null,      moon:true,  stars:1.0,  label:'deepnight'},
         { t:24,  sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],    sun:null,      moon:true,  stars:1.0,  label:'midnight2'},
@@ -1511,6 +1547,7 @@
         sky2:    lerpColor(p0.sky2, p1.sky2, ei),
         hasSun:  p0.sun !== null || p1.sun !== null,
         sunY:    p0.sun && p1.sun ? lerp(p0.sun.y, p1.sun.y, ei) : (p0.sun ? p0.sun.y : p1.sun ? p1.sun.y : 0.5),
+        sunX:    p0.sun && p1.sun ? lerp(p0.sun.x, p1.sun.x, ei) : (p0.sun ? p0.sun.x : p1.sun ? p1.sun.x : 0.5),
         hasMoon: lerp(p0.moon?1:0, p1.moon?1:0, ei) > 0.3,
         moonAlpha: lerp(p0.moon?1:0, p1.moon?1:0, ei),
         starAlpha: lerp(p0.stars, p1.stars, ei),
@@ -1551,9 +1588,11 @@
     let stars = [];
     function initStars() {
       stars = [];
-      for(let i=0;i<400;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*0.7+0.1,alpha:Math.random()*0.4+0.1,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.008+0.002,ox:0,oy:0,layer:0});
-      for(let i=0;i<150;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.0+0.3,alpha:Math.random()*0.5+0.3,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.012+0.005,ox:0,oy:0,layer:1});
-      for(let i=0;i<40;i++)  stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.8,alpha:Math.random()*0.4+0.6,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.02+0.01,ox:0,oy:0,layer:2});
+      const n = _perf.starCount;
+      const n0 = Math.round(n*0.65), n1 = Math.round(n*0.26), n2 = Math.round(n*0.09);
+      for(let i=0;i<n0;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*0.7+0.1,alpha:Math.random()*0.4+0.1,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.008+0.002,ox:0,oy:0,layer:0});
+      for(let i=0;i<n1;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.0+0.3,alpha:Math.random()*0.5+0.3,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.012+0.005,ox:0,oy:0,layer:1});
+      for(let i=0;i<n2;i++)  stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.8,alpha:Math.random()*0.4+0.6,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.02+0.01,ox:0,oy:0,layer:2});
       stars.forEach(s=>{s.ox=s.x;s.oy=s.y;});
     }
 
@@ -1609,7 +1648,8 @@
         {a:1.8, b:0.22,tilt: 0.5, speed:0.0033, size:7,  color:'#fbbf24'},
         {a:1.2, b:0.48,tilt:-1.4, speed:0.011,  size:4,  color:'#a78bfa'},
       ];
-      configs.forEach((cfg,i)=>{SATS.push({...cfg, angle:(i/configs.length)*Math.PI*2});});
+      const usedConfigs = configs.slice(0, _perf.satCount);
+      usedConfigs.forEach((cfg,i)=>{SATS.push({...cfg, angle:(i/usedConfigs.length)*Math.PI*2});});
     }
 
     // ── SHOOTING STARS
@@ -1623,7 +1663,7 @@
         }, i*150);
       }
     }
-    setInterval(()=>{if(Math.random()<0.6) spawnShooter();}, 1800);
+    if(_perf.shooters) setInterval(()=>{if(Math.random()<0.6) spawnShooter();}, 1800);
     setTimeout(spawnShooter, 500);
 
     // ── SAIGON SKYLINE — DOT ART, PIXEL MASK
@@ -1657,8 +1697,12 @@
 
       // Sun — daytime
       if(sky.hasSun && sky.sunY < 1.0) {
-        const sunX = w*0.72;
-        const sunY2 = h * sky.sunY;
+        // sunX: 0=trái → 1=phải trong canvas
+        // sunY: 0=đỉnh trời → 1=đường chân trời (baseY=h*0.68)
+        const skyTop  = h * 0.05;
+        const skyBot  = h * 0.68; // đường chân trời
+        const sunX = w * (sky.sunX || 0.5);
+        const sunY2 = skyTop + (skyBot - skyTop) * sky.sunY;
         const isSunrise = sky.isSunrise, isSunset = sky.isSunset;
         const sunCol = isSunrise||isSunset ? [255,160,60] : [255,240,180];
         const sunSize = isSunrise||isSunset ? w*0.038 : w*0.028;
@@ -1715,7 +1759,8 @@
       // Clouds — more visible during day
       const cloudVis = sky.isDay ? 0.6 : sky.isSunrise||sky.isSunset ? 0.4 : 0.15;
       if(cloudVis > 0.1) {
-        for(let ci2=0;ci2<5;ci2++){
+        const _cN=_perf.cloudCount||5;
+      for(let ci2=0;ci2<_cN;ci2++){
           const cx3=((t*0.00008*(1+ci2*0.3)+ci2/5)%1.2-0.1)*w;
           const cy3=h*(0.2+ci2*0.04);
           const cw3=w*(0.1+ci2*0.02);
@@ -1760,16 +1805,15 @@
         const _sky2 = getCachedSkyPhase();
         const _winAlphaScale = _sky2.isDay ? 0.15 : _sky2.isSunrise||_sky2.isSunset ? 0.5 : 1.0;
         const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
-              ctx.beginPath(); ctx.arc(dx, dy, DOT/2, 0, Math.PI*2);
-              if(isWin && ri>0 && ri<totalRows-1) {
-                // Brighten window color at night, dim during day
-                const baseAlpha = parseFloat(winColor.match(/[\d.]+\)$/)[0]);
-                const scaledWin = winColor.replace(/[\d.]+\)$/, `${baseAlpha*_winAlphaScale})`);
-                ctx.fillStyle = scaledWin;
+              const _wc = (isWin && ri>0 && ri<totalRows-1)
+                ? winColor.replace(/[\d.]+\)$/, m => `${parseFloat(m)*_winAlphaScale})`)
+                : dotColor;
+              ctx.fillStyle = _wc;
+              if(_perf.cityDots) {
+                ctx.beginPath(); ctx.arc(dx,dy,DOT/2,0,Math.PI*2); ctx.fill();
               } else {
-                ctx.fillStyle = dotColor;
+                ctx.fillRect(dx-DOT/2,dy-DOT/2,DOT,DOT);
               }
-              ctx.fill();
             }
           });
         }
@@ -2328,12 +2372,23 @@
       // Ground / terrain
       if(groundAlpha > 0) drawTerrain(easeInOut(groundAlpha));
 
-      requestAnimationFrame(loop);
+      // Throttle FPS for low-end devices
+      if(_perf.fps >= 55) {
+        requestAnimationFrame(loop);
+      } else {
+        setTimeout(()=>requestAnimationFrame(loop), 1000/_perf.fps);
+      }
     }
 
     function resize() {
-      W=canvas.width=window.innerWidth;
-      H=canvas.height=window.innerHeight;
+      const vw = window.innerWidth, vh = window.innerHeight;
+      // Resolution scaling — render smaller, display full size
+      canvas.width  = Math.round(vw * _resScale);
+      canvas.height = Math.round(vh * _resScale);
+      canvas.style.width  = vw + 'px';
+      canvas.style.height = vh + 'px';
+      W = canvas.width;
+      H = canvas.height;
       initStars(); initSats(); initClouds(); cityBuildings=null; initCity();
     }
 
