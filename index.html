@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SimpleSoft — software, made simple</title>
   <meta name="description" content="SimpleSoft builds custom software around how your team actually works — not the other way around." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050810'/><circle cx='32' cy='50' r='10' fill='%233B82F6' filter='url(%23g)'/><defs><filter id='g'><feGaussianBlur stdDeviation='2'/></filter></defs><text x='48' y='66' font-family='Arial' font-weight='900' font-size='52' fill='white'>s</text></svg>" />
-  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050810'/><circle cx='32' cy='50' r='10' fill='%233B82F6'/><text x='48' y='66' font-family='Arial' font-weight='900' font-size='52' fill='white'>s</text></svg>" />
+  <link rel="canonical" href="https://simplesoft.com.vn/" />
+  <meta name="theme-color" content="#050810" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SimpleSoft" />
+  <meta property="og:title" content="SimpleSoft — software, made simple" />
+  <meta property="og:description" content="SimpleSoft builds custom software around how your team actually works — not the other way around." />
+  <meta property="og:url" content="https://simplesoft.com.vn/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="vi_VN" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SimpleSoft — software, made simple" />
+  <meta name="twitter:description" content="SimpleSoft builds custom software around how your team actually works — not the other way around." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050810'/><circle cx='32' cy='50' r='10' fill='%233B82F6'/><text x='48' y='66' font-family='Arial' font-weight='900' font-size='52' fill='white'>s</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -21,7 +32,7 @@
       --accent2:   #06b6d4;
       --accent-dim:#1E3A5F;
       --white:     #F8FBFF;
-      --muted:     #64748b;
+      --muted:     #8190a5;
       --muted2:    #94a3b8;
       --border:    rgba(59,130,246,0.12);
       --border2:   rgba(255,255,255,0.05);
@@ -29,7 +40,21 @@
       --mono:      'JetBrains Mono', monospace;
     }
 
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: 5rem; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent2);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .flag-vn {
+      display: inline-block;
+      width: 1.35em; height: 0.9em;
+      vertical-align: -0.1em;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
 
     body {
       background: var(--bg);
@@ -150,9 +175,29 @@
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { transform: scaleX(1); }
 
+    .nav-links a.active { color: var(--white); }
+
+    .nav-toggle {
+      display: none;
+      width: 36px; height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--white);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-toggle svg { width: 18px; height: 18px; }
+    .nav-toggle .icon-close { display: none; }
+    nav.open .nav-toggle .icon-open { display: none; }
+    nav.open .nav-toggle .icon-close { display: block; }
+
     .nav-status {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       color: #22c55e;
       display: flex;
       align-items: center;
@@ -206,7 +251,7 @@
     /* mono tag above headline */
     .hero-tag {
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: var(--accent);
       letter-spacing: 0.15em;
       margin-bottom: 1.5rem;
@@ -256,6 +301,7 @@
       margin: 0 auto 2.5rem;
       letter-spacing: 0.04em;
       line-height: 1.8;
+      min-height: 1.8em;
       animation: fadeUp 0.9s 0.2s ease both;
     }
 
@@ -327,7 +373,8 @@
     /* hero metrics row */
     .hero-metrics {
       display: flex;
-      gap: 3rem;
+      flex-wrap: wrap;
+      gap: 1.5rem 3rem;
       justify-content: center;
       margin-top: 4rem;
       padding-top: 2rem;
@@ -349,7 +396,7 @@
 
     .metric-label {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       color: var(--muted);
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -358,7 +405,6 @@
 
     /* ── SECTIONS ── */
     section { padding: 5rem 5%; position: relative; z-index: 2; max-width: 1400px; margin-left: auto; margin-right: auto; width: 100%; }
-    section + section, footer, nav { max-width: none; }
     .hero { max-width: none; }
 
     .section-label {
@@ -366,7 +412,7 @@
       align-items: center;
       gap: 0.75rem;
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -409,10 +455,6 @@
       overflow: hidden;
     }
 
-    @media (max-width: 720px) {
-      .cards { grid-template-columns: 1fr; }
-    }
-
     .card {
       background: var(--bg-card);
       padding: 2rem;
@@ -450,7 +492,7 @@
 
     .card-num {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       color: var(--accent);
       letter-spacing: 0.12em;
       margin-bottom: 1.25rem;
@@ -477,7 +519,7 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 360px));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 360px));
       gap: 1.5rem;
       justify-content: center;
     }
@@ -492,13 +534,6 @@
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
-    }
-    .product-features {
-      flex: 1;
-    }
-    .product-cta {
-      margin-top: 1.75rem;
-      align-self: flex-start;
     }
 
     .product-card::before {
@@ -524,7 +559,7 @@
       align-items: center;
       gap: 0.4rem;
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.7rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       color: #22c55e;
@@ -532,16 +567,29 @@
       border-radius: 999px;
       padding: 0.25rem 0.65rem;
       margin-bottom: 1.5rem;
+      align-self: flex-start;
     }
 
     .product-badge::before {
       content: '';
       width: 5px; height: 5px;
       border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 6px #22c55e;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
       animation: blink 2s infinite;
+      flex-shrink: 0;
     }
+
+    /* amber variant for products still in development */
+    .product-card.is-dev .product-badge { color: #f59e0b; border-color: rgba(245,158,11,0.25); }
+    .product-card.is-dev .product-name span {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .product-card.is-dev .product-tagline { color: #f59e0b; }
+    .product-card.is-dev .product-cta { color: #f59e0b; border-color: rgba(245,158,11,0.2); }
+    .product-card.is-dev .product-cta:hover { color: var(--white); border-color: #f59e0b; background: rgba(245,158,11,0.06); }
 
     .product-name {
       font-size: 1.5rem;
@@ -577,8 +625,10 @@
       list-style: none;
       display: flex;
       flex-direction: column;
+      flex: 1;
       gap: 0.5rem;
       margin-bottom: 1.75rem;
+      text-align: left;
     }
 
     .product-features li {
@@ -600,6 +650,8 @@
     }
 
     .product-cta {
+      margin-top: 1.75rem;
+      align-self: flex-start;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -680,7 +732,7 @@
       box-shadow: 0 0 12px rgba(59,130,246,0.3);
     }
 
-    .step h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .step h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; }
     .step p  { font-size: 0.85rem; color: var(--muted2); font-weight: 400; line-height: 1.65; }
 
     /* ── VALUES ── */
@@ -716,7 +768,6 @@
       transition: opacity 0.3s;
     }
 
-    .value-item:hover { border-color: var(--border); transform: translateY(-3px); }
     .value-item:hover::before { opacity: 1; }
 
     .value-item h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
@@ -766,7 +817,7 @@
 
     .terminal-title {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       color: var(--muted2);
       margin-left: auto;
       letter-spacing: 0.08em;
@@ -805,7 +856,19 @@
     .cta-band p { color: var(--muted2); font-size: 0.95rem; font-weight: 300; margin-bottom: 2rem; }
 
     /* ── CONTACT ── */
-    .contact { background: rgba(255,255,255,0.025); border-radius: 16px; }
+    /* inset box: keeps rounded corners off the screen edge */
+    .contact {
+      background: rgba(10,15,30,0.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      width: auto;
+      max-width: calc(1400px - 2rem);
+      margin: 0 max(1rem, 2.5%) 3rem;
+    }
+    @media (min-width: 1440px) {
+      .contact { margin-left: auto; margin-right: auto; }
+    }
 
     .contact-inner {
       max-width: 720px;
@@ -835,10 +898,11 @@
       align-items: center;
       gap: 0.5rem;
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.72rem;
       color: var(--muted2);
       letter-spacing: 0.08em;
       margin-bottom: 2rem;
+      text-align: center;
     }
 
     .vn-badge::before, .vn-badge::after {
@@ -851,7 +915,7 @@
 
     .contact-meta {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -860,12 +924,19 @@
       margin-bottom: 2.5rem;
     }
 
+    @media (min-width: 900px) {
+      /* auto tracks size to content, so short values like "Ho Chi Minh City, VN" stay on one line */
+      .contact-meta { grid-template-columns: repeat(4, auto); }
+      .contact-meta-val { white-space: nowrap; }
+    }
+
     .contact-meta-item {
       background: var(--bg-card);
       padding: 1rem 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
+      min-width: 0;
       transition: background 0.2s;
     }
 
@@ -873,7 +944,7 @@
 
     .contact-meta-label {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.7rem;
       color: var(--accent);
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -883,6 +954,7 @@
       font-size: 0.82rem;
       color: var(--white);
       font-weight: 500;
+      overflow-wrap: anywhere;
     }
 
     .contact-meta-val a {
@@ -894,18 +966,7 @@
     .contact-meta-val a:hover { color: var(--accent); }
 
     .contact-wrap { max-width: 600px; margin: 0 auto; }
-    .contact-wrap > p { color: var(--muted2); font-size: 0.88rem; margin-bottom: 2rem; font-weight: 300; font-family: var(--mono); }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 1px;
-    }
     .form-grid-full {
       display: grid;
       grid-template-columns: 1fr;
@@ -914,7 +975,6 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 1px;
     }
     .form-field {
       background: var(--bg-card);
@@ -922,14 +982,15 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
-      transition: background 0.2s;
+      transition: background 0.2s, box-shadow 0.2s;
     }
     .form-field:focus-within {
-      background: rgba(59,130,246,0.06);
+      background: rgba(59,130,246,0.08);
+      box-shadow: inset 3px 0 0 var(--accent);
     }
     .form-field label {
       font-family: var(--mono);
-      font-size: 0.58rem;
+      font-size: 0.7rem;
       color: var(--accent);
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -937,59 +998,40 @@
     }
     .form-field input,
     .form-field textarea {
+      width: 100%;
       background: transparent;
       border: none;
-      border-radius: 0;
       padding: 0;
       font-size: 0.9rem;
       font-family: var(--font);
       font-weight: 400;
       color: var(--white);
-      box-shadow: none;
-    }
-    .form-field input:focus,
-    .form-field textarea:focus {
-      box-shadow: none;
-      border: none;
+      outline: none;
     }
     .form-field textarea {
       min-height: 100px;
-      resize: none;
+      resize: vertical;
     }
-    .form-row { display: contents; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
-    .form-row .form-group { margin-bottom: 0; }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: var(--muted); opacity: 1; }
 
-    label {
+    .form-status {
       font-family: var(--mono);
-      font-size: 0.65rem;
-      font-weight: 400;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
     }
-
-    input, textarea {
-      background: rgba(15,25,60,0.9);
-      border: 1px solid rgba(59,130,246,0.25);
+    .form-success { text-align: center; padding: 2.5rem 0; }
+    .form-success-icon { font-size: 2.5rem; margin-bottom: 1rem; color: #22c55e; }
+    .form-success .form-status { color: #22c55e; margin-bottom: 0.5rem; }
+    .form-success-note { font-size: 0.85rem; color: var(--muted2); }
+    .form-error {
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(239,68,68,0.3);
       border-radius: 6px;
-      color: var(--white);
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      font-weight: 400;
-      padding: 0.85rem 1.1rem;
-      outline: none;
-      transition: border-color 0.25s, box-shadow 0.25s;
-      width: 100%;
+      margin-top: 1rem;
     }
-
-    input:focus, textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
-    }
-
-    input::placeholder, textarea::placeholder { color: rgba(100,116,139,0.4); }
-    textarea { resize: vertical; min-height: 120px; }
+    .form-error .form-status { color: #ef4444; }
+    .form-error a { color: var(--white); }
 
     /* ── FOOTER ── */
     footer {
@@ -1007,63 +1049,14 @@
 
     .footer-logo { font-size: 0.95rem; font-weight: 700; color: var(--white); text-decoration: none; letter-spacing: -0.02em; display: block; margin-bottom: 0.2rem; }
     .footer-logo span { color: var(--accent); }
-    .footer-tagline { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; }
+    .footer-tagline { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
     .footer-nav { display: flex; gap: 2rem; list-style: none; }
     .footer-nav a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted2); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
     .footer-nav a:hover { color: var(--accent); }
-    .footer-copy { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
-
-    .partners-bar {
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      padding: 0.9rem 5%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-    }
-
-    .partners-label {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      flex-shrink: 0;
-      margin-right: 0.5rem;
-    }
-
-    .partner-item {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.45);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      border: 1px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-
-    .partner-item:hover {
-      color: rgba(255,255,255,0.75);
-      border-color: var(--border);
-    }
-
-    .partner-sep {
-      width: 1px;
-      height: 12px;
-      background: var(--border);
-      flex-shrink: 0;
-    }
+    .footer-copy { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .footer-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; text-align: right; }
+    .footer-phone { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; letter-spacing: 0.06em; }
+    .footer-phone:hover { color: var(--accent2); }
 
     /* ── LANG SWITCHER ── */
     .lang-switch {
@@ -1078,7 +1071,7 @@
 
     .lang-btn {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.08em;
       padding: 0.35rem 0.6rem;
@@ -1097,31 +1090,68 @@
     .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.05); color: var(--white); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .nav-links, .nav-status { display: none; }
+    @media (max-width: 1024px) {
+      /* step connector only makes sense when all 4 steps sit in one row */
       .steps::before { display: none; }
-      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 860px) {
+      .nav-status { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-toggle { display: inline-flex; }
+      .nav-right { gap: 0.75rem; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        gap: 0;
+        padding: 0.5rem 5% 1rem;
+        background: rgba(5,8,16,0.96);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      nav.open .nav-links { display: flex; }
+      .nav-links a {
+        display: block;
+        padding: 0.85rem 0;
+        font-size: 0.85rem;
+        border-bottom: 1px solid var(--border2);
+      }
+      .nav-links li:last-child a { border-bottom: none; }
+      .nav-links a::after { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
       footer { flex-direction: column; align-items: flex-start; }
-      .hero-metrics { gap: 1.5rem; }
-      .cards { gap: 0; }
-      .contact-meta { grid-template-columns: 1fr 1fr; }
+      .footer-meta { align-items: flex-start; text-align: left; }
       .footer-nav { flex-wrap: wrap; gap: 1rem; }
-      .products-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .contact { padding: 3rem 1.25rem; }
+    }
+
+    @media (max-width: 400px) {
+      .contact-meta { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
       .reveal { opacity: 1; transform: none; }
     }
 
-    /* Justify paragraph text */
-    .card p,
-    .step p,
-    .value-item p,
-    .product-desc {
-      text-align: justify;
-      hyphens: auto;
-      -webkit-hyphens: auto;
+    /* Justify paragraph text — only where columns are wide enough to avoid rivers */
+    @media (min-width: 641px) {
+      .card p,
+      .step p,
+      .value-item p,
+      .product-desc {
+        text-align: justify;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+      }
     }
 
     /* Center — 1 dong ngan, khong justify */
@@ -1130,112 +1160,109 @@
     .contact-inner > .contact-sub {
       text-align: center;
     }
-
-    /* Features list — always left aligned, arrow flush */
-    .product-features {
-      text-align: left;
-    }
-    .product-features li {
-      text-align: left;
-    }
   </style>
 </head>
 <body>
 
-  <canvas id="networkCanvas"></canvas>
+  <canvas id="networkCanvas" aria-hidden="true"></canvas>
 
   <!-- NAV -->
-  <nav>
-    <a href="#" class="logo">
+  <nav id="siteNav" aria-label="Main">
+    <a href="#" class="logo" aria-label="SimpleSoft home">
       <div class="logo-dot"></div>
       simple<span class="logo-soft">soft</span>
     </a>
     <div class="nav-right">
-      <ul class="nav-links">
-        <li><a href="#services" data-en="Services" data-vi="Dịch vụ">Services</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#process" data-en="Process" data-vi="Quy trình">Process</a></li>
-        <li><a href="#contact" data-en="Contact" data-vi="Liên hệ">Contact</a></li>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services" data-i18n="nav-s">Services</a></li>
+        <li><a href="#products" data-i18n="nav-prod">Products</a></li>
+        <li><a href="#process" data-i18n="nav-p">Process</a></li>
+        <li><a href="#contact" data-i18n="nav-c">Contact</a></li>
       </ul>
-      <div class="lang-switch">
-        <button class="lang-btn active" id="btn-en">EN</button>
-        <button class="lang-btn" id="btn-vi">VI</button>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" id="btn-en" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" id="btn-vi" data-lang="vi" aria-pressed="false">VI</button>
       </div>
-      <div class="nav-status">SYSTEM ONLINE</div>
+      <div class="nav-status" data-i18n="nav-status">SYSTEM ONLINE</div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-controls="navLinks" aria-expanded="false" aria-label="Open menu">
+        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
     </div>
   </nav>
 
+  <main>
   <!-- HERO -->
   <section class="hero">
     <div class="hero-glow"></div>
 
-    <div class="hero-tag">SOFTWARE SYSTEM INTEGRATOR</div>
+    <div class="hero-tag" data-i18n="hero-tag">SOFTWARE SYSTEM INTEGRATOR</div>
 
-    <h1>software,<br>made <em>simple</em></h1>
+    <h1 data-i18n-html="hero-h1">software,<br>made <em>simple</em></h1>
 
-    <p class="hero-sub" id="typedText"></p>
+    <p class="hero-sub" id="typedText" aria-live="off"></p>
 
     <div class="hero-cta">
-      <a href="#contact" class="btn-primary">Start a project</a>
-      <a href="#services" class="btn-secondary">$ explore --services</a>
+      <a href="#contact" class="btn-primary" data-i18n="btn-start">Start a project</a>
+      <a href="#services" class="btn-secondary" data-i18n="btn-explore">$ explore --services</a>
     </div>
 
     <div class="hero-metrics">
       <div class="metric">
         <div class="metric-val">100%</div>
-        <div class="metric-label">Custom built</div>
+        <div class="metric-label" data-i18n="metric-built">Custom built</div>
       </div>
       <div class="metric">
         <div class="metric-val">&lt; 24h</div>
-        <div class="metric-label">Response time</div>
+        <div class="metric-label" data-i18n="metric-resp">Response time</div>
       </div>
       <div class="metric">
         <div class="metric-val">5+</div>
-        <div class="metric-label">Projects Delivered</div>
+        <div class="metric-label" data-i18n="metric-margin">Projects Delivered</div>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="section-label reveal" data-en="What we do" data-vi="Chúng tôi làm gì">What we do</div>
+    <h2 class="section-label reveal" data-i18n="s-what">What we do</h2>
     <div class="cards">
 
       <div class="card reveal reveal-delay-1">
-        <div class="card-num">01 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <div class="card-num" data-i18n="c1-num">01 / SERVICE</div>
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
         </svg>
-        <h3>Custom software development</h3>
-        <p>Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.</p>
+        <h3 data-i18n="c1-h">Custom software development</h3>
+        <p data-i18n="c1-p">Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.</p>
       </div>
 
       <div class="card reveal reveal-delay-2">
-        <div class="card-num">02 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <div class="card-num" data-i18n="c2-num">02 / SERVICE</div>
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <circle cx="12" cy="12" r="3"/>
           <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
         </svg>
-        <h3>Workflow automation</h3>
-        <p>Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.</p>
+        <h3 data-i18n="c2-h">Workflow automation</h3>
+        <p data-i18n="c2-p">Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.</p>
       </div>
 
       <div class="card reveal reveal-delay-3">
-        <div class="card-num">03 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <div class="card-num" data-i18n="c3-num">03 / SERVICE</div>
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
-        <h3>Ongoing support & maintenance</h3>
-        <p>We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.</p>
+        <h3 data-i18n="c3-h">Ongoing support &amp; maintenance</h3>
+        <p data-i18n="c3-p">We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.</p>
       </div>
 
       <div class="card reveal" style="transition-delay:.4s">
-        <div class="card-num">04 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <div class="card-num" data-i18n="c4-num">04 / SERVICE</div>
+        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
         </svg>
-        <h3>System integration</h3>
-        <p>Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.</p>
+        <h3 data-i18n="c4-h">System integration</h3>
+        <p data-i18n="c4-p">Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.</p>
       </div>
 
     </div>
@@ -1244,55 +1271,52 @@
 
   <!-- PRODUCTS -->
   <section class="products" id="products">
-    <div class="section-label reveal" data-en="Our products" data-vi="Sản phẩm của chúng tôi">Our products</div>
+    <h2 class="section-label reveal" data-i18n="s-prod">Our products</h2>
     <div class="products-grid">
 
       <div class="product-card reveal reveal-delay-1">
-        <div class="product-badge">LIVE</div>
-        <div class="product-name">simple<span>DMS</span></div>
-        <div class="product-tagline">// Distribution Management System</div>
-        <p class="product-desc">A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.</p>
+        <div class="product-badge" data-i18n="pr-live">LIVE</div>
+        <h3 class="product-name">simple<span>DMS</span></h3>
+        <div class="product-tagline" data-i18n="dms-tag">// Distribution Management System</div>
+        <p class="product-desc" data-i18n="dms-desc">A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.</p>
         <ul class="product-features">
-          <li>Order management with multi-warehouse inventory</li>
-          <li>GPS-verified delivery routes & shipper tracking</li>
-          <li>Debt ledger with VietQR dynamic payment</li>
-          <li>Real-time dashboard for owners</li>
-          <li>Role-based access for staff & shippers</li>
+          <li data-i18n="dms-f1">Order management with multi-warehouse inventory</li>
+          <li data-i18n="dms-f2">GPS-verified delivery routes &amp; shipper tracking</li>
+          <li data-i18n="dms-f3">Debt ledger with VietQR dynamic payment</li>
+          <li data-i18n="dms-f4">Real-time dashboard for owners</li>
+          <li data-i18n="dms-f5">Role-based access for staff &amp; shippers</li>
         </ul>
-        <a href="#contact" class="product-cta">Request a demo</a>
+        <a href="#contact" class="product-cta" data-i18n="pr-demo">Request a demo</a>
       </div>
 
       <div class="product-card reveal reveal-delay-2">
-        <div class="product-badge">LIVE</div>
-        <div class="product-name">simple<span>RMS</span></div>
-        <div class="product-tagline">// Repair Management System</div>
-        <p class="product-desc">A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.</p>
+        <div class="product-badge" data-i18n="pr-live">LIVE</div>
+        <h3 class="product-name">simple<span>RMS</span></h3>
+        <div class="product-tagline" data-i18n="rms-tag">// Repair Management System</div>
+        <p class="product-desc" data-i18n="rms-desc">A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.</p>
         <ul class="product-features">
-          <li>End-to-end repair ticket lifecycle management</li>
-          <li>Dual warranty tracking per device & repair</li>
-          <li>Customer portal via Zalo OA (no app install needed)</li>
-          <li>QR-code static payment integration</li>
-          <li>Custom fields engine for multi-industry expansion</li>
+          <li data-i18n="rms-f1">End-to-end repair ticket lifecycle management</li>
+          <li data-i18n="rms-f2">Dual warranty tracking per device &amp; repair</li>
+          <li data-i18n="rms-f3">Customer portal via Zalo OA (no app install needed)</li>
+          <li data-i18n="rms-f4">QR-code static payment integration</li>
+          <li data-i18n="rms-f5">Custom fields engine for multi-industry expansion</li>
         </ul>
-        <a href="#contact" class="product-cta">Request a demo</a>
+        <a href="#contact" class="product-cta" data-i18n="pr-demo">Request a demo</a>
       </div>
 
-      <div class="product-card reveal" style="transition-delay:.3s">
-        <div class="product-badge" style="color:#f59e0b;border-color:rgba(245,158,11,0.25);">
-          <span style="width:5px;height:5px;border-radius:50%;background:#f59e0b;box-shadow:0 0 6px #f59e0b;animation:blink 2s infinite;display:inline-block;margin-right:0.4rem;flex-shrink:0;"></span>
-          IN DEVELOPMENT
-        </div>
-        <div class="product-name">simple<span style="background:linear-gradient(135deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Work</span></div>
-        <div class="product-tagline" style="color:#f59e0b;">// Unified Business Management</div>
-        <p class="product-desc">One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.</p>
+      <div class="product-card is-dev reveal" style="transition-delay:.3s">
+        <div class="product-badge" data-i18n="pr-dev">IN DEVELOPMENT</div>
+        <h3 class="product-name">simple<span>Work</span></h3>
+        <div class="product-tagline" data-i18n="work-tag">// Unified Business Management</div>
+        <p class="product-desc" data-i18n="work-desc">One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.</p>
         <ul class="product-features">
-          <li>HR management & employee records</li>
-          <li>Client & contact relationship tracking</li>
-          <li>Contract lifecycle management</li>
-          <li>Modular activation — pay for what you use</li>
-          <li>Single login for your entire team</li>
+          <li data-i18n="work-f1">HR management &amp; employee records</li>
+          <li data-i18n="work-f2">Client &amp; contact relationship tracking</li>
+          <li data-i18n="work-f3">Contract lifecycle management</li>
+          <li data-i18n="work-f4">Modular activation — pay for what you use</li>
+          <li data-i18n="work-f5">Single login for your entire team</li>
         </ul>
-        <a href="#contact" class="product-cta" style="color:#f59e0b;border-color:rgba(245,158,11,0.2);">Join waitlist</a>
+        <a href="#contact" class="product-cta" data-i18n="pr-waitlist">Join waitlist</a>
       </div>
 
     </div>
@@ -1300,53 +1324,53 @@
 
   <!-- PROCESS -->
   <section class="process" id="process">
-    <div class="section-label reveal" data-en="How we work" data-vi="Quy trình làm việc">How we work</div>
+    <h2 class="section-label reveal" data-i18n="s-how">How we work</h2>
     <div class="steps">
       <div class="step reveal reveal-delay-1">
         <div class="step-num">01</div>
-        <h4>Discover</h4>
-        <p>We listen to how your business actually runs and define the real problem before writing a single line of code.</p>
+        <h3 data-i18n="p1-h">Discover</h3>
+        <p data-i18n="p1-p">We listen to how your business actually runs and define the real problem before writing a single line of code.</p>
       </div>
       <div class="step reveal reveal-delay-2">
         <div class="step-num">02</div>
-        <h4>Design</h4>
-        <p>We map out the solution and present a clear proposal. You know exactly what you're getting before we begin.</p>
+        <h3 data-i18n="p2-h">Design</h3>
+        <p data-i18n="p2-p">We map out the solution and present a clear proposal. You know exactly what you're getting before we begin.</p>
       </div>
       <div class="step reveal reveal-delay-3">
         <div class="step-num">03</div>
-        <h4>Build</h4>
-        <p>We build close to the agreed design and keep you updated throughout. No black boxes, no surprises.</p>
+        <h3 data-i18n="p3-h">Build</h3>
+        <p data-i18n="p3-p">We build close to the agreed design and keep you updated throughout. No black boxes, no surprises.</p>
       </div>
       <div class="step reveal" style="transition-delay:.4s">
         <div class="step-num">04</div>
-        <h4>Deliver & support</h4>
-        <p>We deploy, train your team, and stay available when you need to scale or hit a snag down the road.</p>
+        <h3 data-i18n="p4-h">Deliver &amp; support</h3>
+        <p data-i18n="p4-p">We deploy, train your team, and stay available when you need to scale or hit a snag down the road.</p>
       </div>
     </div>
   </section>
 
   <!-- VALUES -->
   <section class="values">
-    <div class="section-label reveal" data-en="Why simplesoft" data-vi="Tại sao chọn chúng tôi">Why simplesoft</div>
+    <h2 class="section-label reveal" data-i18n="s-why">Why simplesoft</h2>
     <div class="value-grid">
       <div class="value-item reveal reveal-delay-1">
-        <h3>Built around you</h3>
-        <p>No templates forced onto your workflow. Every solution is designed specifically for how you operate.</p>
+        <h3 data-i18n="v1-h">Built around you</h3>
+        <p data-i18n="v1-p">No templates forced onto your workflow. Every solution is designed specifically for how you operate.</p>
       </div>
       <div class="value-item reveal reveal-delay-2">
-        <h3>In it for the long haul</h3>
-        <p>Not just a one-time delivery. We grow alongside your business and stay accountable after go-live.</p>
+        <h3 data-i18n="v2-h">In it for the long haul</h3>
+        <p data-i18n="v2-p">Not just a one-time delivery. We grow alongside your business and stay accountable after go-live.</p>
       </div>
       <div class="value-item reveal reveal-delay-3">
-        <h3>Fast without cutting corners</h3>
-        <p>AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.</p>
+        <h3 data-i18n="v3-h">Fast without cutting corners</h3>
+        <p data-i18n="v3-p">AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.</p>
       </div>
     </div>
   </section>
 
   <!-- CTA BAND -->
   <section class="cta-band">
-    <div class="terminal reveal">
+    <div class="terminal reveal" aria-hidden="true">
       <div class="terminal-bar">
         <div class="t-dot red"></div>
         <div class="t-dot yellow"></div>
@@ -1363,95 +1387,104 @@
         <span class="t-line t-muted"># Your project is next<span class="t-cursor"></span></span>
       </div>
     </div>
-    <h2 class="reveal">Ready to start your project?</h2>
-    <p class="reveal reveal-delay-1">Tell us what problem you're trying to solve — we'll take it from there.</p>
-    <a href="#contact" class="btn-primary reveal reveal-delay-2">Get in touch</a>
+    <h2 class="reveal" data-i18n="cta-h">Ready to start your project?</h2>
+    <p class="reveal reveal-delay-1" data-i18n="cta-p">Tell us what problem you're trying to solve — we'll take it from there.</p>
+    <a href="#contact" class="btn-primary reveal reveal-delay-2" data-i18n="cta-btn">Get in touch</a>
   </section>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="contact-inner reveal">
 
-      <h2>Get in touch</h2>
-      <p class="contact-sub">// leave your details. response_time &lt; 24h</p>
+      <h2 data-i18n="contact-h">Get in touch</h2>
+      <p class="contact-sub" data-i18n="contact-sub">// leave your details. response_time &lt; 24h</p>
 
-      <div class="vn-badge">🇻🇳 &nbsp;Proudly built in Vietnam · Ho Chi Minh City</div>
+      <div class="vn-badge">
+        <svg class="flag-vn" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#DA251D"/><polygon fill="#FFFF00" points="15,4 18.53,14.85 9.29,8.15 20.71,8.15 11.47,14.85"/></svg>
+        <span data-i18n="vn-badge">Proudly built in Vietnam · Ho Chi Minh City</span>
+      </div>
 
       <div class="contact-meta">
         <div class="contact-meta-item">
-          <span class="contact-meta-label">location</span>
-          <span class="contact-meta-val">Ho Chi Minh City, VN</span>
+          <span class="contact-meta-label" data-i18n="label-loc">location</span>
+          <span class="contact-meta-val" data-i18n="val-loc">Ho Chi Minh City,&nbsp;VN</span>
         </div>
         <div class="contact-meta-item">
-          <span class="contact-meta-label">email</span>
+          <span class="contact-meta-label" data-i18n="label-email">email</span>
           <span class="contact-meta-val"><a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a></span>
         </div>
         <div class="contact-meta-item">
-          <span class="contact-meta-label">response</span>
-          <span class="contact-meta-val">&lt; 24 hours</span>
+          <span class="contact-meta-label" data-i18n="label-resp">response</span>
+          <span class="contact-meta-val" data-i18n="val-resp">&lt; 24 hours</span>
         </div>
         <div class="contact-meta-item">
-          <span class="contact-meta-label">hotline</span>
-          <span class="contact-meta-val"><a href="tel:0932197026">0932 197 026</a></span>
+          <span class="contact-meta-label" data-i18n="label-hotline">hotline</span>
+          <span class="contact-meta-val"><a href="tel:+84932197026">0932 197 026</a></span>
         </div>
       </div>
 
       <div class="contact-wrap">
         <form id="contactForm">
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+          <!-- Web3Forms access key: get one free at https://web3forms.com and paste it here -->
+          <input type="hidden" name="access_key" value="7108fe4f-a3bc-4cfa-b651-209011e9f86f" />
           <input type="hidden" name="subject" value="New project inquiry — simplesoft.com.vn" />
           <input type="hidden" name="from_name" value="SimpleSoft Website" />
-          <input type="checkbox" name="botcheck" style="display:none" />
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
           <div class="form-grid-full">
             <div class="form-field">
-              <label for="name">full_name</label>
-              <input type="text" id="name" name="name" placeholder="Nguyen Van A" required />
+              <label for="name" data-i18n="label-name">full_name</label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Nguyen Van A" data-i18n-ph="ph-name" required />
             </div>
             <div class="form-field">
-              <label for="phone">phone</label>
-              <input type="tel" id="phone" name="phone" placeholder="+84 901 234 567" />
+              <label for="phone" data-i18n="label-phone">phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+84 901 234 567" data-i18n-ph="ph-phone" />
             </div>
             <div class="form-field">
-              <label for="email">email</label>
-              <input type="email" id="email" name="email" placeholder="you@company.com" required />
+              <label for="email" data-i18n="label-email-f">email</label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" data-i18n-ph="ph-email" required />
             </div>
             <div class="form-field">
-              <label for="message">project_brief</label>
-              <textarea id="message" name="message" placeholder="We're looking to build a system that..." required></textarea>
+              <label for="message" data-i18n="label-msg">project_brief</label>
+              <textarea id="message" name="message" placeholder="We're looking to build a system that..." data-i18n-ph="ph-msg" required></textarea>
             </div>
           </div>
           <button type="submit" class="btn-primary" id="submitBtn" style="width:100%;margin-top:1rem">
-            <span id="btnText">$ send --message</span>
+            <span id="btnText" data-i18n="btn-send">$ send --message</span>
           </button>
         </form>
 
-        <div id="formSuccess" style="display:none;text-align:center;padding:2.5rem 0;">
-          <div style="font-size:2.5rem;margin-bottom:1rem;color:#22c55e;">✓</div>
-          <div style="font-family:var(--mono);font-size:0.78rem;color:#22c55e;letter-spacing:0.08em;margin-bottom:0.5rem;">MESSAGE_SENT // STATUS: 200 OK</div>
-          <div style="font-size:0.85rem;color:var(--muted2);">We'll get back to you within 24 hours.</div>
+        <div id="formSuccess" class="form-success" role="status" hidden>
+          <div class="form-success-icon" aria-hidden="true">✓</div>
+          <div class="form-status" data-i18n="ok-title">MESSAGE_SENT // STATUS: 200 OK</div>
+          <div class="form-success-note" data-i18n="ok-note">We'll get back to you within 24 hours.</div>
         </div>
 
-        <div id="formError" style="display:none;padding:0.75rem 1rem;border:1px solid rgba(239,68,68,0.3);border-radius:6px;margin-top:1rem;">
-          <div style="font-family:var(--mono);font-size:0.72rem;color:#ef4444;letter-spacing:0.06em;">ERROR // Failed to send. Please try again.</div>
+        <div id="formError" class="form-error" role="alert" hidden>
+          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.</div>
         </div>
       </div>
 
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
     <div>
       <a href="#" class="footer-logo">simple<span>soft</span></a>
-      <span class="footer-tagline">// software, made simple</span>
+      <span class="footer-tagline" data-i18n="foot-tag">// software, made simple</span>
     </div>
     <ul class="footer-nav">
-      <li><a href="#services">services</a></li>
-      <li><a href="#process">process</a></li>
-      <li><a href="#contact">contact</a></li>
+      <li><a href="#services" data-i18n="foot-nav-s">services</a></li>
+      <li><a href="#products" data-i18n="foot-nav-prod">products</a></li>
+      <li><a href="#process" data-i18n="foot-nav-p">process</a></li>
+      <li><a href="#contact" data-i18n="foot-nav-c">contact</a></li>
     </ul>
-<div style="display:flex;flex-direction:column;gap:0.3rem;text-align:right"><span class="footer-copy">© 2026 simplesoft.com.vn &nbsp;·&nbsp; 🇻🇳 Made in Vietnam</span><a href="tel:0932197026" style="font-family:var(--mono);font-size:0.7rem;color:var(--accent);text-decoration:none;letter-spacing:0.06em;">📞 0932 197 026</a></div>
+    <div class="footer-meta">
+      <span class="footer-copy">© 2026 simplesoft.com.vn · <svg class="flag-vn" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#DA251D"/><polygon fill="#FFFF00" points="15,4 18.53,14.85 9.29,8.15 20.71,8.15 11.47,14.85"/></svg> <span data-i18n="foot-made">Made in Vietnam</span></span>
+      <a href="tel:+84932197026" class="footer-phone">☎ 0932 197 026</a>
+    </div>
   </footer>
 
   <script>
@@ -1495,6 +1528,9 @@
     const _resScale = _perf.resScale;
     const ctx = canvas.getContext('2d');
     let W, H, mouse = {x:-999,y:-999}, animT = 0;
+    // dtF = elapsed frames at 60fps, so per-frame motion stays speed-consistent on throttled devices
+    let dtF = 1, _lastFrame = 0;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let scrollProgress = 0; // 0 = space, 1 = ground
 
     // ── SCROLL TRACKING
@@ -1667,8 +1703,10 @@
         }, i*150);
       }
     }
-    if(_perf.shooters) setInterval(()=>{if(Math.random()<0.6) spawnShooter();}, 1800);
-    setTimeout(spawnShooter, 500);
+    if(!reduceMotion) {
+      if(_perf.shooters) setInterval(()=>{if(!document.hidden && Math.random()<0.6) spawnShooter();}, 1800);
+      setTimeout(spawnShooter, 500);
+    }
 
     // ── SAIGON SKYLINE — DOT ART, PIXEL MASK
     let cityBuildings = null;
@@ -1795,6 +1833,9 @@
         } = opts;
 
         const totalRows = mask.length;
+        // Window lights fade during daytime — resolve the colour once per building, not per dot
+        const winAlphaScale = sky.isDay ? 0.15 : sky.isSunrise||sky.isSunset ? 0.5 : 1.0;
+        const winColorScaled = winColor.replace(/[\d.]+\)$/, m => `${parseFloat(m)*winAlphaScale})`);
 
         for(let ri=0; ri<totalRows; ri++) {
           const row = mask[ri]; // [startCol, endCol] or [[s1,e1],[s2,e2]...]
@@ -1805,14 +1846,8 @@
             for(let cc=sc; cc<ec; cc++) {
               const dx = anchorX + cc * colW;
               const dy = rowY;
-              // Window lights fade during daytime
-        const _sky2 = getCachedSkyPhase();
-        const _winAlphaScale = _sky2.isDay ? 0.15 : _sky2.isSunrise||_sky2.isSunset ? 0.5 : 1.0;
-        const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
-              const _wc = (isWin && ri>0 && ri<totalRows-1)
-                ? winColor.replace(/[\d.]+\)$/, m => `${parseFloat(m)*_winAlphaScale})`)
-                : dotColor;
-              ctx.fillStyle = _wc;
+              const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
+              ctx.fillStyle = (isWin && ri>0 && ri<totalRows-1) ? winColorScaled : dotColor;
               if(_perf.cityDots) {
                 ctx.beginPath(); ctx.arc(dx,dy,DOT/2,0,Math.PI*2); ctx.fill();
               } else {
@@ -2194,7 +2229,7 @@
 
     function computeSat(sat) {
       const {cx,cy,r}=EARTH;
-      sat.angle+=sat.speed;
+      sat.angle+=sat.speed*dtF;
       const ox=Math.cos(sat.angle)*r*sat.a, oy=Math.sin(sat.angle)*r*sat.b;
       const sx=cx+ox*Math.cos(sat.tilt)-oy*Math.sin(sat.tilt);
       const sy=cy+ox*Math.sin(sat.tilt)+oy*Math.cos(sat.tilt);
@@ -2239,7 +2274,7 @@
       if(alpha<=0) return;
       const MR=200;
       stars.forEach(s=>{
-        s.twinkle+=s.speed;
+        s.twinkle+=s.speed*dtF;
         const tw=0.5+Math.sin(s.twinkle)*0.5;
         const dx=s.ox-mouse.x,dy=s.oy-mouse.y,d=Math.sqrt(dx*dx+dy*dy);
         if(d<MR&&s.layer>0){const f=(1-d/MR)*12;s.x=s.ox+(dx/d)*f;s.y=s.oy+(dy/d)*f;}
@@ -2260,7 +2295,7 @@
     function drawShooters() {
       shooters=shooters.filter(s=>s.life>0);
       shooters.forEach(s=>{
-        s.x+=s.vx; s.y+=s.vy; s.life-=0.016; s.alpha=s.life;
+        s.x+=s.vx*dtF; s.y+=s.vy*dtF; s.life-=0.016*dtF; s.alpha=Math.max(0,s.life);
         const spd=Math.sqrt(s.vx*s.vx+s.vy*s.vy);
         const ex=s.x-s.len*(s.vx/spd),ey=s.y-s.len*(s.vy/spd);
         const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
@@ -2278,7 +2313,7 @@
     function drawClouds(alpha) {
       if(alpha<=0.01) return;
       clouds.forEach(cl=>{
-        cl.x+=cl.speed * (1+cl.layer*0.3);
+        cl.x+=cl.speed * (1+cl.layer*0.3) * dtF;
         if(cl.x-cl.w > W) cl.x = -cl.w;
         const layerY = cl.layer === 0 ? H*0.25 : cl.layer===1 ? H*0.45 : H*0.6;
         const yPos = layerY + cl.y % (H*0.15);
@@ -2331,8 +2366,20 @@
       return lerpColor(groundColor, sky.sky0, (sp-0.8)/0.2);
     }
 
-    function loop() {
-      animT += 16;
+    // Dark scrim over bright daytime skies so white page text keeps readable contrast
+    function drawReadabilityScrim(bgRGB) {
+      const lum = (0.2126*bgRGB[0] + 0.7152*bgRGB[1] + 0.0722*bgRGB[2]) / 255;
+      // terrain sky can be brighter than the flat bg colour, so key off both
+      const sky = getCachedSkyPhase().sky2;
+      const skyLum = (0.2126*sky[0] + 0.7152*sky[1] + 0.0722*sky[2]) / 255;
+      const groundMix = clamp((scrollProgress-0.65)*4, 0, 1);
+      const L = Math.max(lum, skyLum*groundMix);
+      if(L <= 0.12) return;
+      ctx.fillStyle = `rgba(5,8,16,${Math.min(0.72, (L-0.12)*1.45)})`;
+      ctx.fillRect(0,0,W,H);
+    }
+
+    function renderFrame() {
       ctx.clearRect(0,0,W,H);
 
       // ── DYNAMIC BACKGROUND
@@ -2376,6 +2423,17 @@
       // Ground / terrain
       if(groundAlpha > 0) drawTerrain(easeInOut(groundAlpha));
 
+      drawReadabilityScrim(bgRGB);
+    }
+
+    function loop(now) {
+      now = now || performance.now();
+      dtF = _lastFrame ? Math.min(4, (now - _lastFrame) / (1000/60)) : 1;
+      _lastFrame = now;
+      animT += 16 * dtF;
+
+      renderFrame();
+
       // Throttle FPS for low-end devices
       if(_perf.fps >= 55) {
         requestAnimationFrame(loop);
@@ -2384,6 +2442,15 @@
       }
     }
 
+    // Reduced motion: draw a still frame, redraw only when scroll/resize changes it
+    let _stillQueued = false;
+    function drawStill() {
+      if(_stillQueued) return;
+      _stillQueued = true;
+      requestAnimationFrame(()=>{ _stillQueued = false; dtF = 0; renderFrame(); });
+    }
+
+    let _lastW = 0;
     function resize() {
       const vw = window.innerWidth, vh = window.innerHeight;
       // Resolution scaling — render smaller, display full size
@@ -2393,28 +2460,51 @@
       canvas.style.height = vh + 'px';
       W = canvas.width;
       H = canvas.height;
-      initStars(); initSats(); initClouds(); cityBuildings=null; initCity();
+      // Mobile browsers fire resize when the URL bar shows/hides (height only) — keep the scene stable then
+      if(vw !== _lastW) {
+        _lastW = vw;
+        initStars(); initSats(); initClouds(); cityBuildings=null; initCity();
+      }
+      if(reduceMotion) drawStill();
     }
 
     window.addEventListener('resize',()=>resize());
-    document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+    document.addEventListener('mousemove',e=>{mouse.x=e.clientX*_resScale;mouse.y=e.clientY*_resScale;});
     resize();
     updateScroll();
     // Refresh sky phase cache every minute
-    setInterval(()=>{ _skyPhase = null; }, 60000);
-    loop();
+    setInterval(()=>{ _skyPhase = null; if(reduceMotion) drawStill(); }, 60000);
+    if(reduceMotion) {
+      window.addEventListener('scroll', drawStill, {passive:true});
+      drawStill();
+    } else {
+      loop();
+    }
 
     // ── TRANSLATIONS
+    // Keys map to [data-i18n] (textContent), [data-i18n-html] (innerHTML) and [data-i18n-ph] (placeholder).
     const translations = {
       en: {
         'hero-sub':      ['We build software that fits.','Clean code. Real results.','Delivered on time, every time.'],
+        'hero-tag':      'SOFTWARE SYSTEM INTEGRATOR',
+        'hero-h1':       'software,<br>made <em>simple</em>',
         'btn-start':     'Start a project',   'btn-explore': '$ explore --services',
-        'metric-built':  'CUSTOM BUILT',      'metric-resp': 'RESPONSE TIME',  'metric-margin': 'PROJECTS DELIVERED',
+        'metric-built':  'Custom built',      'metric-resp': 'Response time',  'metric-margin': 'Projects Delivered',
         's-what':'What we do','s-prod':'Our products','s-how':'How we work','s-why':'Why simplesoft',
         'c1-num':'01 / SERVICE','c1-h':'Custom software development','c1-p':'Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.',
         'c2-num':'02 / SERVICE','c2-h':'Workflow automation','c2-p':'Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.',
         'c3-num':'03 / SERVICE','c3-h':'Ongoing support & maintenance','c3-p':"We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.",
         'c4-num':'04 / SERVICE','c4-h':'System integration','c4-p':"Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.",
+        'pr-live':'LIVE','pr-dev':'IN DEVELOPMENT','pr-demo':'Request a demo','pr-waitlist':'Join waitlist',
+        'dms-tag':'// Distribution Management System',
+        'dms-desc':'A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.',
+        'dms-f1':'Order management with multi-warehouse inventory','dms-f2':'GPS-verified delivery routes & shipper tracking','dms-f3':'Debt ledger with VietQR dynamic payment','dms-f4':'Real-time dashboard for owners','dms-f5':'Role-based access for staff & shippers',
+        'rms-tag':'// Repair Management System',
+        'rms-desc':'A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.',
+        'rms-f1':'End-to-end repair ticket lifecycle management','rms-f2':'Dual warranty tracking per device & repair','rms-f3':'Customer portal via Zalo OA (no app install needed)','rms-f4':'QR-code static payment integration','rms-f5':'Custom fields engine for multi-industry expansion',
+        'work-tag':'// Unified Business Management',
+        'work-desc':'One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.',
+        'work-f1':'HR management & employee records','work-f2':'Client & contact relationship tracking','work-f3':'Contract lifecycle management','work-f4':'Modular activation — pay for what you use','work-f5':'Single login for your entire team',
         'p1-h':'Discover','p1-p':'We listen to how your business actually runs and define the real problem before writing a single line of code.',
         'p2-h':'Design',  'p2-p':"We map out the solution and present a clear proposal. You know exactly what you're getting before we begin.",
         'p3-h':'Build',   'p3-p':'We build close to the agreed design and keep you updated throughout. No black boxes, no surprises.',
@@ -2424,18 +2514,25 @@
         'v3-h':'Fast without cutting corners','v3-p':'AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.',
         'cta-h':"Ready to start your project?",'cta-p':"Tell us what problem you're trying to solve — we'll take it from there.",'cta-btn':'Get in touch',
         'contact-h':'Get in touch','contact-sub':'// leave your details. response_time < 24h',
-        'vn-badge':'🇻🇳  Proudly built in Vietnam · Ho Chi Minh City',
-        'label-loc':'LOCATION','label-email':'EMAIL','label-resp':'RESPONSE','label-hotline':'HOTLINE',
-        'label-name':'FULL_NAME','label-phone':'PHONE','label-msg':'PROJECT_BRIEF',
+        'vn-badge':'Proudly built in Vietnam · Ho Chi Minh City',
+        'label-loc':'location','label-email':'email','label-resp':'response','label-hotline':'hotline',
+        'val-loc':'Ho Chi Minh City,\u00A0VN','val-resp':'< 24 hours',
+        'label-name':'full_name','label-phone':'phone','label-email-f':'email','label-msg':'project_brief',
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
-        'btn-send':'$ send --message',
-        'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact',
-        'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-p':'process','foot-nav-c':'contact',
+        'btn-send':'$ send --message','btn-sending':'$ sending...',
+        'ok-title':'MESSAGE_SENT // STATUS: 200 OK','ok-note':"We'll get back to you within 24 hours.",
+        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact','nav-status':'SYSTEM ONLINE',
+        'menu-open':'Open menu','menu-close':'Close menu',
+        'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-prod':'products','foot-nav-p':'process','foot-nav-c':'contact',
+        'foot-made':'Made in Vietnam',
       },
       vi: {
         'hero-sub':      ['Phần mềm vừa vặn, đúng nhu cầu.','Mã nguồn sạch. Kết quả thật.','Đúng hẹn, không lý do.'],
+        'hero-tag':      'TÍCH HỢP HỆ THỐNG PHẦN MỀM',
+        'hero-h1':       'phần mềm,<br>thật <em>đơn giản</em>',
         'btn-start':     'Bắt đầu dự án',    'btn-explore': '$ xem --dịch-vụ',
-        'metric-built':  'PHÁT TRIỂN THEO YÊU CẦU','metric-resp':'THỜI GIAN PHẢN HỒI','metric-margin':'DỰ ÁN ĐÃ BÀN GIAO',
+        'metric-built':  'Phát triển theo yêu cầu','metric-resp':'Thời gian phản hồi','metric-margin':'Dự án đã bàn giao',
         's-what':'Giải pháp chúng tôi cung cấp','s-prod':'Sản phẩm của chúng tôi','s-how':'Cách chúng tôi vận hành','s-why':'Tại sao chọn chúng tôi',
         'c1-num':'01 / DỊCH VỤ',
         'c1-h':'Phát triển phần mềm theo yêu cầu',
@@ -2449,6 +2546,16 @@
         'c4-num':'04 / DỊCH VỤ',
         'c4-h':'Tích hợp hệ thống chuyên sâu',
         'c4-p':'Hợp nhất các nền tảng, ứng dụng và API rời rạc thành một hệ sinh thái vận hành đồng bộ, trơn tru.',
+        'pr-live':'ĐANG VẬN HÀNH','pr-dev':'ĐANG PHÁT TRIỂN','pr-demo':'Trải nghiệm bản demo','pr-waitlist':'Đăng ký nhận thông báo',
+        'dms-tag':'// Hệ thống Quản lý Phân phối',
+        'dms-desc':'Nền tảng SaaS đa khách thuê dành riêng cho các đơn vị phân phối và xưởng sản xuất quy mô vừa và nhỏ. SimpleDMS số hóa mọi quy trình từ đơn hàng, kho bãi đến lộ trình giao nhận và quản lý công nợ, thay thế hoàn toàn phương thức quản lý thủ công kém hiệu quả.',
+        'dms-f1':'Quản lý đa kho, điều phối đơn hàng thông minh','dms-f2':'Theo dõi lộ trình giao nhận thời gian thực qua GPS','dms-f3':'Sổ công nợ minh bạch, tích hợp thanh toán VietQR','dms-f4':'Dashboard số liệu trực quan cho nhà quản lý','dms-f5':'Phân quyền chi tiết, bảo mật dữ liệu',
+        'rms-tag':'// Hệ thống Quản lý Sửa chữa',
+        'rms-desc':'Nền tảng SaaS chuyên dụng giúp các tiệm sửa chữa tối ưu hóa toàn bộ vòng đời dịch vụ — từ khâu tiếp nhận đến bàn giao. Hỗ trợ khách hàng tra cứu thông tin qua Zalo OA với quy trình linh hoạt, phù hợp với đa dạng ngành nghề.',
+        'rms-f1':'Quản lý ticket dịch vụ từ đầu đến cuối','rms-f2':'Theo dõi lịch sử bảo hành linh kiện & thiết bị','rms-f3':'Tương tác khách hàng trực tiếp qua Zalo OA','rms-f4':'Tích hợp thanh toán QR tiện lợi','rms-f5':'Trường thông tin tùy chỉnh cho mọi ngành hàng',
+        'work-tag':'// Nền tảng Quản lý Doanh nghiệp Hợp nhất',
+        'work-desc':'Một nền tảng duy nhất cho nhân sự, khách hàng và hợp đồng. SimpleWork giải quyết bài toán phần mềm rời rạc — mỗi phòng ban không còn cần một hệ thống riêng. Kích hoạt đúng module bạn cần, không ép mua trọn gói.',
+        'work-f1':'Quản lý nhân sự & hồ sơ nhân viên','work-f2':'Theo dõi quan hệ khách hàng & đối tác','work-f3':'Quản lý vòng đời hợp đồng','work-f4':'Kích hoạt theo module — trả tiền đúng nhu cầu','work-f5':'Một đăng nhập duy nhất cho toàn bộ đội ngũ',
         'p1-h':'Tìm hiểu & Phân tích',
         'p1-p':'Lắng nghe và thấu hiểu cách doanh nghiệp bạn vận hành. Chẩn đoán đúng vấn đề trước khi bắt tay vào giải quyết.',
         'p2-h':'Thiết kế & Lên giải pháp',
@@ -2468,116 +2575,55 @@
         'cta-btn':'Kết nối ngay với chúng tôi',
         'contact-h':'Liên hệ hợp tác',
         'contact-sub':'// Để lại thông tin — chúng tôi sẽ phản hồi trong vòng 24 giờ',
-        'vn-badge':'🇻🇳  Phát triển tại Việt Nam · TP. Hồ Chí Minh',
-        'label-loc':'ĐỊA CHỈ TRỤ SỞ','label-email':'EMAIL LIÊN HỆ','label-resp':'YÊU CẦU TƯ VẤN','label-hotline':'HOTLINE KỸ THUẬT',
-        'label-name':'HỌ VÀ TÊN CỦA BẠN','label-phone':'SỐ ĐIỆN THOẠI LIÊN LẠC','label-msg':'Mô tả nhu cầu dự án',
+        'vn-badge':'Phát triển tại Việt Nam · TP. Hồ Chí Minh',
+        'label-loc':'Địa chỉ trụ sở','label-email':'Email liên hệ','label-resp':'Phản hồi','label-hotline':'Hotline',
+        'val-loc':'TP.\u00A0Hồ Chí Minh,\u00A0VN','val-resp':'< 24 giờ',
+        'label-name':'Họ và tên của bạn','label-phone':'Số điện thoại liên lạc','label-email-f':'Email','label-msg':'Mô tả nhu cầu dự án',
         'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com',
         'ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
-        'btn-send':'$ Gửi thông tin ngay',
-        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ',
+        'btn-send':'$ Gửi thông tin ngay','btn-sending':'$ Đang gửi...',
+        'ok-title':'ĐÃ GỬI THÀNH CÔNG','ok-note':'Chúng tôi sẽ phản hồi bạn trong vòng 24 giờ.',
+        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status':'HỆ THỐNG ONLINE',
+        'menu-open':'Mở menu','menu-close':'Đóng menu',
         'foot-tag':'// Phần mềm thông minh, vận hành tối giản',
-        'foot-nav-s':'dịch vụ','foot-nav-p':'quy trình','foot-nav-c':'liên hệ hợp tác',
+        'foot-nav-s':'dịch vụ','foot-nav-prod':'sản phẩm','foot-nav-p':'quy trình','foot-nav-c':'liên hệ hợp tác',
+        'foot-made':'Sản xuất tại Việt Nam',
       }
     };
 
+    let currentLang = 'en';
+
     function setLang(lang) {
       const t = translations[lang];
-      typedLines = t['hero-sub'];
-      li = 0; ci = 0; deleting = false;
+      if (!t) return;
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('ss-lang', lang); } catch (e) {}
 
-      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-' + lang));
-
-      const navAs2 = document.querySelectorAll('.nav-links a');
-      if (navAs2[0]) navAs2[0].textContent = t['nav-s'];
-      if (navAs2[1]) navAs2[1].textContent = t['nav-prod'];
-      if (navAs2[2]) navAs2[2].textContent = t['nav-p'];
-      if (navAs2[3]) navAs2[3].textContent = t['nav-c'];
-
-      const btnStart = document.querySelector('a.btn-primary[href="#contact"]');
-      if (btnStart) btnStart.textContent = t['btn-start'];
-      const btnExp = document.querySelector('a.btn-secondary');
-      if (btnExp) btnExp.textContent = t['btn-explore'];
-
-      const mLabels = document.querySelectorAll('.metric-label');
-      if (mLabels[0]) mLabels[0].textContent = t['metric-built'];
-      if (mLabels[1]) mLabels[1].textContent = t['metric-resp'];
-      if (mLabels[2]) mLabels[2].textContent = t['metric-margin'];
-
-      const sLabels = document.querySelectorAll('.section-label');
-      if (sLabels[0]) sLabels[0].textContent = t['s-what'];
-      if (sLabels[1]) sLabels[1].textContent = t['s-prod'];
-      if (sLabels[2]) sLabels[2].textContent = t['s-how'];
-      if (sLabels[3]) sLabels[3].textContent = t['s-why'];
-
-      const cNums = document.querySelectorAll('.card-num');
-      const cH    = document.querySelectorAll('.card h3');
-      const cP    = document.querySelectorAll('.card p');
-      for (let i=1;i<=4;i++) {
-        if (cNums[i-1]) cNums[i-1].textContent = t['c'+i+'-num'];
-        if (cH[i-1])    cH[i-1].textContent    = t['c'+i+'-h'];
-        if (cP[i-1])    cP[i-1].textContent    = t['c'+i+'-p'];
-      }
-
-      const sH = document.querySelectorAll('.step h4');
-      const sP = document.querySelectorAll('.step p');
-      for (let i=1;i<=4;i++) {
-        if (sH[i-1]) sH[i-1].textContent = t['p'+i+'-h'];
-        if (sP[i-1]) sP[i-1].textContent = t['p'+i+'-p'];
-      }
-
-      const vH = document.querySelectorAll('.value-item h3');
-      const vP = document.querySelectorAll('.value-item p');
-      for (let i=1;i<=3;i++) {
-        if (vH[i-1]) vH[i-1].textContent = t['v'+i+'-h'];
-        if (vP[i-1]) vP[i-1].textContent = t['v'+i+'-p'];
-      }
-
-      const ctaH = document.querySelector('.cta-band h2');
-      const ctaP = document.querySelector('.cta-band > p, .cta-band p');
-      const ctaBtn = document.querySelector('.cta-band .btn-primary');
-      if (ctaH)   ctaH.textContent   = t['cta-h'];
-      if (ctaP)   ctaP.textContent   = t['cta-p'];
-      if (ctaBtn) ctaBtn.textContent = t['cta-btn'];
-
-      const cH2  = document.querySelector('.contact-inner h2');
-      const cSub = document.querySelector('.contact-sub');
-      const vBadge = document.querySelector('.vn-badge');
-      if (cH2)    cH2.textContent    = t['contact-h'];
-      if (cSub)   cSub.textContent   = t['contact-sub'];
-      if (vBadge) vBadge.textContent = t['vn-badge'];
-
-      const metas = document.querySelectorAll('.contact-meta-label');
-      if (metas[0]) metas[0].textContent = t['label-loc'];
-      if (metas[1]) metas[1].textContent = t['label-email'];
-      if (metas[2]) metas[2].textContent = t['label-resp'];
-
-      document.querySelectorAll('label').forEach(l => {
-        if (l.htmlFor==='name')    l.textContent = t['label-name'];
-        if (l.htmlFor==='phone')   l.textContent = t['label-phone'];
-        if (l.htmlFor==='email')   l.textContent = t['label-email'];
-        if (l.htmlFor==='message') l.textContent = t['label-msg'];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = t[el.dataset.i18n];
+        if (typeof v === 'string') el.textContent = v;
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const v = t[el.dataset.i18nHtml];
+        if (typeof v === 'string') el.innerHTML = v;
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const v = t[el.dataset.i18nPh];
+        if (typeof v === 'string') el.placeholder = v;
       });
 
-      const nI = document.getElementById('name');
-      const phI = document.getElementById('phone');
-      const eI = document.getElementById('email');
-      const mI = document.getElementById('message');
-      if (nI)  nI.placeholder  = t['ph-name'];
-      if (phI) phI.placeholder = t['ph-phone'];
-      if (eI)  eI.placeholder  = t['ph-email'];
-      if (mI)  mI.placeholder  = t['ph-msg'];
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        const on = b.dataset.lang === lang;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      updateMenuLabel();
 
-      const sendBtn = document.getElementById('btnText');
-      if (sendBtn) sendBtn.textContent = t['btn-send'];
-
-      const fTag = document.querySelector('.footer-tagline');
-      if (fTag) fTag.textContent = t['foot-tag'];
-      const fNav = document.querySelectorAll('.footer-nav a');
-      if (fNav[0]) fNav[0].textContent = t['foot-nav-s'];
-      if (fNav[1]) fNav[1].textContent = t['foot-nav-p'];
-      if (fNav[2]) fNav[2].textContent = t['foot-nav-c'];
-
-      if (lang === 'vi') updateProductsVI(lang); else resetProductsEN();
+      typedLines = t['hero-sub'];
+      li = 0; ci = 0; deleting = false; pause = 0;
+      if (reduceMotion) el.textContent = typedLines[0];
     }
 
     // ── TYPEWRITER HERO
@@ -2589,26 +2635,54 @@
       if (pause > 0) { pause--; setTimeout(type, 50); return; }
       const line = typedLines[li % typedLines.length];
       if (!deleting) {
-        ci++;
-        el.innerHTML = line.slice(0, ci) + '<span class="typed-cursor"></span>';
+        ci = Math.min(ci + 1, line.length);
+        el.innerHTML = '';
+        el.append(line.slice(0, ci));
+        el.insertAdjacentHTML('beforeend', '<span class="typed-cursor"></span>');
         if (ci === line.length) { deleting = true; pause = 60; }
       } else {
-        ci--;
-        el.innerHTML = line.slice(0, ci) + '<span class="typed-cursor"></span>';
+        ci = Math.max(ci - 1, 0);
+        el.innerHTML = '';
+        el.append(line.slice(0, ci));
+        el.insertAdjacentHTML('beforeend', '<span class="typed-cursor"></span>');
         if (ci === 0) { deleting = false; li = (li + 1) % typedLines.length; pause = 15; }
       }
       setTimeout(type, deleting ? 35 : 65);
     }
-    type();
+    // screen readers get the full lines once instead of letter-by-letter updates
+    el.setAttribute('aria-label', typedLines.join(' '));
+    if (reduceMotion) el.textContent = typedLines[0];
+    else type();
 
     // ── SCROLL REVEAL
     const reveals = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => io.observe(el));
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      reveals.forEach(r => io.observe(r));
+    } else {
+      reveals.forEach(r => r.classList.add('visible'));
+    }
+
+    // ── MOBILE MENU
+    const nav = document.getElementById('siteNav');
+    const navToggle = document.getElementById('navToggle');
+    function updateMenuLabel() {
+      const open = nav.classList.contains('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', translations[currentLang][open ? 'menu-close' : 'menu-open']);
+    }
+    function setMenu(open) {
+      nav.classList.toggle('open', open);
+      updateMenuLabel();
+    }
+    navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); navToggle.focus(); } });
+    document.addEventListener('click', e => { if (nav.classList.contains('open') && !nav.contains(e.target)) setMenu(false); });
 
     // ── ACTIVE NAV
     const secs = document.querySelectorAll('section[id]');
@@ -2616,115 +2690,40 @@
     window.addEventListener('scroll', () => {
       let cur = '';
       secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
-      navAs.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? '#F0F6FF' : ''; });
+      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
     }, { passive: true });
 
-    // Product cards VI translation
-    const productVI = {
-      dms: {
-        badge: 'ĐANG VẬN HÀNH',
-        tagline: '// Hệ thống Quản lý Phân phối',
-        desc: 'Nền tảng SaaS đa khách thuê dành riêng cho các đơn vị phân phối và xưởng sản xuất quy mô vừa và nhỏ. SimpleDMS số hóa mọi quy trình từ đơn hàng, kho bãi đến lộ trình giao nhận và quản lý công nợ, thay thế hoàn toàn phương thức quản lý thủ công kém hiệu quả.',
-        features: ['Quản lý đa kho, điều phối đơn hàng thông minh','Theo dõi lộ trình giao nhận thời gian thực qua GPS','Sổ công nợ minh bạch, tích hợp thanh toán VietQR','Dashboard số liệu trực quan cho nhà quản lý','Phân quyền chi tiết, bảo mật dữ liệu'],
-        cta: 'Trải nghiệm bản demo'
-      },
-      rms: {
-        badge: 'ĐANG VẬN HÀNH',
-        tagline: '// Hệ thống Quản lý Sửa chữa',
-        desc: 'Nền tảng SaaS chuyên dụng giúp các tiệm sửa chữa tối ưu hóa toàn bộ vòng đời dịch vụ — từ khâu tiếp nhận đến bàn giao. Hỗ trợ khách hàng tra cứu thông tin qua Zalo OA với quy trình linh hoạt, phù hợp với đa dạng ngành nghề.',
-        features: ['Quản lý ticket dịch vụ từ đầu đến cuối','Theo dõi lịch sử bảo hành linh kiện & thiết bị','Tương tác khách hàng trực tiếp qua Zalo OA','Tích hợp thanh toán QR tiện lợi','Trường thông tin tùy chỉnh cho mọi ngành hàng'],
-        cta: 'Trải nghiệm bản demo'
-      },
-      work: {
-        badge: 'ĐANG PHÁT TRIỂN',
-        tagline: '// Nền tảng Quản lý Doanh nghiệp Hợp nhất',
-        desc: 'Một nền tảng duy nhất cho nhân sự, khách hàng và hợp đồng. SimpleWork giải quyết bài toán phần mềm rời rạc — mỗi phòng ban không còn cần một hệ thống riêng. Kích hoạt đúng module bạn cần, không ép mua trọn gói.',
-        features: [
-          'Quản lý nhân sự & hồ sơ nhân viên',
-          'Theo dõi quan hệ khách hàng & đối tác',
-          'Quản lý vòng đời hợp đồng',
-          'Kích hoạt theo module — trả tiền đúng nhu cầu',
-          'Một đăng nhập duy nhất cho toàn bộ đội ngũ',
-        ],
-        cta: 'Đăng ký nhận thông báo'
-      }
-    };
-
-    function updateProductsVI(lang) {
-      if(lang !== 'vi') return;
-      const cards = document.querySelectorAll('.product-card');
-      const keys = ['dms','rms','work'];
-      cards.forEach((card,i) => {
-        const vi = productVI[keys[i]];
-        if(!vi) return;
-        const badge = card.querySelector('.product-badge');
-        const tagline = card.querySelector('.product-tagline');
-        const desc = card.querySelector('.product-desc');
-        const features = card.querySelectorAll('.product-features li');
-        const cta = card.querySelector('.product-cta');
-        if(badge) badge.innerHTML = `<span style="width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:blink 2s infinite;display:inline-block;margin-right:0.4rem;flex-shrink:0;"></span> ${vi.badge}`;
-        if(tagline) tagline.textContent = vi.tagline;
-        if(desc) desc.textContent = vi.desc;
-        features.forEach((li,j) => { if(vi.features[j]) li.textContent = vi.features[j]; });
-        if(cta) cta.textContent = vi.cta;
-      });
-    }
-
-    function resetProductsEN() {
-      const cards = document.querySelectorAll('.product-card');
-      const enData = [
-        {
-          badge:'LIVE', tagline:'// Distribution Management System',
-          desc:'A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.',
-          features:['Order management with multi-warehouse inventory','GPS-verified delivery routes & shipper tracking','Debt ledger with VietQR dynamic payment','Real-time dashboard for owners','Role-based access for staff & shippers'],
-          cta:'Request a demo'
-        },
-        {
-          badge:'LIVE', tagline:'// Repair Management System',
-          desc:'A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.',
-          features:['End-to-end repair ticket lifecycle management','Dual warranty tracking per device & repair','Customer portal via Zalo OA (no app install needed)','QR-code static payment integration','Custom fields engine for multi-industry expansion'],
-          cta:'Request a demo'
-        },
-        {
-          badge:'IN DEVELOPMENT', tagline:'// Unified Business Management',
-          desc:'One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.',
-          features:['HR management & employee records','Client & contact relationship tracking','Contract lifecycle management','Modular activation — pay for what you use','Single login for your entire team'],
-          cta:'Join waitlist'
-        }
-      ];
-      cards.forEach((card,i) => {
-        const en = enData[i];
-        const badge = card.querySelector('.product-badge');
-        const tagline = card.querySelector('.product-tagline');
-        const desc = card.querySelector('.product-desc');
-        const features = card.querySelectorAll('.product-features li');
-        const cta = card.querySelector('.product-cta');
-        if(badge) badge.innerHTML = `<span style="width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:blink 2s infinite;display:inline-block;margin-right:0.4rem;flex-shrink:0;"></span> ${en.badge}`;
-        if(tagline) tagline.textContent = en.tagline;
-        if(desc) desc.textContent = en.desc;
-        features.forEach((li,j) => { if(en.features[j]) li.textContent = en.features[j]; });
-        if(cta) cta.textContent = en.cta;
-      });
-    }
-
     // ── LANG BUTTON EVENTS
-    document.getElementById('btn-en').addEventListener('click', () => setLang('en'));
-    document.getElementById('btn-vi').addEventListener('click', () => setLang('vi'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+    let savedLang = null;
+    try { savedLang = localStorage.getItem('ss-lang'); } catch (e) {}
+    setLang(savedLang === 'vi' ? 'vi' : 'en');
 
     // ── WEB3FORMS SUBMIT
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      const t       = translations[currentLang];
       const btn     = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');
       const success = document.getElementById('formSuccess');
       const error   = document.getElementById('formError');
 
-      btnText.textContent = '$ sending...';
-      btn.disabled = true;
-      error.style.display = 'none';
-
       const data = new FormData(this);
       const json = Object.fromEntries(data.entries());
+
+      // No Web3Forms key configured yet — hand off to the visitor's mail app instead of failing silently
+      if (!json.access_key || json.access_key === 'YOUR_ACCESS_KEY_HERE') {
+        const body = `${json.message}\n\n— ${json.name}\n${json.email}${json.phone ? '\n' + json.phone : ''}`;
+        window.location.href = 'mailto:hello@simplesoft.com.vn'
+          + '?subject=' + encodeURIComponent(json.subject)
+          + '&body=' + encodeURIComponent(body);
+        return;
+      }
+
+      btnText.textContent = t['btn-sending'];
+      btn.disabled = true;
+      error.hidden = true;
 
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
@@ -2734,63 +2733,18 @@
         });
         const result = await res.json();
         if (result.success) {
-          this.style.display = 'none';
-          success.style.display = 'block';
+          this.hidden = true;
+          success.hidden = false;
         } else {
           throw new Error(result.message || 'Submission failed');
         }
       } catch(err) {
-        error.style.display = 'block';
-        btnText.textContent = '$ send --message';
+        error.hidden = false;
+        btnText.textContent = translations[currentLang]['btn-send'];
         btn.disabled = false;
       }
     });
   </script>
-
-  <!-- PARTNERS BAR -->
-  <div class="partners-bar">
-    <span class="partners-label">Powered by</span>
-
-    <a href="https://github.com" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-      GitHub
-    </a>
-
-    <div class="partner-sep"></div>
-
-    <a href="https://cursor.sh" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-      Cursor
-    </a>
-
-    <div class="partner-sep"></div>
-
-    <a href="https://claude.ai" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>
-      Claude
-    </a>
-
-    <div class="partner-sep"></div>
-
-    <a href="https://tinohost.com" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      TinoHost
-    </a>
-
-    <div class="partner-sep"></div>
-
-    <a href="https://web2m.com" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      Web2M
-    </a>
-
-    <div class="partner-sep"></div>
-
-    <a href="https://nhanhoa.com" target="_blank" rel="noopener" class="partner-item">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      Nhân Hòa
-    </a>
-  </div>
 
 </body>
 </html>
