@@ -2833,10 +2833,6 @@
           const a = document.createElement('a'); a.className = 'product-cta'; a.href = p.demo;
           a.target = '_blank'; a.rel = 'noopener'; a.textContent = t['pj-demo']; links.append(a);
         }
-        if (p.code) {
-          const a = document.createElement('a'); a.className = 'product-cta is-code'; a.href = p.code;
-          a.target = '_blank'; a.rel = 'noopener'; a.textContent = t['pj-code']; links.append(a);
-        }
         card.append(links);
         grid.append(card);
       });
@@ -2882,8 +2878,7 @@
         desc:  c.desc  || (r && r.description) || '',
         tags:  c.tags  || (r ? [r.language, ...(r.topics || []).filter(t => t !== GH_TOPIC)].filter(Boolean).slice(0, 5) : []),
         image: safeUrl(c.image || ''),
-        demo:  safeUrl(c.demo || (r && r.homepage) || ''),
-        code:  (r && r.private) ? '' : safeUrl(c.code || (r && r.html_url) || '')
+        demo:  safeUrl(c.demo || (r && r.homepage) || '')
       };
     }
 
