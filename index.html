@@ -684,6 +684,8 @@
       gap: 1.5rem;
     }
 
+    @media (min-width: 960px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
     .project-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -707,6 +709,12 @@
       border-radius: 8px;
       border: 1px solid var(--border2);
       margin-bottom: 1.25rem;
+    }
+
+    .project-thumb.is-placeholder {
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 2.2rem; letter-spacing: -0.03em; color: var(--white);
+      background: linear-gradient(135deg, hsl(var(--h) 70% 30%), hsl(calc(var(--h) + 30) 75% 22%));
     }
 
     .project-card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
@@ -2793,13 +2801,26 @@
       projectList.forEach((p, i) => {
         const card = document.createElement('article');
         card.className = 'project-card reveal visible';
+        const title = pick(p.title, currentLang);
+        const placeholder = () => {
+          const ph = document.createElement('div');
+          ph.className = 'project-thumb is-placeholder';
+          ph.setAttribute('aria-hidden', 'true');
+          let hash = 0; for (const ch of title) hash = (hash * 31 + ch.charCodeAt(0)) % 360;
+          ph.style.setProperty('--h', 190 + (hash % 50));
+          ph.textContent = title.replace(/^Website\s+/i, '').split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+          return ph;
+        };
         if (p.image) {
           const img = document.createElement('img');
           img.className = 'project-thumb';
           img.src = p.image; img.alt = ''; img.loading = 'lazy';
+          img.addEventListener('error', () => img.replaceWith(placeholder()), { once: true });
           card.append(img);
+        } else {
+          card.append(placeholder());
         }
-        const h = document.createElement('h3'); h.textContent = pick(p.title, currentLang); card.append(h);
+        const h = document.createElement('h3'); h.textContent = title; card.append(h);
         const d = document.createElement('p'); d.textContent = pick(p.desc, currentLang); card.append(d);
         if (p.tags.length) {
           const ul = document.createElement('ul'); ul.className = 'project-tags';
