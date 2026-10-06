@@ -6,2805 +6,467 @@
   <title>Raymond Tran — Coder dạo</title>
   <meta name="description" content="Raymond Tran, freelance developer tại TP. Hồ Chí Minh: làm phần mềm, web app và tự động hóa theo đúng quy trình của bạn." />
   <link rel="canonical" href="https://simplesoft.com.vn/" />
-  <meta name="theme-color" content="#050810" />
+  <meta name="theme-color" content="#070707" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Raymond Tran" />
   <meta property="og:title" content="Raymond Tran — Coder dạo" />
   <meta property="og:description" content="Raymond Tran, freelance developer tại TP. Hồ Chí Minh: làm phần mềm, web app và tự động hóa theo đúng quy trình của bạn." />
   <meta property="og:url" content="https://simplesoft.com.vn/" />
+  <meta property="og:image" content="https://simplesoft.com.vn/user.jpg" />
   <meta property="og:locale" content="vi_VN" />
   <meta property="og:locale:alternate" content="en_US" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Raymond Tran — Coder dạo" />
   <meta name="twitter:description" content="Raymond Tran, freelance developer tại TP. Hồ Chí Minh: làm phần mềm, web app và tự động hóa theo đúng quy trình của bạn." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050810'/><circle cx='32' cy='50' r='10' fill='%233B82F6'/><text x='48' y='66' font-family='Arial' font-weight='900' font-size='52' fill='white'>r</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23070707'/><text x='50' y='70' text-anchor='middle' font-family='Arial' font-weight='900' font-size='60' fill='%23d4151b'>R</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #050810;
-      --bg-card:   #0a0f1e;
-      --bg-band:   #080c18;
-      --accent:    #3B82F6;
-      --accent2:   #06b6d4;
-      --accent-dim:#1E3A5F;
-      --white:     #F8FBFF;
-      --muted:     #8190a5;
-      --muted2:    #94a3b8;
-      --border:    rgba(59,130,246,0.12);
-      --border2:   rgba(255,255,255,0.05);
-      --font:      'Sora', sans-serif;
-      --mono:      'JetBrains Mono', monospace;
+      --bg:      #070707;
+      --bg-2:    #0d0d0d;
+      --red:     #d4151b;
+      --red-hi:  #ff3b3b;
+      --red-lo:  #5b0508;
+      --text:    #f5f5f5;
+      --muted:   #9b9b9b;
+      --line:    rgba(255,255,255,0.09);
+      --line-red:rgba(212,21,27,0.35);
+      --display: 'Oswald', 'Arial Narrow', sans-serif;
+      --body:    'Inter', system-ui, sans-serif;
+      --script:  'Dancing Script', cursive;
     }
 
-    html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: 5rem; }
-
-    :focus-visible {
-      outline: 2px solid var(--accent2);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
-
-    .flag-vn {
-      display: inline-block;
-      width: 1.35em; height: 0.9em;
-      vertical-align: -0.1em;
-      border-radius: 2px;
-      flex-shrink: 0;
-    }
-
+    html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
     body {
       background: var(--bg);
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 18px;
-      line-height: 1.7;
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 2px solid var(--red-hi); outline-offset: 3px; border-radius: 4px; }
 
-    /* ── CANVAS NETWORK BG ── */
-    #networkCanvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
+    .wrap { width: min(1280px, 100% - 3rem); margin-inline: auto; }
+    .eyebrow { font-family: var(--display); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+    .red { color: var(--red-hi); }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── TOP BAR ── */
+    .top {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      background: linear-gradient(180deg, rgba(7,7,7,.92), rgba(7,7,7,.6));
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
     }
-
-    /* ── SCANLINE OVERLAY ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.1rem 5%;
-      background: rgba(5,8,16,0.7);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* top border accent line */
-    nav::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-    }
-
-    .logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .logo-soft {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .logo-dot {
-      margin-right: 0.5rem;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      animation: blink 2.5s infinite;
-    }
-
-    @keyframes blink {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.2; }
-    }
-
-    .logo span { color: var(--accent); }
-
-    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
-
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-
-    .nav-links a {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--muted2);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0; right: 0;
-      height: 1px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.25s;
-    }
-
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-
-    .nav-links a.active { color: var(--white); }
-
-    .nav-toggle {
-      display: none;
-      width: 36px; height: 36px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--white);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .nav-toggle svg { width: 18px; height: 18px; }
-    .nav-toggle .icon-close { display: none; }
-    nav.open .nav-toggle .icon-open { display: none; }
-    nav.open .nav-toggle .icon-close { display: block; }
-
-    .nav-status {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: #22c55e;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      letter-spacing: 0.05em;
-    }
-
-    .nav-status::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 6px #22c55e;
-      animation: blink 2s infinite;
-    }
+    .top-in { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: .85rem 0; }
+    .brand { line-height: 1.25; }
+    .brand b { display: block; font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .12em; color: var(--red-hi); }
+    .brand span { font-size: .68rem; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+    .nav { display: flex; gap: 2rem; }
+    .nav a { font-family: var(--display); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .nav a:hover { color: var(--text); }
+    .top-right { display: flex; align-items: center; gap: 1.25rem; }
+    .avail { display: flex; align-items: center; gap: .5rem; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text); }
+    .avail::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulse 2.2s infinite; }
+    @keyframes pulse { 50% { opacity: .35; } }
+    .lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+    .lang button { background: none; border: 0; color: var(--muted); font: 500 .7rem var(--body); letter-spacing: .08em; padding: .3rem .7rem; cursor: pointer; }
+    .lang button.active { background: var(--red); color: #fff; }
 
     /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 5% 5rem;
-      position: relative;
-      z-index: 2;
-      max-width: 100vw;
-      overflow: hidden;
+    .hero { position: relative; min-height: min(100vh, 880px); padding-top: 5.5rem; overflow: hidden; border-bottom: 1px solid var(--line); }
+    .hero-word {
+      position: absolute; top: 4.6rem; left: 0; right: 0; z-index: 0;
+      text-align: center; white-space: nowrap; user-select: none; pointer-events: none;
+      font-family: var(--display); font-weight: 700; line-height: .86; letter-spacing: -.01em;
+      font-size: clamp(5rem, 19.5vw, 19rem);
+      background: linear-gradient(180deg, #e0161d 0%, #9d0b11 55%, rgba(60,3,5,.4) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-
-    /* center glow */
-    .hero-glow {
-      position: absolute;
-      top: 40%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(800px, 100vw); height: 500px;
-      background: radial-gradient(ellipse,
-        rgba(59,130,246,0.18) 0%,
-        rgba(6,182,212,0.06) 40%,
-        transparent 70%);
-      pointer-events: none;
-      animation: glowPulse 6s ease-in-out infinite;
+    .hero-photo {
+      position: absolute; z-index: 1; bottom: 0; left: 50%; transform: translateX(-34%);
+      width: min(720px, 62vw); aspect-ratio: 1;
+      background: radial-gradient(ellipse at 50% 30%, #d4151b 0%, #7d0a10 55%, #2b0204 100%);
+      -webkit-mask-image: radial-gradient(ellipse 47% 49% at 50% 44%, #000 50%, transparent 100%);
+              mask-image: radial-gradient(ellipse 47% 49% at 50% 44%, #000 50%, transparent 100%);
     }
-
-    @keyframes glowPulse {
-      0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.8; }
-      50%      { transform: translate(-50%,-50%) scale(1.08); opacity: 1; }
-    }
-
-    /* mono tag above headline */
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .hero-tag::before, .hero-tag::after {
-      content: '';
-      width: 40px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent));
-    }
-
-    .hero-tag::after { transform: rotate(180deg); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-      position: relative;
-      animation: fadeUp 0.9s 0.1s ease both;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-    }
-
-    .hero-sub {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--muted2);
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-      letter-spacing: 0.04em;
-      line-height: 1.8;
-      min-height: 1.8em;
-      animation: fadeUp 0.9s 0.2s ease both;
-    }
-
-    .hero-sub .typed-cursor {
-      display: inline-block;
-      width: 8px; height: 1em;
-      background: var(--accent);
-      margin-left: 2px;
-      vertical-align: middle;
-      animation: blink 1s infinite;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeUp 0.9s 0.3s ease both;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
-      font-family: var(--font);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 0.85rem 2rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      letter-spacing: 0.02em;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.15);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.4); }
-    .btn-primary:hover::before { opacity: 1; }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--muted2);
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      font-weight: 400;
-      padding: 0.85rem 2rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      letter-spacing: 0.08em;
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-
-    .btn-secondary:hover { border-color: var(--accent); color: var(--white); transform: translateY(-2px); }
-
-    /* hero metrics row */
-    .hero-metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem 3rem;
-      justify-content: center;
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border2);
-      animation: fadeUp 0.9s 0.5s ease both;
-    }
-
-    .metric { text-align: center; }
-
-    .metric-val {
-      font-size: 1.6rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--white), var(--muted2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.03em;
-    }
-
-    .metric-label {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 0.2rem;
-    }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; filter: grayscale(.35) contrast(1.12) brightness(1.05); }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); min-height: calc(min(100vh, 880px) - 5.5rem); align-items: end; padding-bottom: 3rem; }
+    .hero-left { align-self: end; max-width: 380px; }
+    .hello { font-family: var(--script); font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 500; line-height: 1; margin-bottom: .6rem; }
+    .name { font-family: var(--display); font-weight: 700; text-transform: uppercase; line-height: .95; letter-spacing: .005em; font-size: clamp(3.2rem, 6.2vw, 5.6rem); }
+    .role { margin-top: 1.1rem; font-family: var(--display); font-weight: 500; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; color: var(--red-hi); }
+    .hero-p { margin-top: .9rem; font-size: .88rem; color: #cfcfcf; font-weight: 300; max-width: 340px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--display); font-weight: 500; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; padding: .7rem 1.3rem; border: 1px solid var(--red); border-radius: 999px; background: var(--red); color: #fff; cursor: pointer; transition: background .2s, border-color .2s, transform .2s; }
+    .btn:hover { background: var(--red-hi); border-color: var(--red-hi); transform: translateY(-2px); }
+    .btn.ghost { background: transparent; color: var(--text); border-color: var(--line); }
+    .btn.ghost:hover { border-color: var(--red-hi); background: transparent; }
+    .hero-mid { display: flex; gap: .9rem; align-items: center; font-size: .78rem; color: #d8d8d8; font-weight: 300; line-height: 1.5; margin-bottom: 1.2rem; }
+    .hero-mid svg { flex-shrink: 0; width: 44px; height: 44px; padding: 11px; border: 1px solid var(--line-red); border-radius: 50%; color: var(--red-hi); }
+    .hero-right { align-self: end; justify-self: end; width: min(240px, 100%); }
+    .stat { display: flex; align-items: baseline; gap: 1rem; padding: .95rem 0; border-bottom: 1px solid var(--line); }
+    .stat:last-child { border-bottom: 0; }
+    .stat b { font-family: var(--display); font-weight: 500; font-size: 2.1rem; line-height: 1; color: var(--red-hi); min-width: 3.6rem; }
+    .stat span { font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 
     /* ── SECTIONS ── */
-    section { padding: 5rem 5%; position: relative; z-index: 2; max-width: 1400px; margin-left: auto; margin-right: auto; width: 100%; }
-    .hero { max-width: none; }
-
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 3rem;
-    }
-
-    .section-label::before { content: '//'; opacity: 0.5; }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border), transparent);
-      max-width: 120px;
-    }
-
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ── SERVICES ── */
-    .services { background: transparent; }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .card {
-      background: var(--bg-card);
-      padding: 2rem;
-      transition: background 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .card:hover { background: rgba(59,130,246,0.04); }
-    .card:hover::before { transform: scaleX(1); }
-
-    /* corner bracket decoration */
-    .card::after {
-      content: '';
-      position: absolute;
-      bottom: 1rem; right: 1rem;
-      width: 16px; height: 16px;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      transition: border-color 0.3s, width 0.3s, height 0.3s;
-    }
-
-    .card:hover::after { border-color: var(--accent); width: 24px; height: 24px; }
-
-    .card-num {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      margin-bottom: 1.25rem;
-      opacity: 0.7;
-    }
-
-    .card-icon {
-      width: 32px; height: 32px;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      stroke-width: 1.5;
-      transition: color 0.3s, transform 0.3s;
-    }
-
-    .card:hover .card-icon { color: var(--accent2); transform: scale(1.1); }
-
-    .card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
-
-    .card p { font-size: 0.88rem; color: var(--muted2); font-weight: 400; line-height: 1.7; }
-
-
-    /* ── PRODUCTS ── */
-    .products { background: transparent; }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 360px));
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .product-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .product-card:hover {
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-    }
-
-    .product-card:hover::before { opacity: 1; }
-
-    .product-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      color: #22c55e;
-      border: 1px solid rgba(34,197,94,0.25);
-      border-radius: 999px;
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 1.5rem;
-      align-self: flex-start;
-    }
-
-    .product-badge::before {
-      content: '';
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 6px currentColor;
-      animation: blink 2s infinite;
-      flex-shrink: 0;
-    }
-
-    /* amber variant for products still in development */
-    .product-card.is-dev .product-badge { color: #f59e0b; border-color: rgba(245,158,11,0.25); }
-    .product-card.is-dev .product-name span {
-      background: linear-gradient(135deg, #f59e0b, #f97316);
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-    .product-card.is-dev .product-tagline { color: #f59e0b; }
-    .product-card.is-dev .product-cta { color: #f59e0b; border-color: rgba(245,158,11,0.2); }
-    .product-card.is-dev .product-cta:hover { color: var(--white); border-color: #f59e0b; background: rgba(245,158,11,0.06); }
-
-    .product-name {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.4rem;
-    }
-
-    .product-name span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .product-tagline {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      margin-bottom: 1.25rem;
-    }
-
-    .product-desc {
-      font-size: 0.88rem;
-      color: var(--muted2);
-      font-weight: 300;
-      line-height: 1.75;
-      margin-bottom: 1.5rem;
-    }
-
-    .product-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      gap: 0.5rem;
-      margin-bottom: 1.75rem;
-      text-align: left;
-    }
-
-    .product-features li {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted2);
-      display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
-      text-align: left;
-    }
-
-    .product-features li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      width: 1em;
-      display: inline-block;
-    }
-
-    .product-cta {
-      margin-top: 1.75rem;
-      align-self: flex-start;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.5rem 1rem;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-
-    .product-cta:hover {
-      border-color: var(--accent);
-      background: rgba(59,130,246,0.06);
-      color: var(--white);
-    }
-
-    .product-cta::after { content: '→'; }
-
-    /* ── PROJECTS (GitHub) ── */
-    .projects { background: transparent; }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-      gap: 1.5rem;
-    }
-
-    @media (min-width: 960px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
-
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(59,130,246,0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-    }
-
-    .project-thumb {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid var(--border2);
-      margin-bottom: 1.25rem;
-    }
-
-    .project-thumb.is-placeholder {
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 2.2rem; letter-spacing: -0.03em; color: var(--white);
-      background: linear-gradient(135deg, hsl(var(--h) 70% 30%), hsl(calc(var(--h) + 30) 75% 22%));
-    }
-
-    .project-card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-
-    .project-card p { font-size: 0.86rem; color: var(--muted2); line-height: 1.7; flex: 1; }
-
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.1rem 0 0; list-style: none; }
-
-    .project-tags li {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--accent);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.15rem 0.6rem;
-    }
-
-    .project-links { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
-
-    .project-links .product-cta { margin-top: 0; }
-    .project-links .product-cta.is-code::after { content: '↗'; }
-
-    .projects-empty { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.8rem; }
-
-    /* ── ABOUT ── */
-    .about { background: transparent; }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 3rem;
-      align-items: center;
-      margin-bottom: 3rem;
-    }
-
-    .about-photo {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 5;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, hsl(205 70% 28%), hsl(235 70% 20%));
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-    }
-
-    .about-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .about-initials { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; color: var(--white); opacity: 0.85; }
-
-    .about-text h3 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
-    .about-text p { font-size: 0.95rem; color: var(--muted2); line-height: 1.85; margin-bottom: 1rem; }
-    .about-text p:last-child { margin-bottom: 0; }
-
-    .about-path-title {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 1.25rem;
-    }
-
-    .path-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-      gap: 1.25rem;
-    }
-
-    .path-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .path-item:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-3px); }
-
-    .path-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent2); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
-    .path-item h4 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
-    .path-item p { font-size: 0.82rem; color: var(--muted2); line-height: 1.7; }
-
-    .path-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; list-style: none; margin-top: 1rem; }
-    .path-tags li {
-      font-family: var(--mono);
-      font-size: 0.66rem;
-      color: var(--accent);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.12rem 0.55rem;
-    }
-
-    @media (max-width: 720px) {
-      .about-grid { grid-template-columns: 1fr; gap: 1.75rem; }
-      .about-photo { max-width: 240px; }
-    }
-
-    /* ── PROCESS ── */
-    .process { background: transparent; }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      position: relative;
-    }
-
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 1.6rem;
-      left: 2rem; right: 2rem;
-      height: 1px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
-      opacity: 0.25;
-    }
-
-    .step {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .step:hover {
-      border-color: rgba(59,130,246,0.35);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-
-    .step-num {
-      width: 3.2rem; height: 3.2rem;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      margin-bottom: 1.25rem;
-      position: relative;
-      z-index: 1;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .step:hover .step-num {
-      border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(59,130,246,0.3);
-    }
-
-    .step h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem; }
-    .step p  { font-size: 0.85rem; color: var(--muted2); font-weight: 400; line-height: 1.65; }
-
-    /* ── VALUES ── */
-    .values { background: transparent; }
-
-    .value-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .value-item {
-      padding: 1.75rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .value-item:hover {
-      border-color: rgba(59,130,246,0.35);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-      transform: translateY(-3px);
-    }
-
-    .value-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.06) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .value-item:hover::before { opacity: 1; }
-
-    .value-item h3 { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .value-item p  { font-size: 0.88rem; color: var(--muted2); font-weight: 400; }
-
-    /* ── CTA BAND ── */
-    .cta-band {
-      text-align: center;
-      padding: 6rem 5%;
-      position: relative;
-      z-index: 2;
-      overflow: hidden;
-    }
-
-    .cta-band::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(59,130,246,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* terminal-style block */
-    .terminal {
-      max-width: 480px;
-      margin: 0 auto 3rem;
-      background: rgba(10,15,30,0.8);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-    }
-
-    .terminal-bar {
-      background: rgba(59,130,246,0.08);
-      border-bottom: 1px solid var(--border);
-      padding: 0.6rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .t-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .t-dot.red    { background: #ff5f57; }
-    .t-dot.yellow { background: #febc2e; }
-    .t-dot.green  { background: #28c840; }
-
-    .terminal-title {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted2);
-      margin-left: auto;
-      letter-spacing: 0.08em;
-    }
-
-    .terminal-body {
-      padding: 1.25rem 1.5rem;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      line-height: 1.9;
-      text-align: left;
-    }
-
-    .t-line { display: block; }
-    .t-prompt { color: var(--accent); margin-right: 0.5rem; }
-    .t-cmd    { color: var(--white); }
-    .t-out    { color: #22c55e; }
-    .t-muted  { color: var(--muted2); }
-    .t-cursor {
-      display: inline-block;
-      width: 7px; height: 0.9em;
-      background: var(--accent);
-      vertical-align: middle;
-      margin-left: 2px;
-      animation: blink 1s infinite;
-    }
-
-    .cta-band h2 {
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      position: relative;
-    }
-
-    .cta-band p { color: var(--muted2); font-size: 0.95rem; font-weight: 300; margin-bottom: 2rem; }
+    section { position: relative; }
+    .sec-head { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+    .sec-head h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
+    .sec-head .rule { flex: 1; height: 1px; background: var(--line); }
+    .sec-head button { background: none; border: 0; color: var(--text); font: 500 .74rem var(--body); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: .6rem; }
+    .sec-head button:hover { color: var(--red-hi); }
+
+    /* ── PROJECTS ── */
+    .projects { padding: 3.5rem 0 4rem; border-bottom: 1px solid var(--line); }
+    .proj-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.75rem; }
+    .proj { display: flex; flex-direction: column; }
+    .thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); background: #111; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .proj:hover .thumb img, .proj:hover .thumb.ph span { transform: scale(1.05); }
+    .thumb.ph { display: flex; align-items: center; justify-content: center; background:
+        linear-gradient(135deg, hsl(355 70% calc(var(--l) * 1%)) 0%, #0b0b0b 80%); }
+    .thumb.ph::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 28px 28px; opacity: .5; }
+    .thumb.ph span { position: relative; font-family: var(--display); font-weight: 700; font-size: 3.4rem; letter-spacing: .02em; color: rgba(255,255,255,.9); transition: transform .6s ease; }
+    .proj-meta { display: grid; grid-template-columns: auto 1fr auto; gap: .2rem 1rem; align-items: center; padding-top: 1rem; }
+    .proj-num { grid-row: span 2; font-family: var(--display); font-weight: 400; font-size: 2.3rem; line-height: 1; color: var(--red-hi); }
+    .proj-name { font-family: var(--display); font-weight: 500; font-size: 1.15rem; letter-spacing: .04em; }
+    .proj-tags { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .proj-go { grid-row: span 2; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 50%; color: var(--text); transition: border-color .2s, color .2s, transform .2s; }
+    .proj-go:hover { border-color: var(--red-hi); color: var(--red-hi); transform: translateX(3px); }
+    .proj-desc { grid-column: 1 / -1; margin-top: .6rem; font-size: .82rem; color: var(--muted); font-weight: 300; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .proj-more { margin-top: 2rem; }
+    .proj-more[hidden] { display: none; }
+
+    /* ── 3 COLUMNS ── */
+    .trio { display: grid; grid-template-columns: 1.05fr 1.15fr .8fr; border-bottom: 1px solid var(--line); }
+    .col { padding: 3.2rem 2.5rem; border-right: 1px solid var(--line); }
+    .col:first-child { padding-left: max(1.5rem, calc((100vw - 1280px) / 2)); }
+    .col:last-child { border-right: 0; }
+    .col h2 { font-family: var(--display); font-weight: 600; font-size: 1.4rem; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 1.4rem; }
+    .col h3 { font-family: var(--display); font-weight: 500; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--red-hi); margin: 1.4rem 0 .7rem; }
+    .about-p { font-size: .88rem; color: #cfcfcf; font-weight: 300; margin-bottom: .8rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .chips li { font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; padding: .35rem .75rem; border: 1px solid var(--line); border-radius: 4px; color: #d6d6d6; }
+    .group-note { font-size: .76rem; color: var(--muted); margin-bottom: .6rem; font-weight: 300; }
+
+    .steps { position: relative; }
+    .step { display: grid; grid-template-columns: 2rem 44px 1fr; gap: 1rem; align-items: start; padding-bottom: 1.5rem; position: relative; }
+    .step:last-child { padding-bottom: 0; }
+    .step:not(:last-child)::after { content: ''; position: absolute; left: calc(2rem + 1rem + 22px); top: 48px; bottom: 4px; width: 1px; background: var(--line-red); }
+    .step-n { font-family: var(--display); font-size: .95rem; color: var(--red-hi); padding-top: .7rem; }
+    .step-i { width: 44px; height: 44px; border: 1px solid var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text); background: var(--bg); }
+    .step-i svg { width: 19px; height: 19px; }
+    .step h4 { font-family: var(--display); font-weight: 500; font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--red-hi); }
+    .step p { font-size: .8rem; color: #bdbdbd; font-weight: 300; line-height: 1.55; margin-top: .15rem; }
+
+    .quote { background: linear-gradient(160deg, #a50f15 0%, #5b0508 70%, #2c0204 100%); display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; }
+    .quote svg.qm { width: 34px; height: 34px; color: #ff6b6b; }
+    .quote blockquote { font-size: 1.15rem; line-height: 1.5; font-weight: 400; margin-top: 1rem; }
+    .sign { font-family: var(--script); font-size: 2.1rem; margin-top: 1.5rem; line-height: 1; }
+    .quote small { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: #ffb3b3; }
 
     /* ── CONTACT ── */
-    /* inset box: keeps rounded corners off the screen edge */
-    .contact {
-      background: rgba(10,15,30,0.72);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border2);
-      border-radius: 16px;
-      width: auto;
-      max-width: calc(1400px - 2rem);
-      margin: 0 max(1rem, 2.5%) 3rem;
-    }
-    @media (min-width: 1440px) {
-      .contact { margin-left: auto; margin-right: auto; }
-    }
+    .contact { padding: 4rem 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr 1.1fr; gap: 3rem; align-items: start; }
+    .contact h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.9rem, 2.9vw, 2.5rem); line-height: 1.1; letter-spacing: .02em; text-transform: uppercase; }
+    .contact h2 svg { display: inline-block; width: .5em; height: .5em; color: var(--red-hi); vertical-align: top; margin-left: .3rem; }
+    .contact-p { margin-top: 1rem; font-size: .9rem; color: #cfcfcf; font-weight: 300; max-width: 340px; }
+    .avail-pill { margin-top: 1.6rem; display: inline-flex; align-items: center; gap: .8rem; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--red-hi); }
+    .avail-pill i { width: 34px; height: 34px; border: 1px solid var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-style: normal; }
+    .rows li { display: flex; align-items: center; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid var(--line); font-size: .9rem; }
+    .rows li:first-child { padding-top: 0; }
+    .rows i { width: 38px; height: 38px; flex-shrink: 0; border: 1px solid var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--red-hi); }
+    .rows i svg { width: 16px; height: 16px; }
+    .rows a:hover { color: var(--red-hi); }
 
-    .contact-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      width: 100%;
-    }
+    form { display: grid; gap: .85rem; }
+    .field label { display: block; font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+    .field input, .field textarea { width: 100%; background: var(--bg-2); border: 1px solid var(--line); border-radius: 6px; color: var(--text); font: 400 .9rem var(--body); padding: .7rem .85rem; transition: border-color .2s; }
+    .field input:focus, .field textarea:focus { outline: none; border-color: var(--red-hi); }
+    .field textarea { min-height: 110px; resize: vertical; }
+    form .btn { justify-content: center; width: 100%; }
+    form .btn:disabled { opacity: .6; cursor: wait; }
+    .form-note { padding: 1.2rem; border: 1px solid var(--line-red); border-radius: 8px; font-size: .86rem; }
+    .form-note[hidden] { display: none; }
 
-    .contact-inner > h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .contact-inner > .contact-sub {
-      color: var(--muted2);
-      font-size: 0.82rem;
-      font-family: var(--mono);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .vn-badge {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted2);
-      letter-spacing: 0.08em;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-
-    .vn-badge::before, .vn-badge::after {
-      content: '';
-      flex: 1;
-      max-width: 60px;
-      height: 1px;
-      background: var(--border2);
-    }
-
-    .contact-meta {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 2.5rem;
-    }
-
-    @media (min-width: 900px) {
-      /* auto tracks size to content, so short values like "Ho Chi Minh City, VN" stay on one line */
-      .contact-meta { grid-template-columns: repeat(4, auto); }
-      .contact-meta-val { white-space: nowrap; }
-    }
-
-    .contact-meta-item {
-      background: var(--bg-card);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      min-width: 0;
-      transition: background 0.2s;
-    }
-
-    .contact-meta-item:hover { background: rgba(59,130,246,0.05); }
-
-    .contact-meta-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .contact-meta-val {
-      font-size: 0.82rem;
-      color: var(--white);
-      font-weight: 500;
-      overflow-wrap: anywhere;
-    }
-
-    .contact-meta-val a {
-      color: var(--white);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .contact-meta-val a:hover { color: var(--accent); }
-
-    .contact-wrap { max-width: 600px; margin: 0 auto; }
-
-    .form-grid-full {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .form-field {
-      background: var(--bg-card);
-      padding: 1rem 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-    .form-field:focus-within {
-      background: rgba(59,130,246,0.08);
-      box-shadow: inset 3px 0 0 var(--accent);
-    }
-    .form-field label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-    .form-field input,
-    .form-field textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      padding: 0;
-      font-size: 0.9rem;
-      font-family: var(--font);
-      font-weight: 400;
-      color: var(--white);
-      outline: none;
-    }
-    .form-field textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    .form-field input::placeholder,
-    .form-field textarea::placeholder { color: var(--muted); opacity: 1; }
-
-    .form-status {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-    }
-    .form-success { text-align: center; padding: 2.5rem 0; }
-    .form-success-icon { font-size: 2.5rem; margin-bottom: 1rem; color: #22c55e; }
-    .form-success .form-status { color: #22c55e; margin-bottom: 0.5rem; }
-    .form-success-note { font-size: 0.85rem; color: var(--muted2); }
-    .form-error {
-      padding: 0.75rem 1rem;
-      border: 1px solid rgba(239,68,68,0.3);
-      border-radius: 6px;
-      margin-top: 1rem;
-    }
-    .form-error .form-status { color: #ef4444; }
-    .form-error a { color: var(--white); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: transparent;
-      padding: 2rem 5%;
-      border-top: 1px solid var(--border2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .footer-logo { font-size: 0.95rem; font-weight: 700; color: var(--white); text-decoration: none; letter-spacing: -0.02em; display: block; margin-bottom: 0.2rem; }
-    .footer-logo span { color: var(--accent); }
-    .footer-tagline { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; }
-    .footer-nav { display: flex; gap: 2rem; list-style: none; }
-    .footer-nav a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted2); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
-    .footer-nav a:hover { color: var(--accent); }
-    .footer-copy { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 0.4rem; }
-    .footer-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; text-align: right; }
-    .footer-phone { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); text-decoration: none; letter-spacing: 0.06em; }
-    .footer-phone:hover { color: var(--accent2); }
-
-    /* ── LANG SWITCHER ── */
-    .lang-switch {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .lang-btn {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      padding: 0.35rem 0.6rem;
-      background: transparent;
-      color: var(--muted2);
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .lang-btn.active {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .lang-btn:hover:not(.active) { background: rgba(255,255,255,0.05); color: var(--white); }
+    footer { border-top: 1px solid var(--line); padding: 1.5rem 0; font-size: .74rem; color: var(--muted); letter-spacing: .04em; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .flag { display: inline-block; width: 1.3em; height: .87em; vertical-align: -.1em; border-radius: 2px; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      /* step connector only makes sense when all 4 steps sit in one row */
-      .steps::before { display: none; }
+    @media (max-width: 1100px) {
+      .nav { display: none; }
+      .trio { grid-template-columns: 1fr 1fr; }
+      .col:nth-child(2) { border-right: 0; }
+      .col { border-bottom: 1px solid var(--line); }
+      .quote { grid-column: 1 / -1; border-bottom: 0; }
+      .col:first-child { padding-left: 2.5rem; }
+      .contact-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid > :last-child { grid-column: 1 / -1; }
     }
-
-    @media (max-width: 860px) {
-      .nav-status { display: none; }
+    @media (max-width: 820px) {
+      .proj-grid { grid-template-columns: 1fr 1fr; }
+      .hero { min-height: 0; }
+      .hero-photo { position: relative; left: auto; bottom: auto; transform: none; width: min(460px, 92vw); margin: 4rem auto -1rem; order: 2; }
+      .hero-grid { grid-template-columns: 1fr; min-height: 0; padding-bottom: 2rem; gap: 2rem; }
+      .hero-word { top: 4.5rem; }
+      .hero-mid { grid-column: 1 / -1; }
+      .hero-right { justify-self: stretch; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      .stat { flex-direction: column; gap: .2rem; border-bottom: 0; border-right: 1px solid var(--line); padding: .5rem 0 .5rem 1rem; }
+      .stat:last-child { border-right: 0; }
+      .avail { display: none; }
     }
-
-    @media (max-width: 760px) {
-      .nav-toggle { display: inline-flex; }
-      .nav-right { gap: 0.75rem; }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%; left: 0; right: 0;
-        flex-direction: column;
-        gap: 0;
-        padding: 0.5rem 5% 1rem;
-        background: rgba(5,8,16,0.96);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-      }
-      nav.open .nav-links { display: flex; }
-      .nav-links a {
-        display: block;
-        padding: 0.85rem 0;
-        font-size: 0.85rem;
-        border-bottom: 1px solid var(--border2);
-      }
-      .nav-links li:last-child a { border-bottom: none; }
-      .nav-links a::after { display: none; }
-    }
-
     @media (max-width: 640px) {
-      .cards { grid-template-columns: 1fr; }
-      footer { flex-direction: column; align-items: flex-start; }
-      .footer-meta { align-items: flex-start; text-align: left; }
-      .footer-nav { flex-wrap: wrap; gap: 1rem; }
-      .contact { padding: 3rem 1.25rem; }
+      .wrap { width: calc(100% - 2rem); }
+      .proj-grid { grid-template-columns: 1fr; }
+      .trio { grid-template-columns: 1fr; }
+      .col, .col:first-child { padding: 2.4rem 1.25rem; border-right: 0; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .sec-head h2 { font-size: 1.25rem; }
     }
-
-    @media (max-width: 400px) {
-      .contact-meta { grid-template-columns: 1fr; }
-    }
-
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
-      .reveal { opacity: 1; transform: none; }
-    }
-
-    /* Justify paragraph text — only where columns are wide enough to avoid rivers */
-    @media (min-width: 641px) {
-      .card p,
-      .step p,
-      .value-item p,
-      .product-desc {
-        text-align: justify;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-      }
-    }
-
-    /* Center — 1 dong ngan, khong justify */
-    .hero p,
-    .cta-band p,
-    .contact-inner > .contact-sub {
-      text-align: center;
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .avail::before { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <canvas id="networkCanvas" aria-hidden="true"></canvas>
-
-  <!-- NAV -->
-  <nav id="siteNav" aria-label="Main">
-    <a href="#" class="logo" aria-label="Raymond Tran home">
-      <div class="logo-dot"></div>
-      raymond<span class="logo-soft">tran</span>
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="navLinks">
-        <li class="js-proj-link" hidden><a href="#projects" data-i18n="nav-proj">Projects</a></li>
-        <li><a href="#about" data-i18n="nav-about">About</a></li>
-        <li><a href="#services" data-i18n="nav-s">Services</a></li>
-        <li><a href="#process" data-i18n="nav-p">Process</a></li>
-        <li><a href="#contact" data-i18n="nav-c">Contact</a></li>
-      </ul>
-      <div class="lang-switch" role="group" aria-label="Language">
-        <button type="button" class="lang-btn active" id="btn-en" data-lang="en" aria-pressed="true">EN</button>
-        <button type="button" class="lang-btn" id="btn-vi" data-lang="vi" aria-pressed="false">VI</button>
+  <header class="top">
+    <div class="wrap top-in">
+      <a href="#" class="brand" aria-label="Raymond Tran">
+        <b>RAYMOND TRAN</b>
+        <span data-i18n="brand-sub">Coder dạo · Freelance</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#projects" data-i18n="nav-proj">Dự án</a>
+        <a href="#skills" data-i18n="nav-skills">Kỹ năng</a>
+        <a href="#process" data-i18n="nav-process">Quy trình</a>
+        <a href="#contact" data-i18n="nav-contact">Liên hệ</a>
+      </nav>
+      <div class="top-right">
+        <span class="avail" data-i18n="avail">Nhận dự án</span>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" class="active" data-lang="vi" aria-pressed="true">VI</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
       </div>
-      <div class="nav-status" data-i18n="nav-status">NHẬN DỰ ÁN</div>
-      <button type="button" class="nav-toggle" id="navToggle" aria-controls="navLinks" aria-expanded="false" aria-label="Open menu">
-        <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
-        <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-      </button>
     </div>
-  </nav>
+  </header>
 
   <main>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-glow"></div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-word" aria-hidden="true">PORTFOLIO</div>
+      <div class="hero-photo"><img src="user.jpg" alt="Raymond Tran" width="720" height="720" fetchpriority="high" onerror="this.remove()" /></div>
 
-    <div class="hero-tag" data-i18n="hero-tag">CODER DẠO · FREELANCE</div>
-
-    <h1 data-i18n-html="hero-h1">Raymond<br><em>Tran</em></h1>
-
-    <p class="hero-sub" id="typedText" aria-live="off"></p>
-
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary" data-i18n="btn-start">Xem dự án</a>
-      <a href="#contact" class="btn-secondary" data-i18n="btn-explore">$ liên-hệ --mình</a>
-    </div>
-
-    <div class="hero-metrics">
-      <div class="metric">
-        <div class="metric-val">100%</div>
-        <div class="metric-label" data-i18n="metric-built">Custom built</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">&lt; 24h</div>
-        <div class="metric-label" data-i18n="metric-resp">Response time</div>
-      </div>
-      <div class="metric">
-        <div class="metric-val">5+</div>
-        <div class="metric-label" data-i18n="metric-margin">Projects Delivered</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section class="projects" id="projects" hidden>
-    <h2 class="section-label reveal" data-i18n="s-proj">Projects</h2>
-    <div class="projects-grid" id="projectsGrid"></div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <h2 class="section-label reveal" data-i18n="s-about">Giới thiệu</h2>
-    <div class="about-grid reveal">
-      <div class="about-photo">
-        <span class="about-initials" aria-hidden="true">RT</span>
-        <img src="user.jpg" alt="Raymond Tran" loading="lazy" onerror="this.remove()" />
-      </div>
-      <div class="about-text">
-        <h3 data-i18n="ab-h">Chào, mình là Raymond</h3>
-        <p data-i18n="ab-p1">Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.</p>
-        <p data-i18n="ab-p2">Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau. Mỗi dự án bên trên là một bước trên con đường đó, và mình ghi lại những gì học được ở đây.</p>
-      </div>
-    </div>
-
-    <div class="about-path-title reveal" data-i18n="ab-path">// những mảnh ghép mình đang ghép lại</div>
-    <div class="path-grid">
-      <div class="path-item reveal reveal-delay-1">
-        <div class="path-num">01</div>
-        <h4 data-i18n="ab1-h">Giao diện</h4>
-        <p data-i18n="ab1-p">Làm cho thứ người dùng nhìn thấy gọn, nhanh và dễ dùng trên cả điện thoại lẫn máy tính.</p>
-        <ul class="path-tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>TypeScript</li><li>React</li></ul>
-      </div>
-      <div class="path-item reveal reveal-delay-2">
-        <div class="path-num">02</div>
-        <h4 data-i18n="ab2-h">Xử lý phía sau</h4>
-        <p data-i18n="ab2-p">Viết nghiệp vụ, phân quyền, API và những đoạn code mà người dùng không bao giờ thấy nhưng luôn cần.</p>
-        <ul class="path-tags"><li>PHP</li><li>REST API</li><li>Firebase</li><li>Dart</li></ul>
-      </div>
-      <div class="path-item reveal reveal-delay-3">
-        <div class="path-num">03</div>
-        <h4 data-i18n="ab3-h">Dữ liệu</h4>
-        <p data-i18n="ab3-p">Thiết kế bảng sao cho số liệu luôn khớp: kho, công nợ, đơn hàng, báo cáo.</p>
-        <ul class="path-tags"><li>MySQL</li><li>Firestore</li><li>SQL</li></ul>
-      </div>
-      <div class="path-item reveal" style="transition-delay:.4s">
-        <div class="path-num">04</div>
-        <h4 data-i18n="ab4-h">Đưa lên chạy thật</h4>
-        <p data-i18n="ab4-p">Triển khai, tên miền, tự động hóa và theo dõi để sản phẩm chạy ổn sau khi bàn giao.</p>
-        <ul class="path-tags"><li>Git</li><li>GitHub Actions</li><li>Hosting</li><li>Domain</li></ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <h2 class="section-label reveal" data-i18n="s-what">Mình làm được gì</h2>
-    <div class="cards">
-
-      <div class="card reveal reveal-delay-1">
-        <div class="card-num" data-i18n="c1-num">01 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-          <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
-        </svg>
-        <h3 data-i18n="c1-h">Custom software development</h3>
-        <p data-i18n="c1-p">Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.</p>
-      </div>
-
-      <div class="card reveal reveal-delay-2">
-        <div class="card-num" data-i18n="c2-num">02 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-        </svg>
-        <h3 data-i18n="c2-h">Workflow automation</h3>
-        <p data-i18n="c2-p">Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.</p>
-      </div>
-
-      <div class="card reveal reveal-delay-3">
-        <div class="card-num" data-i18n="c3-num">03 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        <h3 data-i18n="c3-h">Ongoing support &amp; maintenance</h3>
-        <p data-i18n="c3-p">We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.</p>
-      </div>
-
-      <div class="card reveal" style="transition-delay:.4s">
-        <div class="card-num" data-i18n="c4-num">04 / SERVICE</div>
-        <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
-        </svg>
-        <h3 data-i18n="c4-h">System integration</h3>
-        <p data-i18n="c4-p">Connect your existing tools, APIs, and platforms into one coherent system. No more data silos or manual handoffs between apps.</p>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- PRODUCTS -->
-  <section class="products" id="products" hidden>
-    <h2 class="section-label reveal" data-i18n="s-prod">Our products</h2>
-    <div class="products-grid">
-
-      <div class="product-card reveal reveal-delay-1">
-        <div class="product-badge" data-i18n="pr-live">LIVE</div>
-        <h3 class="product-name">simple<span>DMS</span></h3>
-        <div class="product-tagline" data-i18n="dms-tag">// Distribution Management System</div>
-        <p class="product-desc" data-i18n="dms-desc">A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.</p>
-        <ul class="product-features">
-          <li data-i18n="dms-f1">Order management with multi-warehouse inventory</li>
-          <li data-i18n="dms-f2">GPS-verified delivery routes &amp; shipper tracking</li>
-          <li data-i18n="dms-f3">Debt ledger with VietQR dynamic payment</li>
-          <li data-i18n="dms-f4">Real-time dashboard for owners</li>
-          <li data-i18n="dms-f5">Role-based access for staff &amp; shippers</li>
-        </ul>
-        <a href="#contact" class="product-cta" data-i18n="pr-demo">Request a demo</a>
-      </div>
-
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-badge" data-i18n="pr-live">LIVE</div>
-        <h3 class="product-name">simple<span>RMS</span></h3>
-        <div class="product-tagline" data-i18n="rms-tag">// Repair Management System</div>
-        <p class="product-desc" data-i18n="rms-desc">A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.</p>
-        <ul class="product-features">
-          <li data-i18n="rms-f1">End-to-end repair ticket lifecycle management</li>
-          <li data-i18n="rms-f2">Dual warranty tracking per device &amp; repair</li>
-          <li data-i18n="rms-f3">Customer portal via Zalo OA (no app install needed)</li>
-          <li data-i18n="rms-f4">QR-code static payment integration</li>
-          <li data-i18n="rms-f5">Custom fields engine for multi-industry expansion</li>
-        </ul>
-        <a href="#contact" class="product-cta" data-i18n="pr-demo">Request a demo</a>
-      </div>
-
-      <div class="product-card is-dev reveal" style="transition-delay:.3s">
-        <div class="product-badge" data-i18n="pr-dev">IN DEVELOPMENT</div>
-        <h3 class="product-name">simple<span>Work</span></h3>
-        <div class="product-tagline" data-i18n="work-tag">// Unified Business Management</div>
-        <p class="product-desc" data-i18n="work-desc">One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.</p>
-        <ul class="product-features">
-          <li data-i18n="work-f1">HR management &amp; employee records</li>
-          <li data-i18n="work-f2">Client &amp; contact relationship tracking</li>
-          <li data-i18n="work-f3">Contract lifecycle management</li>
-          <li data-i18n="work-f4">Modular activation — pay for what you use</li>
-          <li data-i18n="work-f5">Single login for your entire team</li>
-        </ul>
-        <a href="#contact" class="product-cta" data-i18n="pr-waitlist">Join waitlist</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="process" id="process">
-    <h2 class="section-label reveal" data-i18n="s-how">How we work</h2>
-    <div class="steps">
-      <div class="step reveal reveal-delay-1">
-        <div class="step-num">01</div>
-        <h3 data-i18n="p1-h">Discover</h3>
-        <p data-i18n="p1-p">We listen to how your business actually runs and define the real problem before writing a single line of code.</p>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-num">02</div>
-        <h3 data-i18n="p2-h">Design</h3>
-        <p data-i18n="p2-p">We map out the solution and present a clear proposal. You know exactly what you're getting before we begin.</p>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-num">03</div>
-        <h3 data-i18n="p3-h">Build</h3>
-        <p data-i18n="p3-p">We build close to the agreed design and keep you updated throughout. No black boxes, no surprises.</p>
-      </div>
-      <div class="step reveal" style="transition-delay:.4s">
-        <div class="step-num">04</div>
-        <h3 data-i18n="p4-h">Deliver &amp; support</h3>
-        <p data-i18n="p4-p">We deploy, train your team, and stay available when you need to scale or hit a snag down the road.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- VALUES -->
-  <section class="values">
-    <h2 class="section-label reveal" data-i18n="s-why">Vì sao chọn mình</h2>
-    <div class="value-grid">
-      <div class="value-item reveal reveal-delay-1">
-        <h3 data-i18n="v1-h">Built around you</h3>
-        <p data-i18n="v1-p">No templates forced onto your workflow. Every solution is designed specifically for how you operate.</p>
-      </div>
-      <div class="value-item reveal reveal-delay-2">
-        <h3 data-i18n="v2-h">In it for the long haul</h3>
-        <p data-i18n="v2-p">Not just a one-time delivery. We grow alongside your business and stay accountable after go-live.</p>
-      </div>
-      <div class="value-item reveal reveal-delay-3">
-        <h3 data-i18n="v3-h">Fast without cutting corners</h3>
-        <p data-i18n="v3-p">AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA BAND -->
-  <section class="cta-band">
-    <div class="terminal reveal" aria-hidden="true">
-      <div class="terminal-bar">
-        <div class="t-dot red"></div>
-        <div class="t-dot yellow"></div>
-        <div class="t-dot green"></div>
-        <span class="terminal-title">raymond ~ contact</span>
-      </div>
-      <div class="terminal-body">
-        <span class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> init new-project --client=you</span></span>
-        <span class="t-line t-out">✓ Project initialized</span>
-        <span class="t-line t-out">✓ Requirements analyzed</span>
-        <span class="t-line t-out">✓ Solution designed</span>
-        <span class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> deploy --env=production</span></span>
-        <span class="t-line t-out">✓ Build complete. Ready to ship.</span>
-        <span class="t-line t-muted"># Your project is next<span class="t-cursor"></span></span>
-      </div>
-    </div>
-    <h2 class="reveal" data-i18n="cta-h">Ready to start your project?</h2>
-    <p class="reveal reveal-delay-1" data-i18n="cta-p">Tell us what problem you're trying to solve — we'll take it from there.</p>
-    <a href="#contact" class="btn-primary reveal reveal-delay-2" data-i18n="cta-btn">Get in touch</a>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner reveal">
-
-      <h2 data-i18n="contact-h">Get in touch</h2>
-      <p class="contact-sub" data-i18n="contact-sub">// leave your details. response_time &lt; 24h</p>
-
-      <div class="vn-badge">
-        <svg class="flag-vn" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#DA251D"/><polygon fill="#FFFF00" points="15,4 18.53,14.85 9.29,8.15 20.71,8.15 11.47,14.85"/></svg>
-        <span data-i18n="vn-badge">Proudly built in Vietnam · Ho Chi Minh City</span>
-      </div>
-
-      <div class="contact-meta">
-        <div class="contact-meta-item">
-          <span class="contact-meta-label" data-i18n="label-loc">location</span>
-          <span class="contact-meta-val" data-i18n="val-loc">Ho Chi Minh City,&nbsp;VN</span>
-        </div>
-        <div class="contact-meta-item">
-          <span class="contact-meta-label" data-i18n="label-email">email</span>
-          <span class="contact-meta-val"><a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a></span>
-        </div>
-        <div class="contact-meta-item">
-          <span class="contact-meta-label" data-i18n="label-resp">response</span>
-          <span class="contact-meta-val" data-i18n="val-resp">&lt; 24 hours</span>
-        </div>
-        <div class="contact-meta-item">
-          <span class="contact-meta-label" data-i18n="label-hotline">hotline</span>
-          <span class="contact-meta-val"><a href="tel:+84932197026">0932 197 026</a></span>
-        </div>
-      </div>
-
-      <div class="contact-wrap">
-        <form id="contactForm">
-          <!-- Web3Forms access key: get one free at https://web3forms.com and paste it here -->
-          <input type="hidden" name="access_key" value="7108fe4f-a3bc-4cfa-b651-209011e9f86f" />
-          <input type="hidden" name="subject" value="New project inquiry — simplesoft.com.vn" />
-          <input type="hidden" name="from_name" value="Raymond Tran Portfolio" />
-          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
-
-          <div class="form-grid-full">
-            <div class="form-field">
-              <label for="name" data-i18n="label-name">full_name</label>
-              <input type="text" id="name" name="name" autocomplete="name" placeholder="Nguyen Van A" data-i18n-ph="ph-name" required />
-            </div>
-            <div class="form-field">
-              <label for="phone" data-i18n="label-phone">phone</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+84 901 234 567" data-i18n-ph="ph-phone" />
-            </div>
-            <div class="form-field">
-              <label for="email" data-i18n="label-email-f">email</label>
-              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@company.com" data-i18n-ph="ph-email" required />
-            </div>
-            <div class="form-field">
-              <label for="message" data-i18n="label-msg">project_brief</label>
-              <textarea id="message" name="message" placeholder="We're looking to build a system that..." data-i18n-ph="ph-msg" required></textarea>
-            </div>
+      <div class="wrap hero-grid">
+        <div class="hero-left">
+          <div class="hello" data-i18n="hello">Xin chào, mình là</div>
+          <h1 class="name">Raymond<br>Tran</h1>
+          <div class="role" data-i18n="role">Coder dạo &amp; Web developer</div>
+          <p class="hero-p" data-i18n="hero-p">Mình thiết kế, viết và đưa phần mềm lên chạy thật: từ giao diện, API đến cơ sở dữ liệu. Làm gọn, làm đúng, giao đúng hẹn.</p>
+          <div class="cta-row">
+            <a href="#projects" class="btn" data-i18n="btn-work">Xem dự án</a>
+            <a href="#contact" class="btn ghost" data-i18n="btn-contact">Liên hệ</a>
           </div>
-          <button type="submit" class="btn-primary" id="submitBtn" style="width:100%;margin-top:1rem">
-            <span id="btnText" data-i18n="btn-send">$ send --message</span>
-          </button>
-        </form>
-
-        <div id="formSuccess" class="form-success" role="status" hidden>
-          <div class="form-success-icon" aria-hidden="true">✓</div>
-          <div class="form-status" data-i18n="ok-title">MESSAGE_SENT // STATUS: 200 OK</div>
-          <div class="form-success-note" data-i18n="ok-note">We'll get back to you within 24 hours.</div>
         </div>
 
-        <div id="formError" class="form-error" role="alert" hidden>
-          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.</div>
+        <div class="hero-right">
+          <div class="hero-mid">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>
+          <span data-i18n="hero-mid">Biến ý tưởng thành sản phẩm chạy thật.</span>
+          </div>
+          <div class="stat"><b id="statProjects">12</b><span data-i18n="st-proj">Dự án đã làm</span></div>
+          <div class="stat"><b>&lt;24h</b><span data-i18n="st-resp">Thời gian phản hồi</span></div>
+          <div class="stat"><b>100%</b><span data-i18n="st-custom">Làm theo yêu cầu</span></div>
         </div>
       </div>
+    </section>
 
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2 data-i18n="s-proj">Dự án nổi bật</h2>
+          <span class="rule"></span>
+          <button type="button" id="toggleAll" hidden>
+            <span id="toggleLabel" data-i18n="view-all">Xem tất cả</span>
+            <svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 6h20M15 1l5 5-5 5"/></svg>
+          </button>
+        </div>
+        <div class="proj-grid" id="projGrid"></div>
+        <div class="proj-grid proj-more" id="projMore" hidden></div>
+      </div>
+    </section>
+
+    <!-- SKILLS / PROCESS / QUOTE -->
+    <div class="trio">
+      <section class="col" id="skills">
+        <h2 data-i18n="s-about">Về mình</h2>
+        <p class="about-p" data-i18n="ab-p1">Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.</p>
+        <p class="about-p" data-i18n="ab-p2">Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau.</p>
+
+        <h3 data-i18n="s-skills">Kỹ năng</h3>
+        <p class="group-note" data-i18n="sk1">Giao diện</p>
+        <ul class="chips"><li>HTML / CSS</li><li>JavaScript</li><li>TypeScript</li><li>React</li></ul>
+        <p class="group-note" style="margin-top:1rem" data-i18n="sk2">Xử lý phía sau</p>
+        <ul class="chips"><li>PHP</li><li>REST API</li><li>Firebase</li><li>Dart</li></ul>
+        <p class="group-note" style="margin-top:1rem" data-i18n="sk3">Dữ liệu</p>
+        <ul class="chips"><li>MySQL</li><li>Firestore</li><li>SQL</li></ul>
+        <p class="group-note" style="margin-top:1rem" data-i18n="sk4">Đưa lên chạy thật</p>
+        <ul class="chips"><li>Git</li><li>GitHub Actions</li><li>Hosting</li><li>Domain</li></ul>
+      </section>
+
+      <section class="col" id="process">
+        <h2 data-i18n="s-process">Quy trình làm việc</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="step-n">01</span>
+            <span class="step-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+            <div><h4 data-i18n="p1-h">Tìm hiểu</h4><p data-i18n="p1-p">Mình nghe cách bạn thực sự vận hành và xác định đúng vấn đề trước khi viết dòng code đầu tiên.</p></div>
+          </div>
+          <div class="step">
+            <span class="step-n">02</span>
+            <span class="step-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+            <div><h4 data-i18n="p2-h">Thiết kế</h4><p data-i18n="p2-p">Mình phác thảo giải pháp và gửi đề xuất rõ ràng. Bạn biết chính xác mình sẽ nhận gì trước khi bắt đầu.</p></div>
+          </div>
+          <div class="step">
+            <span class="step-n">03</span>
+            <span class="step-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <div><h4 data-i18n="p3-h">Phát triển</h4><p data-i18n="p3-p">Mình làm sát thiết kế đã chốt và báo tiến độ thường xuyên. Không hộp đen, không bất ngờ.</p></div>
+          </div>
+          <div class="step">
+            <span class="step-n">04</span>
+            <span class="step-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></span>
+            <div><h4 data-i18n="p4-h">Bàn giao &amp; đồng hành</h4><p data-i18n="p4-p">Mình triển khai, hướng dẫn đội ngũ của bạn và sẵn sàng hỗ trợ khi cần mở rộng hoặc gặp sự cố.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="col quote">
+        <div>
+          <svg class="qm" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 7h4v4c0 3-1.5 5-4 6l-1-1.6c1.3-.7 2-1.8 2-3.4H7zm8 0h4v4c0 3-1.5 5-4 6l-1-1.6c1.3-.7 2-1.8 2-3.4h-1z"/></svg>
+          <blockquote data-i18n="quote">Phần mềm tốt không chỉ ở chỗ nó trông thế nào, mà ở chỗ nó chạy ra sao.</blockquote>
+          <div class="sign">Raymond</div>
+        </div>
+        <small data-i18n="quote-small">Cùng làm ra thứ gì đó đáng dùng.</small>
+      </section>
     </div>
-  </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="wrap contact-grid">
+        <div class="reveal">
+          <h2><span data-i18n="c-h">Cùng làm việc nào</span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg></h2>
+          <p class="contact-p" data-i18n="c-p">Mình đang nhận dự án mới và hợp tác dài hạn. Kể mình nghe bài toán của bạn, mình phản hồi trong 24 giờ.</p>
+          <div class="avail-pill"><i>→</i><span data-i18n="c-avail">Đang nhận dự án</span></div>
+        </div>
+
+        <ul class="rows reveal">
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></i><a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a></li>
+          <li><i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></i><a href="https://github.com/linhtrantm" target="_blank" rel="noopener">github.com/linhtrantm</a></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.8 19.8 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></i><a href="tel:+84932197026">0932 197 026</a></li>
+          <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></i><span data-i18n="c-loc">TP. Hồ Chí Minh, Việt Nam</span></li>
+        </ul>
+
+        <div class="reveal">
+          <form id="contactForm">
+            <input type="hidden" name="access_key" value="7108fe4f-a3bc-4cfa-b651-209011e9f86f" />
+            <input type="hidden" name="subject" value="New inquiry — Raymond Tran Portfolio" />
+            <input type="hidden" name="from_name" value="Raymond Tran Portfolio" />
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+            <div class="field"><label for="name" data-i18n="f-name">Họ và tên</label><input type="text" id="name" name="name" autocomplete="name" required /></div>
+            <div class="field"><label for="email" data-i18n="f-email">Email</label><input type="email" id="email" name="email" autocomplete="email" required /></div>
+            <div class="field"><label for="message" data-i18n="f-msg">Bạn cần làm gì?</label><textarea id="message" name="message" required></textarea></div>
+            <button type="submit" class="btn" id="submitBtn"><span id="btnText" data-i18n="f-send">Gửi cho mình</span></button>
+          </form>
+          <div id="formOk" class="form-note" role="status" hidden data-i18n="f-ok">Đã gửi. Mình sẽ phản hồi bạn trong vòng 24 giờ.</div>
+          <div id="formErr" class="form-note" role="alert" hidden><span data-i18n="f-err">Gửi không thành công. Vui lòng thử lại hoặc email</span> <a href="mailto:raymondtrantm@gmail.com" class="red">raymondtrantm@gmail.com</a></div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- FOOTER -->
   <footer>
-    <div>
-      <a href="#" class="footer-logo">raymond<span>tran</span></a>
-      <span class="footer-tagline" data-i18n="foot-tag">// software, made simple</span>
-    </div>
-    <ul class="footer-nav">
-      <li class="js-proj-link" hidden><a href="#projects" data-i18n="foot-nav-proj">projects</a></li>
-      <li><a href="#about" data-i18n="foot-nav-about">about</a></li>
-      <li><a href="#services" data-i18n="foot-nav-s">services</a></li>
-      <li><a href="#process" data-i18n="foot-nav-p">process</a></li>
-      <li><a href="#contact" data-i18n="foot-nav-c">contact</a></li>
-    </ul>
-    <div class="footer-meta">
-      <span class="footer-copy">© 2026 simplesoft.com.vn · <svg class="flag-vn" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#DA251D"/><polygon fill="#FFFF00" points="15,4 18.53,14.85 9.29,8.15 20.71,8.15 11.47,14.85"/></svg> <span data-i18n="foot-made">Made in Vietnam</span></span>
-      <a href="tel:+84932197026" class="footer-phone">☎ 0932 197 026</a>
+    <div class="wrap">
+      <span>© 2026 Raymond Tran · simplesoft.com.vn</span>
+      <span><svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#DA251D"/><polygon fill="#FFFF00" points="15,4 18.53,14.85 9.29,8.15 20.71,8.15 11.47,14.85"/></svg> <span data-i18n="foot-made">Làm tại Việt Nam</span></span>
     </div>
   </footer>
 
   <script>
-    // ── EPIC SPACE TO EARTH SCROLL SCENE
-    const canvas = document.getElementById('networkCanvas');
-
-    // ── PERFORMANCE DETECTION
-    const _perf = (() => {
-      const cores = navigator.hardwareConcurrency || 2;
-      const mem   = navigator.deviceMemory || 4; // GB, not all browsers support
-      const dpr   = window.devicePixelRatio || 1;
-      const ua    = navigator.userAgent;
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-
-      // Score: higher = more capable
-      let score = cores * 10 + mem * 5;
-      if(dpr >= 2)   score -= 10; // retina = more pixels to fill
-      if(isMobile)   score -= 20;
-
-      // FPS benchmark — run after first few frames
-      let _fps = 60, _fpsFrames = 0, _fpsStart = 0;
-
-      const LOW  = score < 30;
-      const MID  = score >= 30 && score < 60;
-      const HIGH = score >= 60;
-
-      return {
-        LOW, MID, HIGH, isMobile,
-        // Quality multipliers
-        starCount:    LOW ? 120 : MID ? 280 : 590,
-        satCount:     LOW ? 4   : MID ? 8   : 12,
-        shooters:     LOW ? false : true,
-        cityDots:     LOW ? false : true,  // dots vs simple silhouette
-        cloudCount:   LOW ? 3   : MID ? 5  : 7,
-        resScale:     LOW ? 0.55 : MID ? 0.75 : 1.0,
-        fps:          LOW ? 24  : MID ? 36  : 60,
-      };
-    })();
-
-    // Apply canvas resolution scaling
-    const _resScale = _perf.resScale;
-    const ctx = canvas.getContext('2d');
-    let W, H, mouse = {x:-999,y:-999}, animT = 0;
-    // dtF = elapsed frames at 60fps, so per-frame motion stays speed-consistent on throttled devices
-    let dtF = 1, _lastFrame = 0;
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let scrollProgress = 0; // 0 = space, 1 = ground
-
-    // ── SCROLL TRACKING
-    function updateScroll() {
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      scrollProgress = maxScroll > 0 ? Math.min(1, window.scrollY / maxScroll) : 0;
-    }
-    window.addEventListener('scroll', updateScroll, {passive:true});
-
-    // ── REAL-TIME TIME OF DAY
-    // Returns 0.0-1.0 representing 0h-24h
-    function getTimeProgress() {
-      const now = new Date();
-      return (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 86400;
-    }
-
-    // Get sky phase based on hour (0-23)
-    // Returns object with colors and sun/moon position
-    function getSkyPhase() {
-      const now = new Date();
-      const h = now.getHours() + now.getMinutes()/60;
-
-      // Define key time points and their sky colors [r,g,b]
-      const phases = [
-        { t:0,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'midnight' },
-        { t:4,   sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],   sun:null,        moon:true,  stars:1.0,  label:'latedark' },
-        { t:5,   sky0:[20,8,25],   sky1:[60,20,40],  sky2:[100,45,30], sun:{y:0.96,x:0.08}, moon:false, stars:0.3,  label:'predawn'  },
-        { t:6,   sky0:[180,80,30], sky1:[220,110,50],sky2:[255,165,80],sun:{y:0.88,x:0.13}, moon:false, stars:0.0,  label:'sunrise'  },
-        { t:7,   sky0:[80,140,210],sky1:[120,180,240],sky2:[160,210,255],sun:{y:0.70,x:0.22}, moon:false, stars:0.0,  label:'morning'  },
-        { t:10,  sky0:[30,110,200],sky1:[60,150,230],sky2:[100,185,255],sun:{y:0.42,x:0.36}, moon:false, stars:0.0,  label:'late-morning'},
-        { t:12,  sky0:[20,95,190], sky1:[45,135,220],sky2:[85,175,255], sun:{y:0.14,x:0.52}, moon:false, stars:0.0,  label:'noon'     },
-        { t:14,  sky0:[25,100,195],sky1:[50,140,225],sky2:[90,178,255], sun:{y:0.28,x:0.65}, moon:false, stars:0.0,  label:'afternoon'},
-        { t:16,  sky0:[60,120,190],sky1:[100,155,215],sky2:[140,190,245],sun:{y:0.55,x:0.76}, moon:false, stars:0.0,  label:'lateaft'  },
-        { t:17,  sky0:[180,90,30], sky1:[220,120,50],sky2:[255,160,70], sun:{y:0.78,x:0.85}, moon:false, stars:0.05, label:'sunset'   },
-        { t:18,  sky0:[100,40,50], sky1:[160,60,50], sky2:[210,90,40],  sun:{y:0.93,x:0.91}, moon:true,  stars:0.2,  label:'dusk'     },
-        { t:19,  sky0:[15,10,35],  sky1:[25,18,55],  sky2:[40,30,75],   sun:null,      moon:true,  stars:0.7,  label:'night'    },
-        { t:21,  sky0:[4,6,20],    sky1:[8,12,35],   sky2:[12,18,48],   sun:null,      moon:true,  stars:1.0,  label:'deepnight'},
-        { t:24,  sky0:[2,4,15],    sky1:[4,6,22],    sky2:[6,10,30],    sun:null,      moon:true,  stars:1.0,  label:'midnight2'},
-      ];
-
-      // Find surrounding phases and interpolate
-      let p0 = phases[0], p1 = phases[phases.length-1];
-      for(let i=0; i<phases.length-1; i++){
-        if(h >= phases[i].t && h < phases[i+1].t){
-          p0 = phases[i]; p1 = phases[i+1]; break;
-        }
-      }
-      const t2 = p1.t > p0.t ? (h - p0.t) / (p1.t - p0.t) : 0;
-      const ei = t2 < 0.5 ? 2*t2*t2 : -1+(4-2*t2)*t2; // ease
-
-      return {
-        sky0:    lerpColor(p0.sky0, p1.sky0, ei),
-        sky1:    lerpColor(p0.sky1, p1.sky1, ei),
-        sky2:    lerpColor(p0.sky2, p1.sky2, ei),
-        hasSun:  p0.sun !== null || p1.sun !== null,
-        sunY:    p0.sun && p1.sun ? lerp(p0.sun.y, p1.sun.y, ei) : (p0.sun ? p0.sun.y : p1.sun ? p1.sun.y : 0.5),
-        sunX:    p0.sun && p1.sun ? lerp(p0.sun.x, p1.sun.x, ei) : (p0.sun ? p0.sun.x : p1.sun ? p1.sun.x : 0.5),
-        hasMoon: lerp(p0.moon?1:0, p1.moon?1:0, ei) > 0.3,
-        moonAlpha: lerp(p0.moon?1:0, p1.moon?1:0, ei),
-        starAlpha: lerp(p0.stars, p1.stars, ei),
-        isDaytime: h >= 6 && h < 18,
-        isDay: h >= 7 && h < 17,
-        isSunrise: h >= 5 && h < 7,
-        isSunset: h >= 17 && h < 19,
-        hour: h,
-        label: p0.label,
-      };
-    }
-
-    // ── LERP HELPER
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function lerpColor(c1, c2, t) {
-      return [
-        Math.round(lerp(c1[0], c2[0], t)),
-        Math.round(lerp(c1[1], c2[1], t)),
-        Math.round(lerp(c1[2], c2[2], t)),
-      ];
-    }
-    function rgba(rgb, a) { return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`; }
-
-    // ── COLOR PALETTE per altitude
-    const COLORS = {
-      space:  [2,  4,  8],
-      atmo:   [5,  20, 60],
-      high:   [10, 60, 130],
-      mid:    [20, 100, 180],
-      low:    [80, 160, 220],
-      cloud:  [12, 18, 42],
-      ground: [8, 12, 28],
-    };
-
-    // ── STARS
-    let stars = [];
-    function initStars() {
-      stars = [];
-      const n = _perf.starCount;
-      const n0 = Math.round(n*0.65), n1 = Math.round(n*0.26), n2 = Math.round(n*0.09);
-      for(let i=0;i<n0;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*0.7+0.1,alpha:Math.random()*0.4+0.1,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.008+0.002,ox:0,oy:0,layer:0});
-      for(let i=0;i<n1;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.0+0.3,alpha:Math.random()*0.5+0.3,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.012+0.005,ox:0,oy:0,layer:1});
-      for(let i=0;i<n2;i++)  stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.8,alpha:Math.random()*0.4+0.6,twinkle:Math.random()*Math.PI*2,speed:Math.random()*0.02+0.01,ox:0,oy:0,layer:2});
-      stars.forEach(s=>{s.ox=s.x;s.oy=s.y;});
-    }
-
-    // ── CLOUDS
-    let clouds = [];
-    function initClouds() {
-      clouds = [];
-      for(let i=0;i<22;i++) {
-        clouds.push({
-          x: Math.random()*W*1.5 - W*0.25,
-          y: Math.random()*H,
-          w: 120 + Math.random()*280,
-          h: 40  + Math.random()*80,
-          speed: 0.12 + Math.random()*0.25,
-          alpha: 0.5 + Math.random()*0.5,
-          layer: Math.floor(Math.random()*3),
-          puffs: Array.from({length: 4+Math.floor(Math.random()*4)}, ()=>({
-            dx: (Math.random()-0.5)*0.8,
-            dy: (Math.random()-0.5)*0.4,
-            r:  0.3 + Math.random()*0.5,
-          }))
-        });
-      }
-    }
-
-    // ── EARTH
-    const EARTH = {
-      get cx(){return W*0.85},
-      get cy(){return H*0.88},
-      baseR: 0,
-      get r() {
-        // Earth grows as we approach
-        const sp = clamp(scrollProgress*2, 0, 1);
-        return Math.min(W,H) * lerp(0.25, 2.5, easeInOut(sp));
-      }
-    };
-
-    // ── SATELLITES (12)
-    const SATS = [];
-    function initSats() {
-      SATS.length = 0;
-      const configs = [
-        {a:1.35,b:0.38,tilt:-0.2, speed:0.007,  size:7,  color:'#60a5fa'},
-        {a:1.5, b:0.32,tilt: 0.4, speed:0.0055, size:5,  color:'#06b6d4'},
-        {a:1.25,b:0.45,tilt:-0.5, speed:0.009,  size:5,  color:'#a78bfa'},
-        {a:1.65,b:0.28,tilt: 0.7, speed:0.0042, size:8,  color:'#f59e0b'},
-        {a:1.4, b:0.5, tilt:-0.8, speed:0.006,  size:5,  color:'#60a5fa'},
-        {a:1.55,b:0.35,tilt: 1.0, speed:0.0075, size:4,  color:'#06b6d4'},
-        {a:1.3, b:0.42,tilt:-1.2, speed:0.008,  size:5,  color:'#34d399'},
-        {a:1.7, b:0.25,tilt: 0.2, speed:0.0038, size:7,  color:'#f472b6'},
-        {a:1.45,b:0.38,tilt:-0.6, speed:0.0065, size:4,  color:'#60a5fa'},
-        {a:1.6, b:0.3, tilt: 0.9, speed:0.005,  size:5,  color:'#06b6d4'},
-        {a:1.8, b:0.22,tilt: 0.5, speed:0.0033, size:7,  color:'#fbbf24'},
-        {a:1.2, b:0.48,tilt:-1.4, speed:0.011,  size:4,  color:'#a78bfa'},
-      ];
-      const usedConfigs = configs.slice(0, _perf.satCount);
-      usedConfigs.forEach((cfg,i)=>{SATS.push({...cfg, angle:(i/usedConfigs.length)*Math.PI*2});});
-    }
-
-    // ── SHOOTING STARS
-    let shooters = [];
-    function spawnShooter() {
-      if(scrollProgress > 0.3) return; // no shooting stars below atmosphere
-      const count = Math.random()<0.3 ? 3 : 1;
-      for(let i=0;i<count;i++){
-        setTimeout(()=>{
-          shooters.push({x:Math.random()*W*0.8,y:Math.random()*H*0.35,vx:4+Math.random()*6,vy:1.5+Math.random()*3,len:60+Math.random()*100,alpha:1,life:1,width:0.8+Math.random()*1.5});
-        }, i*150);
-      }
-    }
-    if(!reduceMotion) {
-      if(_perf.shooters) setInterval(()=>{if(!document.hidden && Math.random()<0.6) spawnShooter();}, 1800);
-      setTimeout(spawnShooter, 500);
-    }
-
-    // ── SAIGON SKYLINE — DOT ART, PIXEL MASK
-    let cityBuildings = null;
-    function initCity() { cityBuildings = true; }
-
-    function drawTerrain(alpha) {
-      if(alpha <= 0) return;
-      const h = H, w = W, t = animT;
-
-      // ── TIME-AWARE SKY
-      const sky = getCachedSkyPhase();
-
-      const skyG = ctx.createLinearGradient(0,0,0,h*0.85);
-      skyG.addColorStop(0,  `rgba(${sky.sky0[0]},${sky.sky0[1]},${sky.sky0[2]},${alpha})`);
-      skyG.addColorStop(0.5,`rgba(${sky.sky1[0]},${sky.sky1[1]},${sky.sky1[2]},${alpha})`);
-      skyG.addColorStop(1,  `rgba(${sky.sky2[0]},${sky.sky2[1]},${sky.sky2[2]},${alpha*0.8})`);
-      ctx.fillStyle=skyG; ctx.fillRect(0,0,w,h);
-
-      // Stars — visible at night, fade during day
-      if(sky.starAlpha > 0.02) {
-        for(let i=0;i<60;i++){
-          const sx=(Math.sin(i*127.1)*0.5+0.5)*w;
-          const sy=(Math.sin(i*311.7)*0.5+0.5)*h*0.42;
-          ctx.globalAlpha=(0.15+Math.sin(t*0.0008+i)*0.12)*alpha*sky.starAlpha;
-          ctx.fillStyle='rgba(210,218,255,1)';
-          ctx.beginPath(); ctx.arc(sx,sy,0.7,0,Math.PI*2); ctx.fill();
-        }
-        ctx.globalAlpha=1;
-      }
-
-      // Sun — daytime
-      if(sky.hasSun && sky.sunY < 1.0) {
-        // sunX: 0=trái → 1=phải trong canvas
-        // sunY: 0=đỉnh trời → 1=đường chân trời (baseY=h*0.68)
-        const skyTop  = h * 0.05;
-        const skyBot  = h * 0.68; // đường chân trời
-        const sunX = w * (sky.sunX || 0.5);
-        const sunY2 = skyTop + (skyBot - skyTop) * sky.sunY;
-        const isSunrise = sky.isSunrise, isSunset = sky.isSunset;
-        const sunCol = isSunrise||isSunset ? [255,160,60] : [255,240,180];
-        const sunSize = isSunrise||isSunset ? w*0.038 : w*0.028;
-
-        // Sun glow
-        const sg=ctx.createRadialGradient(sunX,sunY2,0,sunX,sunY2,sunSize*4);
-        sg.addColorStop(0,`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha*(isSunrise||isSunset?0.4:0.25)})`);
-        sg.addColorStop(0.4,`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha*0.08})`);
-        sg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(sunX,sunY2,sunSize*4,0,Math.PI*2); ctx.fill();
-
-        // Sun disc
-        ctx.fillStyle=`rgba(${sunCol[0]},${sunCol[1]},${sunCol[2]},${alpha})`;
-        ctx.beginPath(); ctx.arc(sunX,sunY2,sunSize,0,Math.PI*2); ctx.fill();
-
-        // Sun rays (only midday)
-        if(sky.isDay && !isSunrise && !isSunset) {
-          ctx.strokeStyle=`rgba(255,240,160,${alpha*0.12})`;
-          ctx.lineWidth=1.5;
-          for(let ri=0;ri<12;ri++){
-            const ra=ri/12*Math.PI*2;
-            ctx.beginPath();
-            ctx.moveTo(sunX+Math.cos(ra)*sunSize*1.3,sunY2+Math.sin(ra)*sunSize*1.3);
-            ctx.lineTo(sunX+Math.cos(ra)*sunSize*3,sunY2+Math.sin(ra)*sunSize*3);
-            ctx.stroke();
-          }
-        }
-
-        // Horizon glow for sunrise/sunset
-        if(isSunrise||isSunset) {
-          const hg=ctx.createLinearGradient(0,h*0.55,0,h*0.75);
-          hg.addColorStop(0,'rgba(0,0,0,0)');
-          hg.addColorStop(0.5,`rgba(255,120,40,${alpha*0.22})`);
-          hg.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=hg; ctx.fillRect(0,h*0.55,w,h*0.2);
-        }
-      }
-
-      // Moon — nighttime
-      if(sky.moonAlpha > 0.05) {
-        const moonX=w*0.8, moonY2=h*0.12;
-        const ma=sky.moonAlpha*alpha;
-        const mg=ctx.createRadialGradient(moonX,moonY2,0,moonX,moonY2,w*0.032);
-        mg.addColorStop(0,`rgba(240,235,195,${ma})`);
-        mg.addColorStop(0.6,`rgba(210,202,160,${ma*0.8})`);
-        mg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=mg; ctx.beginPath(); ctx.arc(moonX,moonY2,w*0.032,0,Math.PI*2); ctx.fill();
-        const mhalo=ctx.createRadialGradient(moonX,moonY2,w*0.032,moonX,moonY2,w*0.1);
-        mhalo.addColorStop(0,`rgba(200,190,140,${ma*0.08})`);
-        mhalo.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=mhalo; ctx.beginPath(); ctx.arc(moonX,moonY2,w*0.1,0,Math.PI*2); ctx.fill();
-      }
-
-      // Clouds — more visible during day
-      const cloudVis = sky.isDay ? 0.6 : sky.isSunrise||sky.isSunset ? 0.4 : 0.15;
-      if(cloudVis > 0.1) {
-        const _cN=_perf.cloudCount||5;
-      for(let ci2=0;ci2<_cN;ci2++){
-          const cx3=((t*0.00008*(1+ci2*0.3)+ci2/5)%1.2-0.1)*w;
-          const cy3=h*(0.2+ci2*0.04);
-          const cw3=w*(0.1+ci2*0.02);
-          const cloudR=ctx.createRadialGradient(cx3,cy3,0,cx3,cy3,cw3);
-          cloudR.addColorStop(0,`rgba(255,255,255,${alpha*cloudVis*0.35})`);
-          cloudR.addColorStop(0.5,`rgba(230,240,255,${alpha*cloudVis*0.15})`);
-          cloudR.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=cloudR; ctx.beginPath(); ctx.arc(cx3,cy3,cw3,0,Math.PI*2); ctx.fill();
-        }
-      }
-
-      const baseY = h * 0.72;
-      const DOT = Math.max(2.5, w * 0.0038);
-      const STEP = DOT * 1.55;
-
-      // ── CORE DOT RENDERER
-      // mask = 2D array of rows (bottom→top), each row = [colStart, colEnd] or array of spans
-      function dotMask(anchorX, anchorY, mask, opts={}) {
-        const {
-          dotColor   = `rgba(185,162,88,${alpha*0.82})`,
-          winColor   = `rgba(255,228,135,${alpha*0.92})`,
-          winDensity = 0.5,
-          colW       = STEP, // horizontal dot spacing
-          rowH       = STEP, // vertical dot spacing
-          antCols    = null, // column indices for antenna dots above row 0
-          antRows    = 3,
-          blinkKey   = anchorX,
-        } = opts;
-
-        const totalRows = mask.length;
-        // Window lights fade during daytime — resolve the colour once per building, not per dot
-        const winAlphaScale = sky.isDay ? 0.15 : sky.isSunrise||sky.isSunset ? 0.5 : 1.0;
-        const winColorScaled = winColor.replace(/[\d.]+\)$/, m => `${parseFloat(m)*winAlphaScale})`);
-
-        for(let ri=0; ri<totalRows; ri++) {
-          const row = mask[ri]; // [startCol, endCol] or [[s1,e1],[s2,e2]...]
-          const spans = (typeof row[0]==='number') ? [row] : row;
-          const rowY = anchorY - ri * rowH;
-
-          spans.forEach(([sc, ec]) => {
-            for(let cc=sc; cc<ec; cc++) {
-              const dx = anchorX + cc * colW;
-              const dy = rowY;
-              const isWin = Math.sin(ri*6.1+cc*11.3+anchorX*0.05) > 1-winDensity*2;
-              ctx.fillStyle = (isWin && ri>0 && ri<totalRows-1) ? winColorScaled : dotColor;
-              if(_perf.cityDots) {
-                ctx.beginPath(); ctx.arc(dx,dy,DOT/2,0,Math.PI*2); ctx.fill();
-              } else {
-                ctx.fillRect(dx-DOT/2,dy-DOT/2,DOT,DOT);
-              }
-            }
-          });
-        }
-
-        // Antenna
-        if(antCols !== null) {
-          antCols.forEach(cc => {
-            for(let ar=1; ar<=antRows; ar++) {
-              const dx = anchorX + cc * colW;
-              const dy = anchorY - (totalRows-1+ar) * rowH;
-              ctx.beginPath(); ctx.arc(dx, dy, DOT/2*0.7, 0, Math.PI*2);
-              ctx.fillStyle = `rgba(140,125,65,${alpha*0.6})`; ctx.fill();
-            }
-            // Blinking red light at top
-            const dx = anchorX + cc * colW;
-            const dy = anchorY - (totalRows-1+antRows) * rowH - DOT;
-            const blink = Math.sin(t*0.002+blinkKey*0.01) > 0;
-            const bg = ctx.createRadialGradient(dx,dy,0,dx,dy,7);
-            bg.addColorStop(0,`rgba(255,40,40,${blink?alpha*0.9:0})`);
-            bg.addColorStop(1,'rgba(0,0,0,0)');
-            ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(dx,dy,7,0,Math.PI*2); ctx.fill();
-            if(blink){ ctx.fillStyle=`rgba(255,50,50,${alpha})`; ctx.beginPath(); ctx.arc(dx,dy,2.2,0,Math.PI*2); ctx.fill(); }
-          });
-        }
-      }
-
-      // ── BACKGROUND FILLER BUILDINGS (generic blocks)
-      const bgColor = `rgba(100,88,48,${alpha*0.32})`;
-      const bgW = `rgba(150,130,65,${alpha*0.38})`;
-      [
-        [.01,6,7],[.08,5,8],[.14,4,6],[.18,6,7],[.22,5,9],
-        [.75,5,7],[.80,4,6],[.85,6,8],[.90,5,7],[.95,4,6],
-      ].forEach(([rx,rows,cols])=>{
-        const mask = Array.from({length:rows},()=>[0,cols]);
-        dotMask(rx*w, baseY, mask, {dotColor:bgColor, winColor:bgW, winDensity:0.2, antCols:null});
-      });
-
-      // Mid layer
-      const midC=`rgba(140,122,66,${alpha*0.55})`;
-      const midW=`rgba(210,185,95,${alpha*0.65})`;
-      [
-        [.01,10,6],[.07,12,5],[.11,9,7],[.16,14,5],[.20,11,6],
-        [.50,10,5],[.55,13,5],[.60,10,6],[.65,11,5],
-        [.87,11,6],[.91,9,5],[.95,12,6],
-      ].forEach(([rx,rows,cols])=>{
-        const mask = Array.from({length:rows},(_, ri)=>{
-          const trim = ri>rows*0.7 ? 0 : Math.floor((1-ri/rows)*0.5);
-          return [trim, cols-trim];
-        });
-        dotMask(rx*w, baseY, mask, {dotColor:midC, winColor:midW, winDensity:0.3});
-      });
-
-      // ══════════════════════════════════════════════
-      // LANDMARK 81 — tallest, slim, multi-faceted taper
-      // Profile: wide base, gradually narrows to a point
-      // Widths per 5-row segment (bottom→top): 8,8,7,7,6,6,5,5,4,3,2,1
-      // ══════════════════════════════════════════════
-      const l81Mask = [];
-      const l81Widths = [8,8,8,7,7,7,6,6,6,5,5,4,4,3,3,2,2,1,1,1];
-      l81Widths.forEach(bw2 => {
-        const pad = Math.floor((8-bw2)/2);
-        l81Mask.push([pad, pad+bw2]);
-      });
-      const l81X = w*0.25;
-      dotMask(l81X, baseY, l81Mask, {
-        dotColor:`rgba(185,162,88,${alpha*0.85})`,
-        winColor:`rgba(215,235,255,${alpha*0.92})`,
-        winDensity:0.52,
-        antCols:[4], antRows:4, blinkKey:l81X,
-      });
-      // LM81 glow
-      const lmtop = baseY - l81Mask.length * STEP;
-      const lmG=ctx.createRadialGradient(l81X+4*STEP,lmtop,0,l81X+4*STEP,lmtop,STEP*5);
-      lmG.addColorStop(0,`rgba(120,180,255,${alpha*0.2})`);
-      lmG.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=lmG; ctx.beginPath(); ctx.arc(l81X+4*STEP,lmtop,STEP*5,0,Math.PI*2); ctx.fill();
-
-      // ══════════════════════════════════════════════
-      // BITEXCO — cylindrical, helipad disc at ~65% height
-      // Key feature: disc jutting left at row ~10 from bottom
-      // ══════════════════════════════════════════════
-      const btMask = [];
-      // Bottom section (rows 0-7): full width 6
-      for(let i=0;i<8;i++) btMask.push([0,6]);
-      // Helipad row: extend left by 4 cols
-      btMask.push([-4,6]); // special wide row = helipad
-      // Above helipad (rows 9-18): slightly narrower
-      for(let i=0;i<4;i++) btMask.push([1,5]);
-      for(let i=0;i<4;i++) btMask.push([1,5]);
-      // Top taper
-      btMask.push([1,5]);
-      btMask.push([2,4]);
-      btMask.push([2,4]);
-      btMask.push([2,4]);
-
-      const btX = w*0.60;
-      // Draw helipad row specially — different color
-      dotMask(btX, baseY, btMask, {
-        dotColor:`rgba(178,155,82,${alpha*0.82})`,
-        winColor:`rgba(255,228,140,${alpha*0.9})`,
-        winDensity:0.48,
-        antCols:[3], antRows:3, blinkKey:btX,
-      });
-      // Helipad highlight dots
-      const hdRowY = baseY - 8*STEP;
-      for(let hd=-4; hd<6; hd++){
-        ctx.beginPath(); ctx.arc(btX+hd*STEP, hdRowY, DOT/2, 0, Math.PI*2);
-        ctx.fillStyle=`rgba(220,195,100,${alpha*0.9})`; ctx.fill();
-      }
-      // Bitexco glow
-      const btTop = baseY - btMask.length*STEP;
-      const btG=ctx.createRadialGradient(btX+3*STEP,btTop,0,btX+3*STEP,btTop,STEP*4);
-      btG.addColorStop(0,`rgba(255,200,80,${alpha*0.14})`);
-      btG.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=btG; ctx.beginPath(); ctx.arc(btX+3*STEP,btTop,STEP*4,0,Math.PI*2); ctx.fill();
-
-      // ══════════════════════════════════════════════
-      // NHÀ THỜ ĐỨC BÀ — 2 gothic towers, rose window center
-      // Distinctive: twin pointed spires, symmetrical
-      // ══════════════════════════════════════════════
-      const ntdX = w*0.38;
-      // Left tower
-      const ltMask=[
-        [0,3],[0,3],[0,3],[0,3],[0,3],[0,3],  // body
-        [1,2],[1,2],[1,2],                      // spire base
-        [1,2],                                  // spire top (single dot)
-      ];
-      dotMask(ntdX, baseY, ltMask, {dotColor:`rgba(165,145,78,${alpha*0.78})`,winColor:`rgba(200,175,88,${alpha*0.7})`,winDensity:0.25,antCols:[1],antRows:2,blinkKey:ntdX});
-      // Right tower
-      const rtX = ntdX + 5*STEP;
-      dotMask(rtX, baseY, ltMask, {dotColor:`rgba(165,145,78,${alpha*0.78})`,winColor:`rgba(200,175,88,${alpha*0.7})`,winDensity:0.25,antCols:[1],antRows:2,blinkKey:rtX});
-      // Main nave (shorter, between towers)
-      const naveMask=Array.from({length:5},()=>[0,5]);
-      dotMask(ntdX+3*STEP, baseY, naveMask, {dotColor:`rgba(150,132,70,${alpha*0.72})`,winColor:`rgba(190,165,80,${alpha*0.6})`,winDensity:0.2});
-      // Rose window dot — center between towers
-      ctx.beginPath(); ctx.arc(ntdX+4.5*STEP, baseY-5*STEP, DOT*1.2, 0, Math.PI*2);
-      ctx.fillStyle=`rgba(220,190,95,${alpha*0.8})`; ctx.fill();
-      ctx.beginPath(); ctx.arc(ntdX+4.5*STEP, baseY-5*STEP, DOT*0.5, 0, Math.PI*2);
-      ctx.fillStyle=`rgba(10,15,40,${alpha})`; ctx.fill();
-
-      // ══════════════════════════════════════════════
-      // BƯU ĐIỆN TP — wide, low, central dome
-      // Distinctive: wide rectangular base, large dome center
-      // ══════════════════════════════════════════════
-      const bdX = w*0.44;
-      // Wide base
-      const bdBaseMask=Array.from({length:4},()=>[0,10]);
-      dotMask(bdX, baseY, bdBaseMask, {dotColor:`rgba(155,135,72,${alpha*0.75})`,winColor:`rgba(200,178,90,${alpha*0.65})`,winDensity:0.22});
-      // Dome — arc of dots
-      const domeCX = bdX+5*STEP, domeCY = baseY-4*STEP;
-      const domeR = STEP*3;
-      for(let ang=Math.PI; ang<=Math.PI*2; ang+=0.25){
-        const dx2=domeCX+Math.cos(ang)*domeR;
-        const dy2=domeCY+Math.sin(ang)*domeR*0.6;
-        ctx.beginPath(); ctx.arc(dx2,dy2,DOT/2,0,Math.PI*2);
-        ctx.fillStyle=`rgba(165,145,75,${alpha*0.8})`; ctx.fill();
-      }
-      // Fill dome interior dots
-      for(let dr=1; dr<3; dr++){
-        for(let ang=Math.PI+0.4; ang<Math.PI*2-0.4; ang+=0.35){
-          const dx2=domeCX+Math.cos(ang)*domeR*(dr/3);
-          const dy2=domeCY+Math.sin(ang)*domeR*0.55*(dr/3);
-          ctx.beginPath(); ctx.arc(dx2,dy2,DOT/2*0.8,0,Math.PI*2);
-          ctx.fillStyle=`rgba(145,128,66,${alpha*0.65})`; ctx.fill();
-        }
-      }
-      // Cross on top
-      ctx.fillStyle=`rgba(190,168,84,${alpha*0.8})`;
-      ctx.fillRect(domeCX-DOT*0.2, domeCY-domeR*0.62-DOT*2, DOT*0.4, DOT*2);
-      ctx.fillRect(domeCX-DOT, domeCY-domeR*0.62-DOT*1.5, DOT*2, DOT*0.4);
-
-      // ── VINHOMES (left, slim pair)
-      const vhMask=[
-        [0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],[0,4],
-        [1,3],[1,3],[1,3],[2,2], // taper
-      ];
-      // Actually fix taper properly
-      const vhMask2=[];
-      for(let i=0;i<13;i++) vhMask2.push([0,4]);
-      vhMask2.push([0,4]);
-      vhMask2.push([1,3]);
-      vhMask2.push([1,3]);
-      vhMask2.push([2,3]); // tip: 1 dot wide, row of 1 — use [2,3] to get 1 dot
-      dotMask(w*0.095, baseY, vhMask2, {dotColor:`rgba(155,135,72,${alpha*0.75})`,winColor:`rgba(210,230,255,${alpha*0.78})`,winDensity:0.38,antCols:[2],antRows:2,blinkKey:w*0.095});
-      // Twin 2
-      const vh2Mask=vhMask2.slice(0,-2);
-      dotMask(w*0.095+5*STEP, baseY, vh2Mask, {dotColor:`rgba(148,130,68,${alpha*0.72})`,winColor:`rgba(205,225,255,${alpha*0.72})`,winDensity:0.35});
-
-      // ── SÔNG SÀI GÒN
-      const riverY=baseY, riverH=h*0.045;
-      ctx.fillStyle=`rgba(6,10,30,${alpha})`; ctx.fillRect(0,riverY,w,riverH);
-      for(let ri=0;ri<w;ri+=STEP*1.8){
-        const sh=Math.sin(t*0.0014+ri*0.045)*2.5;
-        ctx.beginPath(); ctx.arc(ri,riverY+riverH*0.45+sh,DOT*0.42,0,Math.PI*2);
-        ctx.fillStyle=`rgba(160,140,70,${alpha*0.2})`; ctx.fill();
-      }
-
-      // ── GROUND
-      const groundY=riverY+riverH;
-      ctx.fillStyle=`rgba(5,7,16,${alpha})`; ctx.fillRect(0,groundY,w,h-groundY);
-
-      // Road dashes
-      for(let ri=0;ri<w;ri+=STEP*2.2){
-        ctx.beginPath(); ctx.arc(ri,h*0.845,DOT*0.38,0,Math.PI*2);
-        ctx.fillStyle=`rgba(140,120,48,${alpha*0.28})`; ctx.fill();
-      }
-
-      // Cars + motorbikes
-      for(let i=0;i<10;i++){
-        const dir=i%2===0?1:-1;
-        const lY=h*(i%3===0?0.848:i%3===1?0.868:0.885);
-        const bx=((t*0.00012*(0.9+i*0.18)+i/10)%1.2-0.1)*w;
-        const cx2=dir>0?bx:w-bx;
-        const col=dir>0?`rgba(255,240,170,${alpha*0.9})`:`rgba(255,55,55,${alpha*0.88})`;
-        ctx.beginPath(); ctx.arc(cx2+(dir>0?3:-3),lY,DOT*0.65,0,Math.PI*2);
-        ctx.fillStyle=col; ctx.fill();
-        const cg=ctx.createRadialGradient(cx2,lY,0,cx2,lY,18);
-        cg.addColorStop(0,dir>0?`rgba(255,230,140,${alpha*0.15})`:`rgba(255,50,50,${alpha*0.12})`);
-        cg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx2,lY,18,0,Math.PI*2); ctx.fill();
-      }
-
-      // Street lights
-      for(let i=0;i<12;i++){
-        const lx2=w*(i/11), side=i%2===0?1:-1;
-        for(let pd=0;pd<4;pd++){
-          ctx.beginPath(); ctx.arc(lx2,groundY-pd*STEP,DOT*0.38,0,Math.PI*2);
-          ctx.fillStyle=`rgba(90,80,42,${alpha*0.45})`; ctx.fill();
-        }
-        const lpx2=lx2+side*STEP*1.8, lpy2=groundY-3.5*STEP;
-        ctx.beginPath(); ctx.arc(lpx2,lpy2,DOT*0.9,0,Math.PI*2);
-        ctx.fillStyle=`rgba(255,218,100,${alpha*0.92})`; ctx.fill();
-        const lpG=ctx.createRadialGradient(lpx2,lpy2,0,lpx2,lpy2,STEP*3);
-        lpG.addColorStop(0,`rgba(255,205,80,${alpha*0.22})`);
-        lpG.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=lpG; ctx.beginPath(); ctx.arc(lpx2,lpy2,STEP*3,0,Math.PI*2); ctx.fill();
-      }
-
-      // Light pollution (stronger at night, weaker during day)
-      const polStrength = sky.isDay ? 0.04 : sky.isSunrise||sky.isSunset ? 0.09 : 0.16;
-      const polR = sky.isDay ? [120,160,200] : [160,90,20];
-      const polG2=ctx.createLinearGradient(0,h*0.55,0,baseY);
-      polG2.addColorStop(0,'rgba(0,0,0,0)');
-      polG2.addColorStop(1,`rgba(${polR[0]},${polR[1]},${polR[2]},${alpha*polStrength})`);
-      ctx.fillStyle=polG2; ctx.fillRect(0,h*0.55,w,baseY-h*0.55);
-
-      // TIME INDICATOR — small clock overlay
-      const now2 = new Date();
-      const timeStr = now2.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
-      const phaseLabel = sky.isDay ? (sky.hour<12?'🌅 Buổi sáng':sky.hour<15?'☀️ Buổi trưa':'🌤 Buổi chiều') : sky.isSunrise?'🌄 Bình minh':sky.isSunset?'🌇 Hoàng hôn':'🌙 Ban đêm';
-      ctx.save();
-      ctx.globalAlpha=alpha*0.7;
-      ctx.font=`${Math.max(10,w*0.009)}px 'JetBrains Mono', monospace`;
-      ctx.fillStyle='rgba(255,255,255,0.6)';
-      ctx.textAlign='right';
-      ctx.fillText(timeStr + '  ' + phaseLabel, w*0.97, h*0.08);
-      ctx.restore();
-    }
-
-    // ── CONTINENT PATHS for earth wireframe
-    const CONTINENT_PATHS = [
-      [[-170,72],[-140,70],[-100,72],[-80,50],[-65,45],[-60,20],[-80,10],[-90,15],[-105,20],[-120,30],[-130,50],[-160,60],[-170,72]],
-      [[-80,10],[-60,10],[-35,-5],[-35,-55],[-65,-55],[-75,-35],[-80,-5],[-80,10]],
-      [[-10,35],[30,35],[40,45],[60,50],[100,50],[120,55],[140,50],[140,40],[100,35],[60,25],[40,30],[20,35],[0,40],[-10,35]],
-      [[-18,15],[40,15],[50,10],[45,-10],[35,-35],[20,-35],[15,-20],[-18,15]],
-      [[115,-20],[140,-15],[150,-25],[150,-40],[130,-40],[115,-30],[115,-20]],
-      [[-55,76],[-20,76],[-20,60],[-45,58],[-55,65],[-55,76]],
-    ];
-
-    function latLonToXY(lat, lon, cx, cy, r, rot) {
-      const phi=(90-lat)*Math.PI/180, theta=(lon+rot*180/Math.PI)*Math.PI/180;
-      const x3=Math.sin(phi)*Math.cos(theta), y3=Math.cos(phi), z3=Math.sin(phi)*Math.sin(theta);
-      return {x:cx+x3*r, y:cy-y3*r, z:z3, visible:z3>-0.1};
-    }
-
-    function drawEarth(t) {
-      const {cx,cy,r}=EARTH;
-      const rot=(t*0.000008)%(Math.PI*2);
-      const sp=clamp(scrollProgress*2,0,1);
-
-      // Outer glow — fades as we get close
-      const glowAlpha=lerp(0.22,0,sp);
-      if(glowAlpha>0.01){
-        const og=ctx.createRadialGradient(cx,cy,r*0.7,cx,cy,r*2.2);
-        og.addColorStop(0,`rgba(30,100,220,${glowAlpha})`);
-        og.addColorStop(0.35,`rgba(20,80,180,${glowAlpha*0.5})`);
-        og.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=og; ctx.beginPath(); ctx.arc(cx,cy,r*2.2,0,Math.PI*2); ctx.fill();
-      }
-
-      ctx.save();
-      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.clip();
-
-      // Ocean
-      const ocean=ctx.createRadialGradient(cx-r*0.25,cy-r*0.25,r*0.05,cx,cy,r);
-      ocean.addColorStop(0,`#0d2a6b`);
-      ocean.addColorStop(0.4,`#071a4a`);
-      ocean.addColorStop(0.75,`#040f2e`);
-      ocean.addColorStop(1,`#020818`);
-      ctx.fillStyle=ocean; ctx.fillRect(cx-r,cy-r,r*2,r*2);
-
-      // Grid — fades as we zoom in
-      const gridAlpha=lerp(0.12,0.04,sp);
-      ctx.strokeStyle=`rgba(59,130,246,${gridAlpha})`; ctx.lineWidth=0.6;
-      for(let lat=-60;lat<=60;lat+=30){
-        ctx.beginPath(); let first=true;
-        for(let lon=-180;lon<=180;lon+=5){
-          const p=latLonToXY(lat,lon,cx,cy,r,rot);
-          if(p.visible){if(first){ctx.moveTo(p.x,p.y);first=false;}else ctx.lineTo(p.x,p.y);}
-          else{first=true;}
-        } ctx.stroke();
-      }
-      for(let lon=0;lon<360;lon+=30){
-        ctx.beginPath(); let first=true;
-        for(let lat=-80;lat<=80;lat+=5){
-          const p=latLonToXY(lat,lon,cx,cy,r,rot);
-          if(p.visible){if(first){ctx.moveTo(p.x,p.y);first=false;}else ctx.lineTo(p.x,p.y);}
-          else{first=true;}
-        } ctx.stroke();
-      }
-
-      // Continents
-      CONTINENT_PATHS.forEach(path=>{
-        ctx.beginPath(); let started=false;
-        path.forEach(([lon,lat])=>{
-          const p=latLonToXY(lat,lon,cx,cy,r,rot);
-          if(p.visible){if(!started){ctx.moveTo(p.x,p.y);started=true;}else ctx.lineTo(p.x,p.y);}
-        });
-        if(started){
-          ctx.closePath();
-          ctx.fillStyle=`rgba(15,50,130,0.55)`; ctx.fill();
-          ctx.strokeStyle=`rgba(96,165,250,0.55)`; ctx.lineWidth=1.2; ctx.stroke();
-        }
-      });
-
-      // City lights
-      const cities=[[51,0],[48,2],[52,13],[55,37],[40,28],[35,139],[31,121],[22,114],[1,103],[13,80],[28,77],[19,73],[41,-74],[34,-118],[42,-87],[29,-95],[-33,151],[-23,-43],[6,3],[30,31],[33,44],[-34,-58],[4,9],[24,54]];
-      cities.forEach(([lat,lon])=>{
-        const p=latLonToXY(lat,lon,cx,cy,r,rot);
-        if(p.visible&&p.z>0.05){
-          const b=Math.min(1,(p.z-0.05)*4);
-          const cg=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,5);
-          cg.addColorStop(0,`rgba(255,220,100,${0.9*b})`); cg.addColorStop(1,'rgba(255,180,50,0)');
-          ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill();
-          ctx.fillStyle=`rgba(255,240,160,${b})`; ctx.beginPath(); ctx.arc(p.x,p.y,1.5,0,Math.PI*2); ctx.fill();
-        }
-      });
-
-      // Scan line
-      const scanX=cx+Math.cos(t*0.0005)*r*0.6;
-      const scanG=ctx.createLinearGradient(scanX-r*0.15,cy-r,scanX+r*0.15,cy+r);
-      scanG.addColorStop(0,'rgba(100,180,255,0)'); scanG.addColorStop(0.5,`rgba(150,210,255,${lerp(0.12,0.03,sp)})`); scanG.addColorStop(1,'rgba(100,180,255,0)');
-      ctx.fillStyle=scanG; ctx.fillRect(cx-r,cy-r,r*2,r*2);
-
-      ctx.restore();
-
-      // Atmosphere rim
-      const atmoAlpha=lerp(0.3,0.1,sp);
-      const atmo=ctx.createRadialGradient(cx,cy,r*0.88,cx,cy,r*1.1);
-      atmo.addColorStop(0,'rgba(59,130,246,0)');
-      atmo.addColorStop(0.4,`rgba(96,165,250,${atmoAlpha})`);
-      atmo.addColorStop(1,'rgba(59,130,246,0)');
-      ctx.beginPath(); ctx.arc(cx,cy,r*1.1,0,Math.PI*2); ctx.fillStyle=atmo; ctx.fill();
-
-      // Terminator
-      const term=ctx.createRadialGradient(cx+r*0.5,cy,r*0.1,cx+r*0.4,cy,r*1.3);
-      term.addColorStop(0,'rgba(0,0,0,0)');
-      term.addColorStop(0.6,`rgba(0,5,20,${lerp(0.25,0.1,sp)})`);
-      term.addColorStop(1,`rgba(0,5,20,${lerp(0.7,0.2,sp)})`);
-      ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.clip();
-      ctx.fillStyle=term; ctx.fillRect(cx-r,cy-r,r*2,r*2);
-      ctx.restore();
-    }
-
-    function computeSat(sat) {
-      const {cx,cy,r}=EARTH;
-      sat.angle+=sat.speed*dtF;
-      const ox=Math.cos(sat.angle)*r*sat.a, oy=Math.sin(sat.angle)*r*sat.b;
-      const sx=cx+ox*Math.cos(sat.tilt)-oy*Math.sin(sat.tilt);
-      const sy=cy+ox*Math.sin(sat.tilt)+oy*Math.cos(sat.tilt);
-      return {sx,sy,behind:Math.sin(sat.angle)<0};
-    }
-
-    function renderSat(sat,sx,sy,alpha) {
-      if(alpha<=0.01) return;
-      const s=sat.size;
-      ctx.save(); ctx.translate(sx,sy); ctx.rotate(sat.angle+0.5); ctx.globalAlpha=alpha;
-      const g=ctx.createRadialGradient(0,0,0,0,0,s*3.5);
-      g.addColorStop(0,sat.color+'aa'); g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,s*3.5,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle='#d1d9e6'; ctx.fillRect(-s*0.4,-s*0.28,s*0.8,s*0.56);
-      ctx.fillStyle=sat.color;
-      ctx.fillRect(-s*1.6,-s*0.14,s*1.05,s*0.28);
-      ctx.fillRect( s*0.55,-s*0.14,s*1.05,s*0.28);
-      ctx.restore();
-    }
-
-    function drawOrbit(sat, alpha) {
-      if(alpha<=0.01) return;
-      const {cx,cy,r}=EARTH;
-      ctx.save(); ctx.translate(cx,cy); ctx.rotate(sat.tilt);
-      ctx.beginPath(); ctx.ellipse(0,0,r*sat.a,r*sat.b,0,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(255,255,255,${0.035*alpha})`;
-      ctx.lineWidth=0.6; ctx.setLineDash([3,12]); ctx.stroke();
-      ctx.setLineDash([]); ctx.restore();
-    }
-
-    function drawNebula(alpha) {
-      if(alpha<=0) return;
-      [{x:W*0.08,y:H*0.12,r:W*0.28,c:'rgba(59,20,120,0.08)'},{x:W*0.92,y:H*0.08,r:W*0.22,c:'rgba(0,50,140,0.09)'},{x:W*0.04,y:H*0.8,r:W*0.2,c:'rgba(10,70,110,0.07)'},{x:W*0.7,y:H*0.92,r:W*0.18,c:'rgba(80,20,100,0.06)'},{x:W*0.5,y:H*0.5,r:W*0.4,c:'rgba(20,30,80,0.04)'}].forEach(n=>{
-        const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
-        const col=n.c.replace(/[\d.]+\)$/,(v)=>`${parseFloat(v)*alpha})`);
-        g.addColorStop(0,col); g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fill();
-      });
-    }
-
-    function drawStars(alpha) {
-      if(alpha<=0) return;
-      const MR=200;
-      stars.forEach(s=>{
-        s.twinkle+=s.speed*dtF;
-        const tw=0.5+Math.sin(s.twinkle)*0.5;
-        const dx=s.ox-mouse.x,dy=s.oy-mouse.y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<MR&&s.layer>0){const f=(1-d/MR)*12;s.x=s.ox+(dx/d)*f;s.y=s.oy+(dy/d)*f;}
-        else{s.x+=(s.ox-s.x)*0.06;s.y+=(s.oy-s.y)*0.06;}
-        const a=s.alpha*(0.5+tw*0.5)*alpha;
-        ctx.beginPath(); ctx.arc(s.x,s.y,s.r*(0.8+tw*0.3),0,Math.PI*2);
-        ctx.fillStyle=`rgba(255,255,255,${a})`; ctx.fill();
-        if(s.r>1.2&&alpha>0.3){
-          ctx.strokeStyle=`rgba(255,255,255,${a*0.35})`; ctx.lineWidth=0.5;
-          ctx.beginPath();
-          ctx.moveTo(s.x-s.r*4,s.y); ctx.lineTo(s.x+s.r*4,s.y);
-          ctx.moveTo(s.x,s.y-s.r*4); ctx.lineTo(s.x,s.y+s.r*4);
-          ctx.stroke();
-        }
-      });
-    }
-
-    function drawShooters() {
-      shooters=shooters.filter(s=>s.life>0);
-      shooters.forEach(s=>{
-        s.x+=s.vx*dtF; s.y+=s.vy*dtF; s.life-=0.016*dtF; s.alpha=Math.max(0,s.life);
-        const spd=Math.sqrt(s.vx*s.vx+s.vy*s.vy);
-        const ex=s.x-s.len*(s.vx/spd),ey=s.y-s.len*(s.vy/spd);
-        const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
-        g.addColorStop(0,`rgba(255,255,255,${s.alpha*0.95})`);
-        g.addColorStop(0.2,`rgba(180,220,255,${s.alpha*0.5})`);
-        g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(ex,ey);
-        ctx.strokeStyle=g; ctx.lineWidth=s.width; ctx.stroke();
-        const hg=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,4);
-        hg.addColorStop(0,`rgba(255,255,255,${s.alpha})`); hg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.beginPath(); ctx.arc(s.x,s.y,4,0,Math.PI*2); ctx.fillStyle=hg; ctx.fill();
-      });
-    }
-
-    function drawClouds(alpha) {
-      if(alpha<=0.01) return;
-      clouds.forEach(cl=>{
-        cl.x+=cl.speed * (1+cl.layer*0.3) * dtF;
-        if(cl.x-cl.w > W) cl.x = -cl.w;
-        const layerY = cl.layer === 0 ? H*0.25 : cl.layer===1 ? H*0.45 : H*0.6;
-        const yPos = layerY + cl.y % (H*0.15);
-        const cloudAlpha = cl.alpha * alpha * (cl.layer===0?0.7:cl.layer===1?0.85:1.0);
-
-        ctx.save();
-        cl.puffs.forEach(p=>{
-          const px=cl.x + p.dx*cl.w*0.4;
-          const py=yPos + p.dy*cl.h*0.5;
-          const pr=cl.w*0.18*p.r;
-          const cg=ctx.createRadialGradient(px,py,0,px,py,pr);
-          cg.addColorStop(0,`rgba(255,255,255,${cloudAlpha})`);
-          cg.addColorStop(0.6,`rgba(230,240,255,${cloudAlpha*0.7})`);
-          cg.addColorStop(1,'rgba(200,220,255,0)');
-          ctx.fillStyle=cg;
-          ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2); ctx.fill();
-        });
-        ctx.restore();
-      });
-    }
-
-    // Cache sky phase (update every 30s, not every frame)
-    let _skyPhase = null, _skyPhaseTime = 0;
-    function getCachedSkyPhase() {
-      const now = Date.now();
-      if(!_skyPhase || now - _skyPhaseTime > 30000) {
-        _skyPhase = getSkyPhase();
-        _skyPhaseTime = now;
-      }
-      return _skyPhase;
-    }
-
-    function getBgColor() {
-      const sp = scrollProgress;
-      const sky = getCachedSkyPhase();
-
-      // Space colors stay fixed (above atmosphere)
-      const spaceColor = [2,4,8];
-
-      // Ground/city sky color comes from time of day
-      const groundColor = sky.sky0;
-      const midColor    = sky.sky1;
-      const highColor   = sky.sky2;
-
-      // Blend: space → atmosphere → sky (time-aware) as scroll increases
-      if(sp < 0.2) return lerpColor(spaceColor, [5,20,60], sp/0.2);
-      if(sp < 0.4) return lerpColor([5,20,60], highColor, (sp-0.2)/0.2);
-      if(sp < 0.6) return lerpColor(highColor, midColor, (sp-0.4)/0.2);
-      if(sp < 0.8) return lerpColor(midColor, groundColor, (sp-0.6)/0.2);
-      return lerpColor(groundColor, sky.sky0, (sp-0.8)/0.2);
-    }
-
-    // Dark scrim over bright daytime skies so white page text keeps readable contrast
-    function drawReadabilityScrim(bgRGB) {
-      const lum = (0.2126*bgRGB[0] + 0.7152*bgRGB[1] + 0.0722*bgRGB[2]) / 255;
-      // terrain sky can be brighter than the flat bg colour, so key off both
-      const sky = getCachedSkyPhase().sky2;
-      const skyLum = (0.2126*sky[0] + 0.7152*sky[1] + 0.0722*sky[2]) / 255;
-      const groundMix = clamp((scrollProgress-0.65)*4, 0, 1);
-      const L = Math.max(lum, skyLum*groundMix);
-      if(L <= 0.12) return;
-      ctx.fillStyle = `rgba(5,8,16,${Math.min(0.72, (L-0.12)*1.45)})`;
-      ctx.fillRect(0,0,W,H);
-    }
-
-    function renderFrame() {
-      ctx.clearRect(0,0,W,H);
-
-      // ── DYNAMIC BACKGROUND
-      const bgRGB = getBgColor();
-      ctx.fillStyle = `rgb(${bgRGB[0]},${bgRGB[1]},${bgRGB[2]})`;
-      ctx.fillRect(0,0,W,H);
-
-      const sp = scrollProgress;
-
-      // Layer alphas
-      const spaceAlpha  = clamp(1 - sp*3, 0, 1);           // space fades at 33%
-      const atmoAlpha   = clamp((sp-0.15)*4, 0, 1);         // atmo appears at 15%
-      const cloudAlpha  = clamp((sp-0.35)*4, 0, 1);         // clouds at 35%
-      const groundAlpha = clamp((sp-0.65)*4, 0, 1);         // ground at 65%
-      const satAlpha    = clamp(1 - sp*4, 0, 1);            // sats gone at 25%
-
-      // Space layers
-      drawNebula(spaceAlpha);
-      drawStars(spaceAlpha);
-      if(sp < 0.3) drawShooters();
-
-      // Earth (always, but grows and changes)
-      SATS.forEach(s=>drawOrbit(s, satAlpha));
-      const pos=SATS.map(s=>({sat:s,...computeSat(s)}));
-      pos.filter(p=>p.behind).forEach(({sat,sx,sy})=>renderSat(sat,sx,sy,satAlpha));
-      drawEarth(animT);
-      pos.filter(p=>!p.behind).forEach(({sat,sx,sy})=>renderSat(sat,sx,sy,satAlpha));
-
-      // Atmospheric entry glow
-      if(atmoAlpha > 0 && spaceAlpha > 0) {
-        const entryG=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.7);
-        entryG.addColorStop(0,`rgba(100,150,255,0)`);
-        entryG.addColorStop(0.6,`rgba(60,120,255,${atmoAlpha*spaceAlpha*0.15})`);
-        entryG.addColorStop(1,`rgba(20,60,200,${atmoAlpha*spaceAlpha*0.25})`);
-        ctx.fillStyle=entryG; ctx.fillRect(0,0,W,H);
-      }
-
-      // Cloud layers
-      if(cloudAlpha > 0) drawClouds(cloudAlpha);
-
-      // Ground / terrain
-      if(groundAlpha > 0) drawTerrain(easeInOut(groundAlpha));
-
-      drawReadabilityScrim(bgRGB);
-    }
-
-    function loop(now) {
-      now = now || performance.now();
-      dtF = _lastFrame ? Math.min(4, (now - _lastFrame) / (1000/60)) : 1;
-      _lastFrame = now;
-      animT += 16 * dtF;
-
-      renderFrame();
-
-      // Throttle FPS for low-end devices
-      if(_perf.fps >= 55) {
-        requestAnimationFrame(loop);
-      } else {
-        setTimeout(()=>requestAnimationFrame(loop), 1000/_perf.fps);
-      }
-    }
-
-    // Reduced motion: draw a still frame, redraw only when scroll/resize changes it
-    let _stillQueued = false;
-    function drawStill() {
-      if(_stillQueued) return;
-      _stillQueued = true;
-      requestAnimationFrame(()=>{ _stillQueued = false; dtF = 0; renderFrame(); });
-    }
-
-    let _lastW = 0;
-    function resize() {
-      const vw = window.innerWidth, vh = window.innerHeight;
-      // Resolution scaling — render smaller, display full size
-      canvas.width  = Math.round(vw * _resScale);
-      canvas.height = Math.round(vh * _resScale);
-      canvas.style.width  = vw + 'px';
-      canvas.style.height = vh + 'px';
-      W = canvas.width;
-      H = canvas.height;
-      // Mobile browsers fire resize when the URL bar shows/hides (height only) — keep the scene stable then
-      if(vw !== _lastW) {
-        _lastW = vw;
-        initStars(); initSats(); initClouds(); cityBuildings=null; initCity();
-      }
-      if(reduceMotion) drawStill();
-    }
-
-    window.addEventListener('resize',()=>resize());
-    document.addEventListener('mousemove',e=>{mouse.x=e.clientX*_resScale;mouse.y=e.clientY*_resScale;});
-    resize();
-    updateScroll();
-    // Refresh sky phase cache every minute
-    setInterval(()=>{ _skyPhase = null; if(reduceMotion) drawStill(); }, 60000);
-    if(reduceMotion) {
-      window.addEventListener('scroll', drawStill, {passive:true});
-      drawStill();
-    } else {
-      loop();
-    }
-
-    // ── TRANSLATIONS
-    // Keys map to [data-i18n] (textContent), [data-i18n-html] (innerHTML) and [data-i18n-ph] (placeholder).
+    // ── TRANSLATIONS ([data-i18n] sets textContent)
     const translations = {
-      en: {
-        's-about':'About','nav-about':'About','foot-nav-about':'about',
-        'ab-h':"Hi, I'm Raymond",
-        'ab-p1':"I'm a freelance coder in Ho Chi Minh City. I started with small websites, then worked my way down the stack: writing APIs, designing databases, and getting products running for real.",
-        'ab-p2':"To me, good software means understanding both ends: what users touch and what quietly runs behind it. Every project above is a step on that road, and I write down what I learn here.",
-        'ab-path':'// the pieces I keep putting together',
-        'ab1-h':'Interface','ab1-p':'Making what users see clean, fast and easy to use on phones and desktops.',
-        'ab2-h':'Behind the scenes','ab2-p':"Business logic, permissions, APIs, and the code users never see but always need.",
-        'ab3-h':'Data','ab3-p':'Designing tables so the numbers always add up: stock, debts, orders, reports.',
-        'ab4-h':'Going live','ab4-p':'Deployment, domains, automation and monitoring so the product stays healthy after handover.',
-                'hero-sub': ["I build software that fits.", "Clean code. Real results.", "Delivered on time, every time."],
-        'hero-tag': "FREELANCE DEVELOPER",
-        'hero-h1': "Raymond<br><em>Tran</em>",
-        'btn-start': "See my work",   'btn-explore': "$ contact --me",
-        'metric-built': "Custom built",      'metric-resp': 'Response time',  'metric-margin': "Projects delivered",
-        's-what': "What I do",'s-prod':'Our products','s-proj': "Selected projects",'pj-code':'Source code','pj-demo':'Live demo','s-how': "How I work",'s-why': "Why work with me",
-        'c1-num':'01 / SERVICE','c1-h':'Custom software development','c1-p': "Tailor-made applications built around your workflow, end to end. No compromises with off-the-shelf solutions.",
-        'c2-num':'02 / SERVICE','c2-h':'Workflow automation','c2-p': "I remove repetitive manual work with reliable automated pipelines, so your team can focus on what matters.",
-        'c3-num':'03 / SERVICE','c3-h':'Ongoing support & maintenance','c3-p': "I stay on after delivery and keep your system stable as you grow.",
-        'c4-num':'04 / SERVICE','c4-h':'System integration','c4-p': "I connect your existing tools, APIs and platforms into one coherent system.",
-        'pr-live':'LIVE','pr-dev':'IN DEVELOPMENT','pr-demo':'Request a demo','pr-waitlist':'Join waitlist',
-        'dms-tag':'// Distribution Management System',
-        'dms-desc':'A multi-tenant SaaS platform built for Vietnamese distributors and small manufacturers. SimpleDMS replaces spreadsheets and manual tracking with a real-time system that gives owners full visibility — from orders and inventory to delivery routes and debt collection.',
-        'dms-f1':'Order management with multi-warehouse inventory','dms-f2':'GPS-verified delivery routes & shipper tracking','dms-f3':'Debt ledger with VietQR dynamic payment','dms-f4':'Real-time dashboard for owners','dms-f5':'Role-based access for staff & shippers',
-        'rms-tag':'// Repair Management System',
-        'rms-desc':'A multi-tenant SaaS platform designed for Vietnamese repair shops of all sizes. SimpleRMS streamlines the entire repair lifecycle — from intake to delivery — with built-in customer communication via Zalo OA and flexible workflows that adapt to any repair industry.',
-        'rms-f1':'End-to-end repair ticket lifecycle management','rms-f2':'Dual warranty tracking per device & repair','rms-f3':'Customer portal via Zalo OA (no app install needed)','rms-f4':'QR-code static payment integration','rms-f5':'Custom fields engine for multi-industry expansion',
-        'work-tag':'// Unified Business Management',
-        'work-desc':'One platform for HR, clients, and contracts. SimpleWork solves the fragmented software problem — each department no longer needs its own system. Activate only the modules your business actually needs, no forced bundles.',
-        'work-f1':'HR management & employee records','work-f2':'Client & contact relationship tracking','work-f3':'Contract lifecycle management','work-f4':'Modular activation — pay for what you use','work-f5':'Single login for your entire team',
-        'p1-h':'Discover','p1-p': "I listen to how your business actually runs and define the real problem before writing a single line of code.",
-        'p2-h':'Design',  'p2-p': "I map out the solution and send a clear proposal. You know what you're getting before I start.",
-        'p3-h':'Build',   'p3-p': "I build close to the agreed design and keep you updated. No black boxes, no surprises.",
-        'p4-h':'Deliver & support','p4-p': "I deploy, train your team, and stay available when you need to scale or hit a snag.",
-        'v1-h':'Built around you',        'v1-p': "No templates forced onto your workflow. Every solution is designed for how you operate.",
-        'v2-h':'In it for the long haul', 'v2-p': "Not a one-time delivery. I stay accountable after go-live.",
-        'v3-h':'Fast without cutting corners','v3-p': "AI-assisted development lets me ship faster while keeping the quality bar high.",
-        'cta-h': "Got a project in mind?",'cta-p': "Tell me the problem you're trying to solve and I'll take it from there.",'cta-btn': "Get in touch",
-        'contact-h':'Get in touch','contact-sub': "// leave your details. response_time < 24h",
-        'vn-badge': "Freelance from Ho Chi Minh City, Vietnam",
-        'label-loc':'location','label-email':'email','label-resp':'response','label-hotline':'hotline',
-        'val-loc':'Ho Chi Minh City,\u00A0VN','val-resp':'< 24 hours',
-        'label-name':'full_name','label-phone':'phone','label-email-f':'email','label-msg':'project_brief',
-        'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg': "I'm looking to build a system that...",
-        'btn-send':'$ send --message','btn-sending':'$ sending...',
-        'ok-title':'MESSAGE_SENT // STATUS: 200 OK','ok-note': "I'll get back to you within 24 hours.",
-        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.',
-        'nav-s':'Services','nav-prod':'Products','nav-proj':'Projects','nav-p':'Process','nav-c':'Contact','nav-status': "OPEN FOR PROJECTS",
-        'menu-open':'Open menu','menu-close':'Close menu',
-        'foot-tag': "// freelance developer",'foot-nav-s':'services','foot-nav-prod':'products','foot-nav-proj':'projects','foot-nav-p':'process','foot-nav-c':'contact',
-        'foot-made':'Made in Vietnam',
-      },
       vi: {
-        's-about':'Giới thiệu','nav-about':'Giới thiệu','foot-nav-about':'giới thiệu',
-        'ab-h': "Chào, mình là Raymond",
-        'ab-p1': "Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.",
-        'ab-p2': "Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau. Mỗi dự án bên trên là một bước trên con đường đó, và mình ghi lại những gì học được ở đây.",
-        'ab-path': "// những mảnh ghép mình đang ghép lại",
-        'ab1-h': "Giao diện",
-        'ab1-p': "Làm cho thứ người dùng nhìn thấy gọn, nhanh và dễ dùng trên cả điện thoại lẫn máy tính.",
-        'ab2-h': "Xử lý phía sau",
-        'ab2-p': "Viết nghiệp vụ, phân quyền, API và những đoạn code mà người dùng không bao giờ thấy nhưng luôn cần.",
-        'ab3-h': "Dữ liệu",
-        'ab3-p': "Thiết kế bảng sao cho số liệu luôn khớp: kho, công nợ, đơn hàng, báo cáo.",
-        'ab4-h': "Đưa lên chạy thật",
-        'ab4-p': "Triển khai, tên miền, tự động hóa và theo dõi để sản phẩm chạy ổn sau khi bàn giao.",
-                'hero-sub': ["Phần mềm vừa vặn, đúng nhu cầu.", "Code sạch. Kết quả thật.", "Đúng hẹn, không lý do."],
-        'hero-tag': "CODER DẠO · FREELANCE",
-        'hero-h1': "Raymond<br><em>Tran</em>",
-        'btn-start': "Xem dự án",    'btn-explore': "$ liên-hệ --mình",
-        'metric-built': "Làm theo yêu cầu",'metric-resp':'Thời gian phản hồi','metric-margin': "Dự án đã làm",
-        's-what': "Mình làm được gì",'s-prod':'Sản phẩm của chúng tôi','s-proj': "Dự án đã làm",'pj-code':'Mã nguồn','pj-demo':'Xem demo','s-how': "Cách mình làm việc",'s-why': "Vì sao chọn mình",
-        'c1-num':'01 / DỊCH VỤ',
-        'c1-h':'Phát triển phần mềm theo yêu cầu',
-        'c1-p': "Ứng dụng làm riêng theo đúng quy trình của bạn, từ đầu đến cuối — không bắt bạn phải đổi cách làm để khớp với phần mềm có sẵn.",
-        'c2-num':'02 / DỊCH VỤ',
-        'c2-h':'Tự động hóa vận hành',
-        'c2-p': "Mình loại bỏ các thao tác thủ công lặp đi lặp lại để đội ngũ của bạn tập trung vào việc quan trọng hơn.",
-        'c3-num':'03 / DỊCH VỤ',
-        'c3-h': "Hỗ trợ & bảo trì lâu dài",
-        'c3-p': "Mình không biến mất sau khi bàn giao. Hệ thống được theo dõi và xử lý kịp thời khi có vấn đề.",
-        'c4-num':'04 / DỊCH VỤ',
-        'c4-h': "Tích hợp hệ thống",
-        'c4-p': "Nối các công cụ, API và nền tảng rời rạc thành một hệ thống chạy trơn tru, hết cảnh nhập liệu hai lần.",
-        'pr-live':'ĐANG VẬN HÀNH','pr-dev':'ĐANG PHÁT TRIỂN','pr-demo':'Trải nghiệm bản demo','pr-waitlist':'Đăng ký nhận thông báo',
-        'dms-tag':'// Hệ thống Quản lý Phân phối',
-        'dms-desc':'Nền tảng SaaS đa khách thuê dành riêng cho các đơn vị phân phối và xưởng sản xuất quy mô vừa và nhỏ. SimpleDMS số hóa mọi quy trình từ đơn hàng, kho bãi đến lộ trình giao nhận và quản lý công nợ, thay thế hoàn toàn phương thức quản lý thủ công kém hiệu quả.',
-        'dms-f1':'Quản lý đa kho, điều phối đơn hàng thông minh','dms-f2':'Theo dõi lộ trình giao nhận thời gian thực qua GPS','dms-f3':'Sổ công nợ minh bạch, tích hợp thanh toán VietQR','dms-f4':'Dashboard số liệu trực quan cho nhà quản lý','dms-f5':'Phân quyền chi tiết, bảo mật dữ liệu',
-        'rms-tag':'// Hệ thống Quản lý Sửa chữa',
-        'rms-desc':'Nền tảng SaaS chuyên dụng giúp các tiệm sửa chữa tối ưu hóa toàn bộ vòng đời dịch vụ — từ khâu tiếp nhận đến bàn giao. Hỗ trợ khách hàng tra cứu thông tin qua Zalo OA với quy trình linh hoạt, phù hợp với đa dạng ngành nghề.',
-        'rms-f1':'Quản lý ticket dịch vụ từ đầu đến cuối','rms-f2':'Theo dõi lịch sử bảo hành linh kiện & thiết bị','rms-f3':'Tương tác khách hàng trực tiếp qua Zalo OA','rms-f4':'Tích hợp thanh toán QR tiện lợi','rms-f5':'Trường thông tin tùy chỉnh cho mọi ngành hàng',
-        'work-tag':'// Nền tảng Quản lý Doanh nghiệp Hợp nhất',
-        'work-desc':'Một nền tảng duy nhất cho nhân sự, khách hàng và hợp đồng. SimpleWork giải quyết bài toán phần mềm rời rạc — mỗi phòng ban không còn cần một hệ thống riêng. Kích hoạt đúng module bạn cần, không ép mua trọn gói.',
-        'work-f1':'Quản lý nhân sự & hồ sơ nhân viên','work-f2':'Theo dõi quan hệ khách hàng & đối tác','work-f3':'Quản lý vòng đời hợp đồng','work-f4':'Kích hoạt theo module — trả tiền đúng nhu cầu','work-f5':'Một đăng nhập duy nhất cho toàn bộ đội ngũ',
-        'p1-h': "Tìm hiểu",
-        'p1-p': "Mình nghe cách bạn thực sự vận hành và xác định đúng vấn đề trước khi viết dòng code đầu tiên.",
-        'p2-h': "Thiết kế",
-        'p2-p': "Mình phác thảo giải pháp và gửi đề xuất rõ ràng. Bạn biết chính xác mình sẽ nhận gì trước khi bắt đầu.",
-        'p3-h': "Phát triển",
-        'p3-p': "Mình làm sát thiết kế đã chốt và báo tiến độ thường xuyên. Không hộp đen, không bất ngờ.",
-        'p4-h': "Bàn giao & đồng hành",
-        'p4-p': "Mình triển khai, hướng dẫn đội ngũ của bạn và sẵn sàng hỗ trợ khi cần mở rộng hoặc gặp sự cố.",
-        'v1-h': "Làm theo cách của bạn",
-        'v1-p': "Không khuôn mẫu áp đặt. Mỗi giải pháp được thiết kế vừa với cách bạn làm việc.",
-        'v2-h': "Đồng hành lâu dài",
-        'v2-p': "Không phải giao xong rồi thôi. Mình vẫn chịu trách nhiệm sau khi hệ thống đi vào vận hành.",
-        'v3-h': "Nhanh nhưng không ẩu",
-        'v3-p': "Phát triển có AI hỗ trợ giúp mình giao nhanh hơn mà vẫn giữ chất lượng.",
-        'cta-h': "Bạn đang có dự án?",
-        'cta-p': "Kể mình nghe bài toán của bạn, phần còn lại để mình lo.",
-        'cta-btn': "Liên hệ mình",
-        'contact-h': "Liên hệ",
-        'contact-sub': "// để lại thông tin — mình phản hồi trong 24 giờ",
-        'vn-badge': "Freelance tại TP. Hồ Chí Minh, Việt Nam",
-        'label-loc': "Khu vực",'label-email': "Email",'label-resp': "Phản hồi",'label-hotline': "Điện thoại",
-        'val-loc':'TP.\u00A0Hồ Chí Minh,\u00A0VN','val-resp':'< 24 giờ',
-        'label-name':'Họ và tên của bạn','label-phone':'Số điện thoại liên lạc','label-email-f':'Email','label-msg':'Mô tả nhu cầu dự án',
-        'ph-name':'Nguyễn Văn A','ph-phone':'0901 234 567','ph-email':'ban@congty.com',
-        'ph-msg': "Tôi cần làm một hệ thống để...",
-        'btn-send':'$ Gửi thông tin ngay','btn-sending':'$ Đang gửi...',
-        'ok-title':'ĐÃ GỬI THÀNH CÔNG','ok-note': "Mình sẽ phản hồi bạn trong vòng 24 giờ.",
-        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.',
-        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-proj':'Dự án','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status': "NHẬN DỰ ÁN",
-        'menu-open':'Mở menu','menu-close':'Đóng menu',
-        'foot-tag': "// coder dạo",
-        'foot-nav-s':'dịch vụ','foot-nav-prod':'sản phẩm','foot-nav-proj':'dự án','foot-nav-p':'quy trình','foot-nav-c': "liên hệ",
-        'foot-made':'Sản xuất tại Việt Nam',
+        'brand-sub':'Coder dạo · Freelance','avail':'Nhận dự án',
+        'nav-proj':'Dự án','nav-skills':'Kỹ năng','nav-process':'Quy trình','nav-contact':'Liên hệ',
+        'hello':'Xin chào, mình là','role':'Coder dạo & Web developer',
+        'hero-p':'Mình thiết kế, viết và đưa phần mềm lên chạy thật: từ giao diện, API đến cơ sở dữ liệu. Làm gọn, làm đúng, giao đúng hẹn.',
+        'btn-work':'Xem dự án','btn-contact':'Liên hệ',
+        'hero-mid':'Biến ý tưởng thành sản phẩm chạy thật.',
+        'st-proj':'Dự án đã làm','st-resp':'Thời gian phản hồi','st-custom':'Làm theo yêu cầu',
+        's-proj':'Dự án nổi bật','view-all':'Xem tất cả','view-less':'Thu gọn','pj-demo':'Xem demo',
+        's-about':'Về mình',
+        'ab-p1':'Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.',
+        'ab-p2':'Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau.',
+        's-skills':'Kỹ năng','sk1':'Giao diện','sk2':'Xử lý phía sau','sk3':'Dữ liệu','sk4':'Đưa lên chạy thật',
+        's-process':'Quy trình làm việc',
+        'p1-h':'Tìm hiểu','p1-p':'Mình nghe cách bạn thực sự vận hành và xác định đúng vấn đề trước khi viết dòng code đầu tiên.',
+        'p2-h':'Thiết kế','p2-p':'Mình phác thảo giải pháp và gửi đề xuất rõ ràng. Bạn biết chính xác mình sẽ nhận gì trước khi bắt đầu.',
+        'p3-h':'Phát triển','p3-p':'Mình làm sát thiết kế đã chốt và báo tiến độ thường xuyên. Không hộp đen, không bất ngờ.',
+        'p4-h':'Bàn giao & đồng hành','p4-p':'Mình triển khai, hướng dẫn đội ngũ của bạn và sẵn sàng hỗ trợ khi cần mở rộng hoặc gặp sự cố.',
+        'quote':'Phần mềm tốt không chỉ ở chỗ nó trông thế nào, mà ở chỗ nó chạy ra sao.','quote-small':'Cùng làm ra thứ gì đó đáng dùng.',
+        'c-h':'Cùng làm việc nào','c-p':'Mình đang nhận dự án mới và hợp tác dài hạn. Kể mình nghe bài toán của bạn, mình phản hồi trong 24 giờ.',
+        'c-avail':'Đang nhận dự án','c-loc':'TP. Hồ Chí Minh, Việt Nam',
+        'f-name':'Họ và tên','f-email':'Email','f-msg':'Bạn cần làm gì?','f-send':'Gửi cho mình','f-sending':'Đang gửi...',
+        'f-ok':'Đã gửi. Mình sẽ phản hồi bạn trong vòng 24 giờ.','f-err':'Gửi không thành công. Vui lòng thử lại hoặc email',
+        'foot-made':'Làm tại Việt Nam'
+      },
+      en: {
+        'brand-sub':'Freelance developer','avail':'Open for projects',
+        'nav-proj':'Projects','nav-skills':'Skills','nav-process':'Process','nav-contact':'Contact',
+        'hello':"Hello, I'm",'role':'Freelance coder & Web developer',
+        'hero-p':'I design, build and ship software for real: from interface and API to database. Clean, correct, on time.',
+        'btn-work':'See my work','btn-contact':'Contact',
+        'hero-mid':'Turning ideas into products that actually run.',
+        'st-proj':'Projects done','st-resp':'Response time','st-custom':'Custom built',
+        's-proj':'Selected projects','view-all':'View all','view-less':'Show less','pj-demo':'Live demo',
+        's-about':'About me',
+        'ab-p1':"I'm a freelance coder in Ho Chi Minh City. I started with small websites, then worked my way down the stack: writing APIs, designing databases, and getting products running for real.",
+        'ab-p2':'To me, good software means understanding both ends: what users touch and what quietly runs behind it.',
+        's-skills':'Skills','sk1':'Interface','sk2':'Behind the scenes','sk3':'Data','sk4':'Going live',
+        's-process':'How I work',
+        'p1-h':'Discover','p1-p':'I listen to how your business actually runs and define the real problem before writing a single line of code.',
+        'p2-h':'Design','p2-p':"I map out the solution and send a clear proposal. You know what you're getting before I start.",
+        'p3-h':'Build','p3-p':'I build close to the agreed design and keep you updated. No black boxes, no surprises.',
+        'p4-h':'Deliver & support','p4-p':'I deploy, train your team, and stay available when you need to scale or hit a snag.',
+        'quote':"Good software isn't just how it looks, but how it works.",'quote-small':"Let's build something worth using.",
+        'c-h':"Let's work together",'c-p':"I'm open to new projects and long-term collaboration. Tell me the problem you're trying to solve and I'll reply within 24 hours.",
+        'c-avail':'Open for projects','c-loc':'Ho Chi Minh City, Vietnam',
+        'f-name':'Full name','f-email':'Email','f-msg':'What do you need?','f-send':'Send message','f-sending':'Sending...',
+        'f-ok':"Sent. I'll get back to you within 24 hours.",'f-err':'Failed to send. Please try again or email',
+        'foot-made':'Made in Vietnam'
       }
     };
 
     let currentLang = 'vi';
     let projectList = [];
+    let showAll = false;
 
     function setLang(lang) {
       const t = translations[lang];
@@ -2812,119 +474,29 @@
       currentLang = lang;
       document.documentElement.lang = lang;
       try { localStorage.setItem('ss-lang', lang); } catch (e) {}
-
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const v = t[el.dataset.i18n];
         if (typeof v === 'string') el.textContent = v;
       });
-      document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const v = t[el.dataset.i18nHtml];
-        if (typeof v === 'string') el.innerHTML = v;
-      });
-      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const v = t[el.dataset.i18nPh];
-        if (typeof v === 'string') el.placeholder = v;
-      });
-
-      document.querySelectorAll('.lang-btn').forEach(b => {
+      document.querySelectorAll('.lang button').forEach(b => {
         const on = b.dataset.lang === lang;
         b.classList.toggle('active', on);
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      updateMenuLabel();
-      if (projectList.length) renderProjects();
-
-      typedLines = t['hero-sub'];
-      li = 0; ci = 0; deleting = false; pause = 0;
-      if (reduceMotion) el.textContent = typedLines[0];
+      renderProjects();
     }
+    document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
 
-    // ── TYPEWRITER HERO
-    let typedLines = translations.vi['hero-sub'];
-    let li = 0, ci = 0, deleting = false, pause = 0;
-    const el = document.getElementById('typedText');
-
-    function type() {
-      if (pause > 0) { pause--; setTimeout(type, 50); return; }
-      const line = typedLines[li % typedLines.length];
-      if (!deleting) {
-        ci = Math.min(ci + 1, line.length);
-        el.innerHTML = '';
-        el.append(line.slice(0, ci));
-        el.insertAdjacentHTML('beforeend', '<span class="typed-cursor"></span>');
-        if (ci === line.length) { deleting = true; pause = 60; }
-      } else {
-        ci = Math.max(ci - 1, 0);
-        el.innerHTML = '';
-        el.append(line.slice(0, ci));
-        el.insertAdjacentHTML('beforeend', '<span class="typed-cursor"></span>');
-        if (ci === 0) { deleting = false; li = (li + 1) % typedLines.length; pause = 15; }
-      }
-      setTimeout(type, deleting ? 35 : 65);
-    }
-    // screen readers get the full lines once instead of letter-by-letter updates
-    el.setAttribute('aria-label', typedLines.join(' '));
-    if (reduceMotion) el.textContent = typedLines[0];
-    else type();
-
-    // ── SCROLL REVEAL
-    const reveals = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.1 });
-      reveals.forEach(r => io.observe(r));
-    } else {
-      reveals.forEach(r => r.classList.add('visible'));
-    }
-
-    // ── MOBILE MENU
-    const nav = document.getElementById('siteNav');
-    const navToggle = document.getElementById('navToggle');
-    function updateMenuLabel() {
-      const open = nav.classList.contains('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      navToggle.setAttribute('aria-label', translations[currentLang][open ? 'menu-close' : 'menu-open']);
-    }
-    function setMenu(open) {
-      nav.classList.toggle('open', open);
-      updateMenuLabel();
-    }
-    navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
-    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); navToggle.focus(); } });
-    document.addEventListener('click', e => { if (nav.classList.contains('open') && !nav.contains(e.target)) setMenu(false); });
-
-    // ── ACTIVE NAV
-    const secs = document.querySelectorAll('section[id]');
-    const navAs = document.querySelectorAll('.nav-links a');
-    window.addEventListener('scroll', () => {
-      let cur = '';
-      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
-      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
-    }, { passive: true });
-
-    // ── LANG BUTTON EVENTS
-    document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
-
-    let savedLang = null;
-    try { savedLang = localStorage.getItem('ss-lang'); } catch (e) {}
-    setLang(savedLang === 'en' ? 'en' : 'vi');
-
-    // ── PROJECTS: GitHub repos tagged with TOPIC + curated overrides from projects.json
+    // ── PROJECTS: GitHub repos tagged TOPIC (repos.json built by the sync action) + curated projects.json
     const GH_USER = 'linhtrantm';
     const GH_TOPIC = 'portfolio';
+    const FEATURED = 3;
 
     const safeUrl = u => { try { if (u && !/^[a-z][a-z0-9+.-]*:/i.test(u) && !u.startsWith('/') && !u.startsWith('.')) u = 'https://' + u; const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; } };
     const pick = (v, lang) => (v && typeof v === 'object') ? (v[lang] || v.en || '') : (v || '');
 
     async function loadJson(url, cacheKey) {
-      try {
-        const c = sessionStorage.getItem(cacheKey);
-        if (c) return JSON.parse(c);
-      } catch (e) {}
+      try { const c = sessionStorage.getItem(cacheKey); if (c) return JSON.parse(c); } catch (e) {}
       try {
         const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
         if (!r.ok) return null;
@@ -2932,83 +504,6 @@
         try { sessionStorage.setItem(cacheKey, JSON.stringify(j)); } catch (e) {}
         return j;
       } catch (e) { return null; }
-    }
-
-    function renderProjects() {
-      const grid = document.getElementById('projectsGrid');
-      grid.textContent = '';
-      projectList.forEach((p, i) => {
-        const card = document.createElement('article');
-        card.className = 'project-card reveal visible';
-        const title = pick(p.title, currentLang);
-        const placeholder = () => {
-          const ph = document.createElement('div');
-          ph.className = 'project-thumb is-placeholder';
-          ph.setAttribute('aria-hidden', 'true');
-          let hash = 0; for (const ch of title) hash = (hash * 31 + ch.charCodeAt(0)) % 360;
-          ph.style.setProperty('--h', 190 + (hash % 50));
-          ph.textContent = title.replace(/^Website\s+/i, '').split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
-          return ph;
-        };
-        if (p.image) {
-          const img = document.createElement('img');
-          img.className = 'project-thumb';
-          img.src = p.image; img.alt = ''; img.loading = 'lazy';
-          img.addEventListener('error', () => img.replaceWith(placeholder()), { once: true });
-          card.append(img);
-        } else {
-          card.append(placeholder());
-        }
-        const h = document.createElement('h3'); h.textContent = title; card.append(h);
-        const d = document.createElement('p'); d.textContent = pick(p.desc, currentLang); card.append(d);
-        if (p.tags.length) {
-          const ul = document.createElement('ul'); ul.className = 'project-tags';
-          p.tags.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
-          card.append(ul);
-        }
-        const links = document.createElement('div'); links.className = 'project-links';
-        const t = translations[currentLang];
-        if (p.demo) {
-          const a = document.createElement('a'); a.className = 'product-cta'; a.href = p.demo;
-          a.target = '_blank'; a.rel = 'noopener'; a.textContent = t['pj-demo']; links.append(a);
-        }
-        card.append(links);
-        grid.append(card);
-      });
-    }
-
-    async function initProjects() {
-      // repos.json is built by the sync-repos GitHub Action (includes private repos); public API is the fallback
-      let [repos, curated] = await Promise.all([
-        loadJson('repos.json', 'ss-repos-json'),
-        loadJson('projects.json', 'ss-projects-json')
-      ]);
-      if (!repos || !repos.items) {
-        repos = await loadJson(`https://api.github.com/search/repositories?q=user:${GH_USER}+topic:${GH_TOPIC}&sort=updated&per_page=30`, 'ss-gh-repos');
-      }
-      const overrides = {};
-      (Array.isArray(curated) ? curated : []).forEach(c => { if (c && c.repo) overrides[c.repo.toLowerCase()] = c; });
-      const seen = new Set();
-      const list = [];
-
-      // curated entries first (their order in projects.json), then remaining tagged repos
-      (Array.isArray(curated) ? curated : []).forEach(c => {
-        if (!c || c.hidden) return;
-        const repo = ((repos && repos.items) || []).find(r => c.repo && r.full_name.toLowerCase() === c.repo.toLowerCase());
-        seen.add((c.repo || c.title?.en || '').toLowerCase());
-        list.push(buildProject(c, repo));
-      });
-      ((repos && repos.items) || []).forEach(r => {
-        const key = r.full_name.toLowerCase();
-        if (seen.has(key) || (overrides[key] && overrides[key].hidden) || r.fork) return;
-        list.push(buildProject(overrides[key] || {}, r));
-      });
-
-      projectList = list.filter(p => p.title);
-      if (!projectList.length) return; // nothing to show: section + nav link stay hidden
-      document.getElementById('projects').hidden = false;
-      document.querySelectorAll('.js-proj-link').forEach(li => { li.hidden = false; });
-      renderProjects();
     }
 
     function buildProject(c, r) {
@@ -3021,33 +516,124 @@
       };
     }
 
-    initProjects();
+    function projectCard(p, idx) {
+      const title = pick(p.title, currentLang);
+      const el = document.createElement('article');
+      el.className = 'proj reveal visible';
 
-    // ── WEB3FORMS SUBMIT
-    document.getElementById('contactForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const t       = translations[currentLang];
-      const btn     = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const success = document.getElementById('formSuccess');
-      const error   = document.getElementById('formError');
-
-      const data = new FormData(this);
-      const json = Object.fromEntries(data.entries());
-
-      // No Web3Forms key configured yet — hand off to the visitor's mail app instead of failing silently
-      if (!json.access_key || json.access_key === 'YOUR_ACCESS_KEY_HERE') {
-        const body = `${json.message}\n\n— ${json.name}\n${json.email}${json.phone ? '\n' + json.phone : ''}`;
-        window.location.href = 'mailto:raymondtrantm@gmail.com'
-          + '?subject=' + encodeURIComponent(json.subject)
-          + '&body=' + encodeURIComponent(body);
-        return;
+      const thumb = document.createElement('div');
+      const makePh = () => {
+        const ph = document.createElement('div');
+        ph.className = 'thumb ph';
+        let h = 0; for (const ch of title) h = (h * 31 + ch.charCodeAt(0)) % 13;
+        ph.style.setProperty('--l', 22 + h);
+        const sp = document.createElement('span');
+        const words = title.replace(/^Website\s+/i, '').replace(/([a-z])([A-Z])/g, '$1 $2').split(/\s+/).filter(Boolean);
+        sp.textContent = (words.length > 1 ? words.slice(0, 2).map(w => w[0]).join('') : words[0].slice(0, 2)).toUpperCase();
+        ph.append(sp);
+        return ph;
+      };
+      if (p.image) {
+        thumb.className = 'thumb';
+        const img = document.createElement('img');
+        img.src = p.image; img.alt = ''; img.loading = 'lazy';
+        img.addEventListener('error', () => thumb.replaceWith(makePh()), { once: true });
+        thumb.append(img);
+        el.append(thumb);
+      } else {
+        el.append(makePh());
       }
 
-      btnText.textContent = t['btn-sending'];
-      btn.disabled = true;
-      error.hidden = true;
+      const meta = document.createElement('div'); meta.className = 'proj-meta';
+      const num = document.createElement('div'); num.className = 'proj-num'; num.textContent = String(idx + 1).padStart(2, '0');
+      const name = document.createElement('div'); name.className = 'proj-name'; name.textContent = title;
+      const tags = document.createElement('div'); tags.className = 'proj-tags'; tags.textContent = p.tags.slice(0, 3).join(' · ');
+      meta.append(num, name);
+      if (p.demo) {
+        const go = document.createElement('a');
+        go.className = 'proj-go'; go.href = p.demo; go.target = '_blank'; go.rel = 'noopener';
+        go.setAttribute('aria-label', translations[currentLang]['pj-demo'] + ': ' + title);
+        go.innerHTML = '<svg width="20" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M0 6h20M15 1l5 5-5 5"/></svg>';
+        meta.append(go);
+      }
+      meta.append(tags);
+      const desc = pick(p.desc, currentLang);
+      if (desc) { const d = document.createElement('p'); d.className = 'proj-desc'; d.textContent = desc; meta.append(d); }
+      el.append(meta);
+      return el;
+    }
 
+    function renderProjects() {
+      const grid = document.getElementById('projGrid');
+      const more = document.getElementById('projMore');
+      const btn = document.getElementById('toggleAll');
+      grid.textContent = ''; more.textContent = '';
+      projectList.forEach((p, i) => (i < FEATURED ? grid : more).append(projectCard(p, i)));
+      more.hidden = !showAll || projectList.length <= FEATURED;
+      btn.hidden = projectList.length <= FEATURED;
+      const t = translations[currentLang];
+      document.getElementById('toggleLabel').textContent = showAll ? t['view-less'] : t['view-all'];
+      document.getElementById('statProjects').textContent = projectList.length || document.getElementById('statProjects').textContent;
+    }
+
+    document.getElementById('toggleAll').addEventListener('click', () => { showAll = !showAll; renderProjects(); });
+
+    async function initProjects() {
+      let [repos, curated] = await Promise.all([
+        loadJson('repos.json', 'ss-repos-json'),
+        loadJson('projects.json', 'ss-projects-json')
+      ]);
+      if (!repos || !repos.items) {
+        repos = await loadJson(`https://api.github.com/search/repositories?q=user:${GH_USER}+topic:${GH_TOPIC}&sort=updated&per_page=30`, 'ss-gh-repos');
+      }
+      const items = (repos && repos.items) || [];
+      const list = Array.isArray(curated) ? curated : [];
+      const overrides = {};
+      list.forEach(c => { if (c && c.repo) overrides[c.repo.toLowerCase()] = c; });
+      const seen = new Set();
+      const out = [];
+      list.forEach(c => {
+        if (!c || c.hidden) return;
+        const r = items.find(x => c.repo && x.full_name.toLowerCase() === c.repo.toLowerCase());
+        seen.add((c.repo || '').toLowerCase());
+        out.push(buildProject(c, r));
+      });
+      items.forEach(r => {
+        const key = r.full_name.toLowerCase();
+        if (seen.has(key) || (overrides[key] && overrides[key].hidden) || r.fork) return;
+        out.push(buildProject(overrides[key] || {}, r));
+      });
+      projectList = out.filter(p => p.title);
+      renderProjects();
+    }
+
+    // ── SCROLL REVEAL
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      }), { threshold: 0.1 });
+      reveals.forEach(r => io.observe(r));
+    } else reveals.forEach(r => r.classList.add('visible'));
+
+    // ── INIT
+    let savedLang = null;
+    try { savedLang = localStorage.getItem('ss-lang'); } catch (e) {}
+    setLang(savedLang === 'en' ? 'en' : 'vi');
+    initProjects();
+
+    // ── CONTACT FORM (Web3Forms)
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const t = translations[currentLang];
+      const btn = document.getElementById('submitBtn');
+      const txt = document.getElementById('btnText');
+      const ok = document.getElementById('formOk');
+      const err = document.getElementById('formErr');
+      const json = Object.fromEntries(new FormData(this).entries());
+      txt.textContent = t['f-sending'];
+      btn.disabled = true;
+      err.hidden = true;
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -3055,19 +641,15 @@
           body: JSON.stringify(json)
         });
         const result = await res.json();
-        if (result.success) {
-          this.hidden = true;
-          success.hidden = false;
-        } else {
-          throw new Error(result.message || 'Submission failed');
-        }
-      } catch(err) {
-        error.hidden = false;
-        btnText.textContent = translations[currentLang]['btn-send'];
+        if (!result.success) throw new Error(result.message || 'Submission failed');
+        this.hidden = true;
+        ok.hidden = false;
+      } catch (ex) {
+        err.hidden = false;
+        txt.textContent = translations[currentLang]['f-send'];
         btn.disabled = false;
       }
     });
   </script>
-
 </body>
 </html>
