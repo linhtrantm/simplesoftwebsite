@@ -2657,6 +2657,7 @@
     };
 
     let currentLang = 'en';
+    let projectList = [];
 
     function setLang(lang) {
       const t = translations[lang];
@@ -2684,7 +2685,7 @@
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       updateMenuLabel();
-      if (typeof projectList !== 'undefined' && projectList.length) renderProjects();
+      if (projectList.length) renderProjects();
 
       typedLines = t['hero-sub'];
       li = 0; ci = 0; deleting = false; pause = 0;
@@ -2785,8 +2786,6 @@
         return j;
       } catch (e) { return null; }
     }
-
-    let projectList = [];
 
     function renderProjects() {
       const grid = document.getElementById('projectsGrid');
