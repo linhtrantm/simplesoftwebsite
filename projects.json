@@ -1,0 +1,13 @@
+[
+  {
+    "repo": "linhtrantm/simplesoftwebsite",
+    "title": { "en": "SimpleSoft Website", "vi": "Website SimpleSoft" },
+    "desc": {
+      "en": "Company website: bilingual EN/VI, canvas background, contact form. Pure HTML, no framework.",
+      "vi": "Website công ty: song ngữ EN/VI, nền canvas, form liên hệ. HTML thuần, không framework."
+    },
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "demo": "https://simplesoft.com.vn",
+    "image": ""
+  }
+]

@@ -675,6 +675,62 @@
 
     .product-cta::after { content: '→'; }
 
+    /* ── PROJECTS (GitHub) ── */
+    .projects { background: transparent; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-card h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+
+    .project-card p { font-size: 0.86rem; color: var(--muted2); line-height: 1.7; flex: 1; }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1.1rem 0 0; list-style: none; }
+
+    .project-tags li {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+    }
+
+    .project-links { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+
+    .project-links .product-cta { margin-top: 0; }
+    .project-links .product-cta.is-code::after { content: '↗'; }
+
+    .projects-empty { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.8rem; }
+
     /* ── PROCESS ── */
     .process { background: transparent; }
 
@@ -1176,6 +1232,7 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#services" data-i18n="nav-s">Services</a></li>
         <li><a href="#products" data-i18n="nav-prod">Products</a></li>
+        <li class="js-proj-link" hidden><a href="#projects" data-i18n="nav-proj">Projects</a></li>
         <li><a href="#process" data-i18n="nav-p">Process</a></li>
         <li><a href="#contact" data-i18n="nav-c">Contact</a></li>
       </ul>
@@ -1320,6 +1377,12 @@
       </div>
 
     </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects" hidden>
+    <h2 class="section-label reveal" data-i18n="s-proj">Projects</h2>
+    <div class="projects-grid" id="projectsGrid"></div>
   </section>
 
   <!-- PROCESS -->
@@ -1478,6 +1541,7 @@
     <ul class="footer-nav">
       <li><a href="#services" data-i18n="foot-nav-s">services</a></li>
       <li><a href="#products" data-i18n="foot-nav-prod">products</a></li>
+      <li class="js-proj-link" hidden><a href="#projects" data-i18n="foot-nav-proj">projects</a></li>
       <li><a href="#process" data-i18n="foot-nav-p">process</a></li>
       <li><a href="#contact" data-i18n="foot-nav-c">contact</a></li>
     </ul>
@@ -2490,7 +2554,7 @@
         'hero-h1':       'software,<br>made <em>simple</em>',
         'btn-start':     'Start a project',   'btn-explore': '$ explore --services',
         'metric-built':  'Custom built',      'metric-resp': 'Response time',  'metric-margin': 'Projects Delivered',
-        's-what':'What we do','s-prod':'Our products','s-how':'How we work','s-why':'Why simplesoft',
+        's-what':'What we do','s-prod':'Our products','s-proj':'Projects','pj-code':'Source code','pj-demo':'Live demo','s-how':'How we work','s-why':'Why simplesoft',
         'c1-num':'01 / SERVICE','c1-h':'Custom software development','c1-p':'Tailor-made applications built around your workflow from end to end. No compromises with off-the-shelf solutions.',
         'c2-num':'02 / SERVICE','c2-h':'Workflow automation','c2-p':'Eliminate repetitive tasks with reliable automated pipelines. Let your team focus on work that actually matters.',
         'c3-num':'03 / SERVICE','c3-h':'Ongoing support & maintenance','c3-p':"We stay in for the long run, keeping your system stable as you grow. We don't disappear after delivery.",
@@ -2522,9 +2586,9 @@
         'btn-send':'$ send --message','btn-sending':'$ sending...',
         'ok-title':'MESSAGE_SENT // STATUS: 200 OK','ok-note':"We'll get back to you within 24 hours.",
         'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
-        'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact','nav-status':'SYSTEM ONLINE',
+        'nav-s':'Services','nav-prod':'Products','nav-proj':'Projects','nav-p':'Process','nav-c':'Contact','nav-status':'SYSTEM ONLINE',
         'menu-open':'Open menu','menu-close':'Close menu',
-        'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-prod':'products','foot-nav-p':'process','foot-nav-c':'contact',
+        'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-prod':'products','foot-nav-proj':'projects','foot-nav-p':'process','foot-nav-c':'contact',
         'foot-made':'Made in Vietnam',
       },
       vi: {
@@ -2533,7 +2597,7 @@
         'hero-h1':       'phần mềm,<br>thật <em>đơn giản</em>',
         'btn-start':     'Bắt đầu dự án',    'btn-explore': '$ xem --dịch-vụ',
         'metric-built':  'Phát triển theo yêu cầu','metric-resp':'Thời gian phản hồi','metric-margin':'Dự án đã bàn giao',
-        's-what':'Giải pháp chúng tôi cung cấp','s-prod':'Sản phẩm của chúng tôi','s-how':'Cách chúng tôi vận hành','s-why':'Tại sao chọn chúng tôi',
+        's-what':'Giải pháp chúng tôi cung cấp','s-prod':'Sản phẩm của chúng tôi','s-proj':'Dự án','pj-code':'Mã nguồn','pj-demo':'Xem demo','s-how':'Cách chúng tôi vận hành','s-why':'Tại sao chọn chúng tôi',
         'c1-num':'01 / DỊCH VỤ',
         'c1-h':'Phát triển phần mềm theo yêu cầu',
         'c1-p':'Ứng dụng được thiết kế riêng, tối ưu hóa theo quy trình thực tế của doanh nghiệp — chứ không bắt bạn phải thay đổi để khớp với phần mềm.',
@@ -2584,10 +2648,10 @@
         'btn-send':'$ Gửi thông tin ngay','btn-sending':'$ Đang gửi...',
         'ok-title':'ĐÃ GỬI THÀNH CÔNG','ok-note':'Chúng tôi sẽ phản hồi bạn trong vòng 24 giờ.',
         'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
-        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status':'HỆ THỐNG ONLINE',
+        'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-proj':'Dự án','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status':'HỆ THỐNG ONLINE',
         'menu-open':'Mở menu','menu-close':'Đóng menu',
         'foot-tag':'// Phần mềm thông minh, vận hành tối giản',
-        'foot-nav-s':'dịch vụ','foot-nav-prod':'sản phẩm','foot-nav-p':'quy trình','foot-nav-c':'liên hệ hợp tác',
+        'foot-nav-s':'dịch vụ','foot-nav-prod':'sản phẩm','foot-nav-proj':'dự án','foot-nav-p':'quy trình','foot-nav-c':'liên hệ hợp tác',
         'foot-made':'Sản xuất tại Việt Nam',
       }
     };
@@ -2620,6 +2684,7 @@
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       updateMenuLabel();
+      if (typeof projectList !== 'undefined' && projectList.length) renderProjects();
 
       typedLines = t['hero-sub'];
       li = 0; ci = 0; deleting = false; pause = 0;
@@ -2699,6 +2764,110 @@
     let savedLang = null;
     try { savedLang = localStorage.getItem('ss-lang'); } catch (e) {}
     setLang(savedLang === 'vi' ? 'vi' : 'en');
+
+    // ── PROJECTS: GitHub repos tagged with TOPIC + curated overrides from projects.json
+    const GH_USER = 'linhtrantm';
+    const GH_TOPIC = 'portfolio';
+
+    const safeUrl = u => { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; } };
+    const pick = (v, lang) => (v && typeof v === 'object') ? (v[lang] || v.en || '') : (v || '');
+
+    async function loadJson(url, cacheKey) {
+      try {
+        const c = sessionStorage.getItem(cacheKey);
+        if (c) return JSON.parse(c);
+      } catch (e) {}
+      try {
+        const r = await fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } });
+        if (!r.ok) return null;
+        const j = await r.json();
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(j)); } catch (e) {}
+        return j;
+      } catch (e) { return null; }
+    }
+
+    let projectList = [];
+
+    function renderProjects() {
+      const grid = document.getElementById('projectsGrid');
+      grid.textContent = '';
+      projectList.forEach((p, i) => {
+        const card = document.createElement('article');
+        card.className = 'project-card reveal visible';
+        if (p.image) {
+          const img = document.createElement('img');
+          img.className = 'project-thumb';
+          img.src = p.image; img.alt = ''; img.loading = 'lazy';
+          card.append(img);
+        }
+        const h = document.createElement('h3'); h.textContent = pick(p.title, currentLang); card.append(h);
+        const d = document.createElement('p'); d.textContent = pick(p.desc, currentLang); card.append(d);
+        if (p.tags.length) {
+          const ul = document.createElement('ul'); ul.className = 'project-tags';
+          p.tags.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
+          card.append(ul);
+        }
+        const links = document.createElement('div'); links.className = 'project-links';
+        const t = translations[currentLang];
+        if (p.demo) {
+          const a = document.createElement('a'); a.className = 'product-cta'; a.href = p.demo;
+          a.target = '_blank'; a.rel = 'noopener'; a.textContent = t['pj-demo']; links.append(a);
+        }
+        if (p.code) {
+          const a = document.createElement('a'); a.className = 'product-cta is-code'; a.href = p.code;
+          a.target = '_blank'; a.rel = 'noopener'; a.textContent = t['pj-code']; links.append(a);
+        }
+        card.append(links);
+        grid.append(card);
+      });
+    }
+
+    async function initProjects() {
+      // repos.json is built by the sync-repos GitHub Action (includes private repos); public API is the fallback
+      let [repos, curated] = await Promise.all([
+        loadJson('repos.json', 'ss-repos-json'),
+        loadJson('projects.json', 'ss-projects-json')
+      ]);
+      if (!repos || !repos.items) {
+        repos = await loadJson(`https://api.github.com/search/repositories?q=user:${GH_USER}+topic:${GH_TOPIC}&sort=updated&per_page=30`, 'ss-gh-repos');
+      }
+      const overrides = {};
+      (Array.isArray(curated) ? curated : []).forEach(c => { if (c && c.repo) overrides[c.repo.toLowerCase()] = c; });
+      const seen = new Set();
+      const list = [];
+
+      // curated entries first (their order in projects.json), then remaining tagged repos
+      (Array.isArray(curated) ? curated : []).forEach(c => {
+        if (!c || c.hidden) return;
+        const repo = ((repos && repos.items) || []).find(r => c.repo && r.full_name.toLowerCase() === c.repo.toLowerCase());
+        seen.add((c.repo || c.title?.en || '').toLowerCase());
+        list.push(buildProject(c, repo));
+      });
+      ((repos && repos.items) || []).forEach(r => {
+        const key = r.full_name.toLowerCase();
+        if (seen.has(key) || (overrides[key] && overrides[key].hidden) || r.fork) return;
+        list.push(buildProject(overrides[key] || {}, r));
+      });
+
+      projectList = list.filter(p => p.title);
+      if (!projectList.length) return; // nothing to show: section + nav link stay hidden
+      document.getElementById('projects').hidden = false;
+      document.querySelectorAll('.js-proj-link').forEach(li => { li.hidden = false; });
+      renderProjects();
+    }
+
+    function buildProject(c, r) {
+      return {
+        title: c.title || (r && r.name) || '',
+        desc:  c.desc  || (r && r.description) || '',
+        tags:  c.tags  || (r ? [r.language, ...(r.topics || []).filter(t => t !== GH_TOPIC)].filter(Boolean).slice(0, 5) : []),
+        image: safeUrl(c.image || ''),
+        demo:  safeUrl(c.demo || (r && r.homepage) || ''),
+        code:  (r && r.private) ? '' : safeUrl(c.code || (r && r.html_url) || '')
+      };
+    }
+
+    initProjects();
 
     // ── WEB3FORMS SUBMIT
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
