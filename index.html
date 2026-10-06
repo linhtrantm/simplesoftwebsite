@@ -739,6 +739,79 @@
 
     .projects-empty { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 0.8rem; }
 
+    /* ── ABOUT ── */
+    .about { background: transparent; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+
+    .about-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, hsl(205 70% 28%), hsl(235 70% 20%));
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+
+    .about-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .about-initials { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; color: var(--white); opacity: 0.85; }
+
+    .about-text h3 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .about-text p { font-size: 0.95rem; color: var(--muted2); line-height: 1.85; margin-bottom: 1rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-path-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 1.25rem;
+    }
+
+    .path-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .path-item:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-3px); }
+
+    .path-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent2); letter-spacing: 0.1em; margin-bottom: 0.6rem; }
+    .path-item h4 { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+    .path-item p { font-size: 0.82rem; color: var(--muted2); line-height: 1.7; }
+
+    .path-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; list-style: none; margin-top: 1rem; }
+    .path-tags li {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+    }
+
+    @media (max-width: 720px) {
+      .about-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+      .about-photo { max-width: 240px; }
+    }
+
     /* ── PROCESS ── */
     .process { background: transparent; }
 
@@ -1239,6 +1312,7 @@
     <div class="nav-right">
       <ul class="nav-links" id="navLinks">
         <li class="js-proj-link" hidden><a href="#projects" data-i18n="nav-proj">Projects</a></li>
+        <li><a href="#about" data-i18n="nav-about">About</a></li>
         <li><a href="#services" data-i18n="nav-s">Services</a></li>
         <li><a href="#process" data-i18n="nav-p">Process</a></li>
         <li><a href="#contact" data-i18n="nav-c">Contact</a></li>
@@ -1291,6 +1365,50 @@
   <section class="projects" id="projects" hidden>
     <h2 class="section-label reveal" data-i18n="s-proj">Projects</h2>
     <div class="projects-grid" id="projectsGrid"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <h2 class="section-label reveal" data-i18n="s-about">Giới thiệu</h2>
+    <div class="about-grid reveal">
+      <div class="about-photo">
+        <span class="about-initials" aria-hidden="true">RT</span>
+        <img src="user.jpg" alt="Raymond Tran" loading="lazy" onerror="this.remove()" />
+      </div>
+      <div class="about-text">
+        <h3 data-i18n="ab-h">Chào, mình là Raymond</h3>
+        <p data-i18n="ab-p1">Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.</p>
+        <p data-i18n="ab-p2">Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau. Mỗi dự án bên trên là một bước trên con đường đó, và mình ghi lại những gì học được ở đây.</p>
+      </div>
+    </div>
+
+    <div class="about-path-title reveal" data-i18n="ab-path">// những mảnh ghép mình đang ghép lại</div>
+    <div class="path-grid">
+      <div class="path-item reveal reveal-delay-1">
+        <div class="path-num">01</div>
+        <h4 data-i18n="ab1-h">Giao diện</h4>
+        <p data-i18n="ab1-p">Làm cho thứ người dùng nhìn thấy gọn, nhanh và dễ dùng trên cả điện thoại lẫn máy tính.</p>
+        <ul class="path-tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>TypeScript</li><li>React</li></ul>
+      </div>
+      <div class="path-item reveal reveal-delay-2">
+        <div class="path-num">02</div>
+        <h4 data-i18n="ab2-h">Xử lý phía sau</h4>
+        <p data-i18n="ab2-p">Viết nghiệp vụ, phân quyền, API và những đoạn code mà người dùng không bao giờ thấy nhưng luôn cần.</p>
+        <ul class="path-tags"><li>PHP</li><li>REST API</li><li>Firebase</li><li>Dart</li></ul>
+      </div>
+      <div class="path-item reveal reveal-delay-3">
+        <div class="path-num">03</div>
+        <h4 data-i18n="ab3-h">Dữ liệu</h4>
+        <p data-i18n="ab3-p">Thiết kế bảng sao cho số liệu luôn khớp: kho, công nợ, đơn hàng, báo cáo.</p>
+        <ul class="path-tags"><li>MySQL</li><li>Firestore</li><li>SQL</li></ul>
+      </div>
+      <div class="path-item reveal" style="transition-delay:.4s">
+        <div class="path-num">04</div>
+        <h4 data-i18n="ab4-h">Đưa lên chạy thật</h4>
+        <p data-i18n="ab4-p">Triển khai, tên miền, tự động hóa và theo dõi để sản phẩm chạy ổn sau khi bàn giao.</p>
+        <ul class="path-tags"><li>Git</li><li>GitHub Actions</li><li>Hosting</li><li>Domain</li></ul>
+      </div>
+    </div>
   </section>
 
   <!-- SERVICES -->
@@ -1481,7 +1599,7 @@
         </div>
         <div class="contact-meta-item">
           <span class="contact-meta-label" data-i18n="label-email">email</span>
-          <span class="contact-meta-val"><a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a></span>
+          <span class="contact-meta-val"><a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a></span>
         </div>
         <div class="contact-meta-item">
           <span class="contact-meta-label" data-i18n="label-resp">response</span>
@@ -1531,7 +1649,7 @@
         </div>
 
         <div id="formError" class="form-error" role="alert" hidden>
-          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.</div>
+          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.</div>
         </div>
       </div>
 
@@ -1547,6 +1665,7 @@
     </div>
     <ul class="footer-nav">
       <li class="js-proj-link" hidden><a href="#projects" data-i18n="foot-nav-proj">projects</a></li>
+      <li><a href="#about" data-i18n="foot-nav-about">about</a></li>
       <li><a href="#services" data-i18n="foot-nav-s">services</a></li>
       <li><a href="#process" data-i18n="foot-nav-p">process</a></li>
       <li><a href="#contact" data-i18n="foot-nav-c">contact</a></li>
@@ -2555,7 +2674,16 @@
     // Keys map to [data-i18n] (textContent), [data-i18n-html] (innerHTML) and [data-i18n-ph] (placeholder).
     const translations = {
       en: {
-        'hero-sub': ["I build software that fits.", "Clean code. Real results.", "Delivered on time, every time."],
+        's-about':'About','nav-about':'About','foot-nav-about':'about',
+        'ab-h':"Hi, I'm Raymond",
+        'ab-p1':"I'm a freelance coder in Ho Chi Minh City. I started with small websites, then worked my way down the stack: writing APIs, designing databases, and getting products running for real.",
+        'ab-p2':"To me, good software means understanding both ends: what users touch and what quietly runs behind it. Every project above is a step on that road, and I write down what I learn here.",
+        'ab-path':'// the pieces I keep putting together',
+        'ab1-h':'Interface','ab1-p':'Making what users see clean, fast and easy to use on phones and desktops.',
+        'ab2-h':'Behind the scenes','ab2-p':"Business logic, permissions, APIs, and the code users never see but always need.",
+        'ab3-h':'Data','ab3-p':'Designing tables so the numbers always add up: stock, debts, orders, reports.',
+        'ab4-h':'Going live','ab4-p':'Deployment, domains, automation and monitoring so the product stays healthy after handover.',
+                'hero-sub': ["I build software that fits.", "Clean code. Real results.", "Delivered on time, every time."],
         'hero-tag': "FREELANCE DEVELOPER",
         'hero-h1': "Raymond<br><em>Tran</em>",
         'btn-start': "See my work",   'btn-explore': "$ contact --me",
@@ -2591,14 +2719,27 @@
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg': "I'm looking to build a system that...",
         'btn-send':'$ send --message','btn-sending':'$ sending...',
         'ok-title':'MESSAGE_SENT // STATUS: 200 OK','ok-note': "I'll get back to you within 24 hours.",
-        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.',
         'nav-s':'Services','nav-prod':'Products','nav-proj':'Projects','nav-p':'Process','nav-c':'Contact','nav-status': "OPEN FOR PROJECTS",
         'menu-open':'Open menu','menu-close':'Close menu',
         'foot-tag': "// freelance developer",'foot-nav-s':'services','foot-nav-prod':'products','foot-nav-proj':'projects','foot-nav-p':'process','foot-nav-c':'contact',
         'foot-made':'Made in Vietnam',
       },
       vi: {
-        'hero-sub': ["Phần mềm vừa vặn, đúng nhu cầu.", "Code sạch. Kết quả thật.", "Đúng hẹn, không lý do."],
+        's-about':'Giới thiệu','nav-about':'Giới thiệu','foot-nav-about':'giới thiệu',
+        'ab-h': "Chào, mình là Raymond",
+        'ab-p1': "Mình là coder dạo ở TP. Hồ Chí Minh. Mình bắt đầu từ những trang web nhỏ, rồi đi dần xuống phía sau: viết API, thiết kế cơ sở dữ liệu, đưa sản phẩm lên chạy thật.",
+        'ab-p2': "Với mình, làm phần mềm tốt nghĩa là hiểu cả hai đầu: thứ người dùng chạm vào và thứ chạy âm thầm phía sau. Mỗi dự án bên trên là một bước trên con đường đó, và mình ghi lại những gì học được ở đây.",
+        'ab-path': "// những mảnh ghép mình đang ghép lại",
+        'ab1-h': "Giao diện",
+        'ab1-p': "Làm cho thứ người dùng nhìn thấy gọn, nhanh và dễ dùng trên cả điện thoại lẫn máy tính.",
+        'ab2-h': "Xử lý phía sau",
+        'ab2-p': "Viết nghiệp vụ, phân quyền, API và những đoạn code mà người dùng không bao giờ thấy nhưng luôn cần.",
+        'ab3-h': "Dữ liệu",
+        'ab3-p': "Thiết kế bảng sao cho số liệu luôn khớp: kho, công nợ, đơn hàng, báo cáo.",
+        'ab4-h': "Đưa lên chạy thật",
+        'ab4-p': "Triển khai, tên miền, tự động hóa và theo dõi để sản phẩm chạy ổn sau khi bàn giao.",
+                'hero-sub': ["Phần mềm vừa vặn, đúng nhu cầu.", "Code sạch. Kết quả thật.", "Đúng hẹn, không lý do."],
         'hero-tag': "CODER DẠO · FREELANCE",
         'hero-h1': "Raymond<br><em>Tran</em>",
         'btn-start': "Xem dự án",    'btn-explore': "$ liên-hệ --mình",
@@ -2653,7 +2794,7 @@
         'ph-msg': "Tôi cần làm một hệ thống để...",
         'btn-send':'$ Gửi thông tin ngay','btn-sending':'$ Đang gửi...',
         'ok-title':'ĐÃ GỬI THÀNH CÔNG','ok-note': "Mình sẽ phản hồi bạn trong vòng 24 giờ.",
-        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:raymondtrantm@gmail.com">raymondtrantm@gmail.com</a>.',
         'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-proj':'Dự án','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status': "NHẬN DỰ ÁN",
         'menu-open':'Mở menu','menu-close':'Đóng menu',
         'foot-tag': "// coder dạo",
@@ -2897,7 +3038,7 @@
       // No Web3Forms key configured yet — hand off to the visitor's mail app instead of failing silently
       if (!json.access_key || json.access_key === 'YOUR_ACCESS_KEY_HERE') {
         const body = `${json.message}\n\n— ${json.name}\n${json.email}${json.phone ? '\n' + json.phone : ''}`;
-        window.location.href = 'mailto:hello@simplesoft.com.vn'
+        window.location.href = 'mailto:raymondtrantm@gmail.com'
           + '?subject=' + encodeURIComponent(json.subject)
           + '&body=' + encodeURIComponent(body);
         return;
