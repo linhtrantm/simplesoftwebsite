@@ -1411,7 +1411,7 @@
         </div>
         <div class="contact-meta-item">
           <span class="contact-meta-label" data-i18n="label-email">email</span>
-          <span class="contact-meta-val"><a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a><br><a href="mailto:info@simplesoft.com.vn">info@simplesoft.com.vn</a></span>
+          <span class="contact-meta-val"><a href="mailto:info@simplesoft.com.vn">info@simplesoft.com.vn</a></span>
         </div>
         <div class="contact-meta-item">
           <span class="contact-meta-label" data-i18n="label-resp">response</span>
@@ -1461,7 +1461,7 @@
         </div>
 
         <div id="formError" class="form-error" role="alert" hidden>
-          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.</div>
+          <div class="form-status" data-i18n-html="err-msg">ERROR // Failed to send. Please try again or email <a href="mailto:info@simplesoft.com.vn">info@simplesoft.com.vn</a>.</div>
         </div>
       </div>
 
@@ -2521,7 +2521,7 @@
         'ph-name':'Nguyen Van A','ph-phone':'+84 901 234 567','ph-email':'you@company.com','ph-msg':"We're looking to build a system that...",
         'btn-send':'$ send --message','btn-sending':'$ sending...',
         'ok-title':'MESSAGE_SENT // STATUS: 200 OK','ok-note':"We'll get back to you within 24 hours.",
-        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'err-msg':'ERROR // Failed to send. Please try again or email <a href="mailto:info@simplesoft.com.vn">info@simplesoft.com.vn</a>.',
         'nav-s':'Services','nav-prod':'Products','nav-p':'Process','nav-c':'Contact','nav-status':'SYSTEM ONLINE',
         'menu-open':'Open menu','menu-close':'Close menu',
         'foot-tag':'// software, made simple','foot-nav-s':'services','foot-nav-prod':'products','foot-nav-p':'process','foot-nav-c':'contact',
@@ -2583,7 +2583,7 @@
         'ph-msg':'Chúng tôi cần xây dựng một hệ thống...',
         'btn-send':'$ Gửi thông tin ngay','btn-sending':'$ Đang gửi...',
         'ok-title':'ĐÃ GỬI THÀNH CÔNG','ok-note':'Chúng tôi sẽ phản hồi bạn trong vòng 24 giờ.',
-        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:hello@simplesoft.com.vn">hello@simplesoft.com.vn</a>.',
+        'err-msg':'LỖI // Gửi không thành công. Vui lòng thử lại hoặc email <a href="mailto:info@simplesoft.com.vn">info@simplesoft.com.vn</a>.',
         'nav-s':'Dịch vụ','nav-prod':'Sản phẩm','nav-p':'Quy trình','nav-c':'Liên hệ','nav-status':'HỆ THỐNG ONLINE',
         'menu-open':'Mở menu','menu-close':'Đóng menu',
         'foot-tag':'// Phần mềm thông minh, vận hành tối giản',
@@ -2715,7 +2715,7 @@
       // No Web3Forms key configured yet — hand off to the visitor's mail app instead of failing silently
       if (!json.access_key || json.access_key === 'YOUR_ACCESS_KEY_HERE') {
         const body = `${json.message}\n\n— ${json.name}\n${json.email}${json.phone ? '\n' + json.phone : ''}`;
-        window.location.href = 'mailto:hello@simplesoft.com.vn'
+        window.location.href = 'mailto:info@simplesoft.com.vn'
           + '?subject=' + encodeURIComponent(json.subject)
           + '&body=' + encodeURIComponent(body);
         return;
