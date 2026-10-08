@@ -675,6 +675,35 @@
 
     .product-cta::after { content: '→'; }
 
+
+    /* ── FOUNDER (small corner, links to the personal site) ── */
+    .founder-card {
+      display: flex; align-items: center; gap: 1.5rem;
+      max-width: 760px; margin: 3rem auto 0; padding: 1.4rem 1.75rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      text-decoration: none; color: inherit; position: relative; overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .founder-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s;
+    }
+    .founder-card:hover { border-color: rgba(59,130,246,0.35); box-shadow: 0 8px 24px rgba(0,0,0,0.3); transform: translateY(-3px); }
+    .founder-card:hover::before { opacity: 1; }
+    .founder-photo {
+      flex: 0 0 auto; width: 92px; height: 92px; border-radius: 50%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #1d4ed8, #0b1e4a 70%);
+      border: 2px solid rgba(59,130,246,0.45); box-shadow: 0 0 22px rgba(59,130,246,0.25);
+    }
+    .founder-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; }
+    .founder-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+    .founder-name { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; margin: 0.15rem 0 0.3rem; }
+    .founder-bio { font-size: 0.85rem; line-height: 1.6; color: var(--muted2); }
+    .founder-link { display: inline-block; margin-top: 0.55rem; font-family: var(--mono); font-size: 0.74rem; color: var(--accent2); }
+    .founder-link::after { content: ' ↗'; }
+    @media (max-width: 560px) {
+      .founder-card { flex-direction: column; text-align: center; padding: 1.4rem 1.25rem; }
+    }
     /* ── PROCESS ── */
     .process { background: transparent; }
 
@@ -1366,6 +1395,15 @@
         <p data-i18n="v3-p">AI-assisted development lets us ship faster while maintaining the quality bar your business deserves.</p>
       </div>
     </div>
+    <a class="founder-card reveal" href="https://raymondtrantm.id.vn" target="_blank" rel="noopener">
+      <span class="founder-photo"><img src="founder.webp" alt="Raymond Tran" width="288" height="288" loading="lazy" /></span>
+      <span>
+        <span class="founder-tag" data-i18n="fd-tag">FOUNDER</span>
+        <span class="founder-name" style="display:block">Raymond Tran</span>
+        <span class="founder-bio" style="display:block" data-i18n="fd-bio">Freelance developer in Ho Chi Minh City. The person behind simpleRMS, simpleDMS and simpleWork.</span>
+        <span class="founder-link">raymondtrantm.id.vn</span>
+      </span>
+    </a>
   </section>
 
   <!-- CTA BAND -->
@@ -2485,6 +2523,7 @@
     // Keys map to [data-i18n] (textContent), [data-i18n-html] (innerHTML) and [data-i18n-ph] (placeholder).
     const translations = {
       en: {
+        'fd-tag':'FOUNDER','fd-bio':'Freelance developer in Ho Chi Minh City. The person behind simpleRMS, simpleDMS and simpleWork.',
         'hero-sub':      ['We build software that fits.','Clean code. Real results.','Delivered on time, every time.'],
         'hero-tag':      'SOFTWARE SYSTEM INTEGRATOR',
         'hero-h1':       'software,<br>made <em>simple</em>',
@@ -2528,6 +2567,7 @@
         'foot-made':'Made in Vietnam',
       },
       vi: {
+        'fd-tag':'NGƯỜI SÁNG LẬP','fd-bio':'Coder dạo, freelance ở TP. Hồ Chí Minh. Người làm ra simpleRMS, simpleDMS và simpleWork.',
         'hero-sub':      ['Phần mềm vừa vặn, đúng nhu cầu.','Mã nguồn sạch. Kết quả thật.','Đúng hẹn, không lý do.'],
         'hero-tag':      'TÍCH HỢP HỆ THỐNG PHẦN MỀM',
         'hero-h1':       'phần mềm,<br>thật <em>đơn giản</em>',
